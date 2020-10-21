@@ -104,7 +104,6 @@ header_names = [
 gender_and_position = {"caller_F", "receiver_F", "caller_M", "receiver_M"}
 gender_types = dict.fromkeys(gender_and_position, 0)
 cue_types = {"laughter": 0, "silence": 0, "filler": 0, "bc": 0}
-df = read_in_data(header_names)
 
 
 def occurrence_of_each_event(df, types):
