@@ -85,12 +85,16 @@ def test_data():
 
 
 def test_total_overlap_occurrence(test_data):
-    assert dm.total_overlap_occurrence(test_data, dm.gender_and_position) == 2
+    assert dm.total_overlap_occurrence(test_data) == 2
 
 
 def test_total_overlap_time(test_data):
-    assert pytest.approx(dm.total_overlap_time(test_data, dm.gender_and_position)) == 1.25
+    assert (
+        pytest.approx(dm.total_overlap_time(test_data)) == 1.25
+    )
 
 
 def test_mean_overlap_time(test_data):
-    assert pytest.approx(dm.mean_overlap_time(test_data, dm.gender_and_position)) == 0.625
+    assert (
+        pytest.approx(dm.mean_overlap_time(test_data)) == 0.625
+    )

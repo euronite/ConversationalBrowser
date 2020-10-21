@@ -6,11 +6,25 @@ import datetime
 import itertools
 
 
-def read_in_data(header_names):
+header_names = [
+    "call",
+    "conversation_topic",
+    "person_and_type",
+    "start",
+    "end",
+    "caller",
+    "receiver",
+]
+gender_and_position = {"caller_F", "receiver_F", "caller_M", "receiver_M"}
+gender_types = dict.fromkeys(gender_and_position, 0)
+cue_types = {"laughter": 0, "silence": 0, "filler": 0, "bc": 0}
+
+
+def read_in_data():
     return pd.read_csv("../data/genderedCorpus.csv", sep=",", names=header_names)
 
 
-def reciever_and_caller_column(df, gender_and_position):
+def reciever_and_caller_column(df):
     """
     Takes in the dataframe, header names and gender/position.
     This then looks at person_and_type column and fills the caller and receiver column with the appropriate value
@@ -36,7 +50,8 @@ def get_conversation_topic_df(df, topic):
 
 def remove_conversation_topic_df(df, topic):
     """
-    Gets the rows that do not contain a specific topic. Can pass a string containing topics to remove, delimited by a comma
+    Gets the rows that do not contain a specific topic. Can pass a string containing topics to remove.
+    Delimited by a comma
     """
     for individual_topic in topic.split(","):
         df = df.loc[df["conversation_topic"] != individual_topic]
@@ -84,26 +99,12 @@ def convert_to_minutes_and_seconds(seconds):
     return datetime.timedelta(seconds=seconds)
 
 
-def get_permutations_of_gender_and_position(options):
+def get_permutations_of_gender_and_position():
     """
     Takes in the gender_and_position var and returns the possible combinations of size 2
     """
     permutations = list(itertools.permutations(gender_and_position, 2))
     return [" ".join(i) for i in permutations]
-
-
-header_names = [
-    "call",
-    "conversation_topic",
-    "person_and_type",
-    "start",
-    "end",
-    "caller",
-    "receiver",
-]
-gender_and_position = {"caller_F", "receiver_F", "caller_M", "receiver_M"}
-gender_types = dict.fromkeys(gender_and_position, 0)
-cue_types = {"laughter": 0, "silence": 0, "filler": 0, "bc": 0}
 
 
 def occurrence_of_each_event(df, types):
@@ -165,16 +166,16 @@ def individual_call_length(df):
     return total
 
 
-def total_overlap_occurrence(df, gender_and_position):
+def total_overlap_occurrence(df):
     """
     Returns the number of times there was two people talking over on another
     """
-    permutations = get_permutations_of_gender_and_position(gender_and_position)
+    permutations = get_permutations_of_gender_and_position()
     return df[df["person_and_type"].isin(permutations)].shape[0]
 
 
-def total_overlap_time(df, gender_and_position):
-    permutations = get_permutations_of_gender_and_position(gender_and_position)
+def total_overlap_time(df):
+    permutations = get_permutations_of_gender_and_position()
     new_df = df[df["person_and_type"].isin(permutations)]
     total = (new_df["end"] - new_df["start"]).sum(
         axis=0
@@ -182,10 +183,10 @@ def total_overlap_time(df, gender_and_position):
     return total
 
 
-def mean_overlap_time(df, gender_and_position):
+def mean_overlap_time(df):
     """
     Calculates the overlap mean time.
     """
-    permutations = get_permutations_of_gender_and_position(gender_and_position)
+    permutations = get_permutations_of_gender_and_position()
     new_df = df[df["person_and_type"].isin(permutations)]
     return (new_df["end"] - new_df["start"]).mean(axis=0)
