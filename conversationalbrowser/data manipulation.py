@@ -190,17 +190,3 @@ def mean_overlap_time(df, gender_and_position):
     permutations = get_permutations_of_gender_and_position(gender_and_position)
     new_df = df[df["person_and_type"].isin(permutations)]
     return (new_df["end"] - new_df["start"]).mean(axis=0)
-
-
-df = reciever_and_caller_column(df, gender_and_position)
-occ_count = occurrence_of_each_event(df, cue_types.copy())
-time_total = total_time_of_each_event(df, cue_types.copy())
-mean_time = mean_time_of_each_event(df, cue_types.copy())
-id_call_length = individual_call_length(df)
-call_time_total = convert_to_minutes_and_seconds(sum(id_call_length.values()))
-total_overlap_occurrences = total_overlap_occurrence(df, gender_and_position.copy())
-total_overlap_duration = total_overlap_time(df, gender_and_position.copy())
-mean_overlap_duration = mean_overlap_time(df, gender_and_position.copy())
-m_m_calls = get_all_call_ids(
-    get_rows_by_caller_and_receiver(df, "caller_M", "receiver_M")
-)
