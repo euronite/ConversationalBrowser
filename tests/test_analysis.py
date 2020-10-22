@@ -85,6 +85,24 @@ def test_data():
     return data
 
 
+def test_get_permutations_of_gender_and_position():
+    expected = ['caller_F receiver_M', 'caller_F receiver_F', 'caller_M receiver_M', 'caller_M receiver_F']
+    assert any(elem in dm.get_permutations_of_gender_and_position() for elem in expected)
+
+
+def test_get_rows_by_caller_and_receiver(test_data):
+    df = dm.get_rows_by_caller_and_receiver(test_data, "caller_F", "receiver_F")
+    assert "caller_F" in df.caller.unique() and len(df.caller.unique()) == 1
+    assert "receiver_F" in df.receiver.unique() and len(df.receiver.unique()) == 1
+
+
+def test_occurrence_of_each_event(test_data):
+    result = dm.occurrence_of_each_event(test_data, dm.cue_types)
+    assert pytest.approx(result["silence"]) == 3
+    assert pytest.approx(result["laughter"]) == 1
+    assert result["filler"] == 0
+    assert result["bc"] == 0
+
 def test_mean_time_of_each_event(test_data):
     result = dm.mean_time_of_each_event(test_data, dm.cue_types)
     assert pytest.approx(result["silence"]) == 0.705333333
@@ -93,9 +111,22 @@ def test_mean_time_of_each_event(test_data):
     assert result["bc"] == 0
 
 
+def test_total_time_of_each_event(test_data):
+    result = dm.total_time_of_each_event(test_data, dm.cue_types)
+    assert pytest.approx(result["silence"]) == 2.116
+    assert pytest.approx(result["laughter"]) == 0.76
+    assert result["filler"] == 0
+    assert result["bc"] == 0
+
+
 def test_remove_conversation_topic_df(test_data):
     df = dm.remove_conversation_topic_df(test_data, "other")
     assert "other" not in df.conversation_topic.unique()
+
+
+def test_get_conversation_only_df(test_data):
+    df = dm.get_conversation_only_df(test_data, dm.cue_types.keys())
+    assert not any(elem in df["person_and_type"].tolist() for elem in dm.cue_types.keys())
 
 
 def test_get_conversation_topic_df(test_data):
