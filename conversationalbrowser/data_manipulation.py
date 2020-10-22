@@ -104,7 +104,12 @@ def get_permutations_of_gender_and_position():
     Takes in the gender_and_position var and returns the possible combinations of size 2
     """
     permutations = list(itertools.permutations(gender_and_position, 2))
-    return [" ".join(i) for i in permutations]
+    final_permutation = []
+    for perm in permutations:
+        if "caller" in perm[0]:
+            if "receiver" in perm[1]:
+                final_permutation.append(perm)
+    return [" ".join(i) for i in final_permutation]
 
 
 def occurrence_of_each_event(df, types):
