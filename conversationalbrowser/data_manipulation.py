@@ -141,7 +141,8 @@ def mean_time_of_each_event(df, types):
     """
     for cue in types:
         new_df = df[df["person_and_type"].str.contains(cue)]
-        types[cue] = (new_df["end"] - new_df["start"]).mean(axis=0)
+        if len(new_df) > 0:
+            types[cue] = (new_df["end"] - new_df["start"]).mean(axis=0)
     return types
 
 
