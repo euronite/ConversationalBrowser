@@ -24,7 +24,7 @@ def read_in_data():
     return pd.read_csv("../data/genderedCorpus.csv", sep=",", names=header_names)
 
 
-def reciever_and_caller_column(df):
+def receiver_and_caller_column(df):
     """
     Takes in the dataframe, header names and gender/position.
     This then looks at person_and_type column and fills the caller and receiver column with the appropriate value
