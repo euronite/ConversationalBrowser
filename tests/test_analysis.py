@@ -86,8 +86,15 @@ def test_data():
 
 
 def test_get_permutations_of_gender_and_position():
-    expected = ['caller_F receiver_M', 'caller_F receiver_F', 'caller_M receiver_M', 'caller_M receiver_F']
-    assert any(elem in dm.get_permutations_of_gender_and_position() for elem in expected)
+    expected = [
+        "caller_F receiver_M",
+        "caller_F receiver_F",
+        "caller_M receiver_M",
+        "caller_M receiver_F",
+    ]
+    assert any(
+        elem in dm.get_permutations_of_gender_and_position() for elem in expected
+    )
 
 
 def test_get_rows_by_caller_and_receiver(test_data):
@@ -102,6 +109,7 @@ def test_occurrence_of_each_event(test_data):
     assert pytest.approx(result["laughter"]) == 1
     assert result["filler"] == 0
     assert result["bc"] == 0
+
 
 def test_mean_time_of_each_event(test_data):
     result = dm.mean_time_of_each_event(test_data, dm.cue_types)
@@ -126,7 +134,9 @@ def test_remove_conversation_topic_df(test_data):
 
 def test_get_conversation_only_df(test_data):
     df = dm.get_conversation_only_df(test_data, dm.cue_types.keys())
-    assert not any(elem in df["person_and_type"].tolist() for elem in dm.cue_types.keys())
+    assert not any(
+        elem in df["person_and_type"].tolist() for elem in dm.cue_types.keys()
+    )
 
 
 def test_get_conversation_topic_df(test_data):
@@ -169,7 +179,7 @@ def test_get_all_call_ids(test_data):
 
 def test_get_call_df(test_data):
     rows = dm.get_call_df(test_data, "F01")
-    assert (rows.shape[0] == 7) and (len(rows['call'].value_counts()) == 1)
+    assert (rows.shape[0] == 7) and (len(rows["call"].value_counts()) == 1)
 
 
 def test_receiver_and_caller_column(test_data):
@@ -183,7 +193,15 @@ def test_receiver_and_caller_column(test_data):
             "F01",
             "F01",
         ],
-        "conversation_topic": ["n/a", "n/a", "n/a", "n/a", "n/a", "n/a", "end", ],
+        "conversation_topic": [
+            "n/a",
+            "n/a",
+            "n/a",
+            "n/a",
+            "n/a",
+            "n/a",
+            "end",
+        ],
         "person_and_type": [
             "silence",
             "caller_F",

@@ -20,8 +20,8 @@ gender_types = dict.fromkeys(gender_and_position, 0)
 cue_types = {"laughter": 0, "silence": 0, "filler": 0, "bc": 0}
 
 
-def read_in_data():
-    return pd.read_csv("../data/genderedCorpus.csv", sep=",", names=header_names)
+def read_in_data(location):
+    return pd.read_csv(location, sep=",", names=header_names)
 
 
 def receiver_and_caller_column(df):
