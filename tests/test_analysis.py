@@ -81,8 +81,75 @@ def test_data():
             "receiver_F",
         ],
     }
-    data = pd.DataFrame(data)
-    return data
+    return pd.DataFrame(data)
+
+
+@pytest.fixture
+def individual_call_data():
+    dummy_data = {
+        "call": ["F01", "F01", "F01", "F01", "F01", "F01"],
+        "conversation_topic": [
+            "other",
+            "other",
+            "other",
+            "other",
+            "other",
+            "end",
+        ],
+        "person_and_type": [
+            "silence",
+            "caller_F",
+            "laughter_cF",
+            "laughter_rM",
+            "laughter_cF",
+            "end",
+        ],
+        "start": [
+            0,
+            1.01,
+            1.24,
+            2.0,
+            2.9,
+            3.456,
+        ],
+        "end": [
+            1.01,
+            1.24,
+            2.0,
+            2.9,
+            3.456,
+            4.0,
+        ],
+        "caller": [
+            "caller_F",
+            "caller_F",
+            "caller_F",
+            "caller_F",
+            "caller_F",
+            "caller_F",
+        ],
+        "receiver": [
+            "receiver_M",
+            "receiver_M",
+            "receiver_M",
+            "receiver_M",
+            "receiver_M",
+            "receiver_M",
+        ],
+    }
+    return pd.DataFrame(dummy_data)
+
+
+def test_read_in():
+    assert dm.read_in_data("tests/test_data.csv") is not None
+
+
+def test_occurrence_of_event(individual_call_data):
+    assert [2, 1] == dm.occurrence_of_event(individual_call_data, "laughter")
+
+
+def test_total_time_of_event(individual_call_data):
+    assert [1.316, 0.9], dm.total_time_of_event(individual_call_data, "laughter")
 
 
 def test_get_permutations_of_gender_and_position():
