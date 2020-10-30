@@ -1,6 +1,3 @@
-#!/usr/bin/env python
-# coding: utf-8
-
 import pandas as pd
 import datetime
 import itertools
@@ -124,6 +121,42 @@ def occurrence_of_each_event(df, types):
             elif occurrence_name.count(cue_type) == 1:
                 types[cue_type] += occurrences[occurrence_name]
     return types
+
+
+def occurrence_of_event(df, cue):
+    # dataframe input should be an individual call.
+    # returns a list of two vals. number of times caller did a cue and number of times the receiver did the cue
+    if "M" in df["receiver"].iloc[0]:
+        receiver_search = f"{cue}_rM"
+    else:
+        receiver_search = f"{cue}_rF"
+    if "M" in df["caller"].iloc[0]:
+        caller_search = f"{cue}_cM"
+    else:
+        caller_search = f"{cue}_cF"
+    caller_cue_count = df.person_and_type.str.count(caller_search).sum()
+    receiver_cue_count = df.person_and_type.str.count(receiver_search).sum()
+    return [caller_cue_count, receiver_cue_count]
+
+
+def total_time_of_event(df, cue):
+    # dataframe input should be an individual call.
+    # returns a list of two vals. Length of time caller did cue and length of time the receiver did the cue
+    if "M" in df["receiver"].iloc[0]:
+        receiver_search = f"{cue}_rM"
+    else:
+        receiver_search = f"{cue}_rF"
+    if "M" in df["caller"].iloc[0]:
+        caller_search = f"{cue}_cM"
+    else:
+        caller_search = f"{cue}_cF"
+    caller_cue_time = df[df["person_and_type"].str.contains(caller_search)]
+    caller_cue_time = (caller_cue_time["end"] - caller_cue_time["start"]).sum(axis=0)
+    receiver_cue_time = df[df["person_and_type"].str.contains(receiver_search)]
+    receiver_cue_time = (receiver_cue_time["end"] - receiver_cue_time["start"]).sum(
+        axis=0
+    )
+    return [caller_cue_time, receiver_cue_time]
 
 
 def total_time_of_each_event(df, types):
