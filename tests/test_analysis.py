@@ -2,6 +2,7 @@ import pytest
 from conversationalbrowser import data_manipulation as dm
 import pandas as pd
 import numpy as np
+from pathlib import Path
 
 
 # test unit tests run and are able to pass
@@ -141,7 +142,7 @@ def individual_call_data():
 
 
 def test_read_in():
-    assert dm.read_in_data("tests/test_data.csv") is not None
+    assert dm.read_in_data(Path("tests/test_data.csv")) is not None
 
 
 def test_occurrence_of_event(individual_call_data):
