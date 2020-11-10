@@ -394,7 +394,27 @@
   </customwidget>
  </customwidgets>
  <resources/>
- <connections/>
+ <connections>
+  <connection>
+   <sender>loadDataBtn</sender>
+   <signal>clicked()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>browseSlot()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>237</x>
+     <y>106</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>8</x>
+     <y>93</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+ <slots>
+  <slot>browseSlot()</slot>
+ </slots>
  <buttongroups>
   <buttongroup name="buttonGroup"/>
  </buttongroups>

@@ -1,30 +1,49 @@
 from PyQt5 import QtWidgets, uic
 from PyQt5.QtCore import pyqtSlot
+from PyQt5.QtWidgets import QWidget
 import sys
 from conversationalbrowser import data_manipulation as dm
+from conversationalbrowser.model import Model
 from pathlib import Path
+
+
+class FileDialog(QWidget):
+    def __init__(self):
+        super(FileDialog, self).__init__()
+        self.init_UI()
+
+    def init_UI(self):
+        self.setWindowTitle('Choose csv file')
+        self.setGeometry(100, 100, 640, 480)
+
+    def open_file_dialog(self):
+        options = QtWidgets.QFileDialog.Options()
+        file, _ = QtWidgets.QFileDialog.getOpenFileName(
+            None,
+            "QFileDialog.getOpenFileName()",
+            "",
+            "All Files (*);;CSV Files (*.csv)",
+            options=options)
+        return file
 
 
 class MainWindow(QtWidgets.QMainWindow):
     def __init__(self, *args, **kwargs):
+        self.model = Model()
         super(MainWindow, self).__init__(*args, **kwargs)
         # Load the UI
         ui_location = Path(
             "conversationalbrowser/ui/main_window.ui"
         )  # This converts \ on windows etc.
         uic.loadUi(ui_location, self)
-        self.loadDataBtn.clicked.connect(self.on_click)
 
     @pyqtSlot()
-    def on_click(self):
-        data_location = Path(
-            "data/genderedCorpus.csv"
-        )  # converts / or \ depending on OS
-        try:
-            df = dm.read_in_data(data_location)
-            print("Successfully read in data!")
-        except FileNotFoundError:
-            print("File has not been found. Please check file path is correct.")
+    def browseSlot(self):
+        file_dialog = FileDialog()
+        file = file_dialog.open_file_dialog()
+        if file:
+            print(file)
+            self.model.set_file_name(file)
 
 
 def main():
