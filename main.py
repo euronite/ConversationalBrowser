@@ -1,6 +1,6 @@
 from PyQt5 import QtWidgets, uic
 from PyQt5.QtCore import pyqtSlot
-from PyQt5.QtWidgets import QWidget
+from PyQt5.QtWidgets import QWidget, QMessageBox
 import sys
 from conversationalbrowser import data_manipulation as dm
 from conversationalbrowser.model import Model
@@ -22,7 +22,7 @@ class FileDialog(QWidget):
             None,
             "QFileDialog.getOpenFileName()",
             "",
-            "All Files (*);;CSV Files (*.csv)",
+            "CSV Files (*.csv)",
             options=options)
         return file
 
@@ -42,8 +42,12 @@ class MainWindow(QtWidgets.QMainWindow):
         file_dialog = FileDialog()
         file = file_dialog.open_file_dialog()
         if file:
-            print(file)
             self.model.set_file_name(file)
+            QMessageBox.information(self, "Load File",
+                                    "File loaded successfully.")
+        else:
+            QMessageBox.critical(self, "Load File Error",
+                                    "File not selected, please try again")
 
 
 def main():
