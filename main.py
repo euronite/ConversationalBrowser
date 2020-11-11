@@ -49,8 +49,7 @@ class MainWindow(QtWidgets.QMainWindow):
         else:
             QMessageBox.critical(self, "Load File Error",
                                     "File not selected, please try again")
-
-
+        print(dm.get_all_call_ids(self.model.get_file_content()))
     @pyqtSlot()
     def clearGraphSlot(self):
         self.GraphWidget.clear()
