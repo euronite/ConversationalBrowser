@@ -14,35 +14,6 @@
    <string>MainWindow</string>
   </property>
   <widget class="QWidget" name="centralwidget">
-   <widget class="PlotWidget" name="graphWidget" native="true">
-    <property name="geometry">
-     <rect>
-      <x>400</x>
-      <y>70</y>
-      <width>701</width>
-      <height>751</height>
-     </rect>
-    </property>
-    <property name="autoFillBackground">
-     <bool>false</bool>
-    </property>
-    <widget class="Line" name="line">
-     <property name="geometry">
-      <rect>
-       <x>-17</x>
-       <y>0</y>
-       <width>41</width>
-       <height>761</height>
-      </rect>
-     </property>
-     <property name="lineWidth">
-      <number>3</number>
-     </property>
-     <property name="orientation">
-      <enum>Qt::Vertical</enum>
-     </property>
-    </widget>
-   </widget>
    <widget class="QLabel" name="label">
     <property name="geometry">
      <rect>
@@ -334,52 +305,14 @@
      </item>
     </layout>
    </widget>
-   <widget class="Line" name="line_2">
+   <widget class="PlotWidget" name="GraphWidget" native="true">
     <property name="geometry">
      <rect>
-      <x>1080</x>
-      <y>70</y>
-      <width>41</width>
-      <height>761</height>
+      <x>440</x>
+      <y>80</y>
+      <width>611</width>
+      <height>641</height>
      </rect>
-    </property>
-    <property name="lineWidth">
-     <number>3</number>
-    </property>
-    <property name="orientation">
-     <enum>Qt::Vertical</enum>
-    </property>
-   </widget>
-   <widget class="Line" name="line_3">
-    <property name="geometry">
-     <rect>
-      <x>400</x>
-      <y>60</y>
-      <width>701</width>
-      <height>21</height>
-     </rect>
-    </property>
-    <property name="lineWidth">
-     <number>3</number>
-    </property>
-    <property name="orientation">
-     <enum>Qt::Horizontal</enum>
-    </property>
-   </widget>
-   <widget class="Line" name="line_4">
-    <property name="geometry">
-     <rect>
-      <x>400</x>
-      <y>810</y>
-      <width>701</width>
-      <height>21</height>
-     </rect>
-    </property>
-    <property name="lineWidth">
-     <number>3</number>
-    </property>
-    <property name="orientation">
-     <enum>Qt::Horizontal</enum>
     </property>
    </widget>
   </widget>
@@ -411,9 +344,26 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>clearBtn</sender>
+   <signal>clicked()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>clearGraphSlot()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>143</x>
+     <y>698</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>151</x>
+     <y>754</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>browseSlot()</slot>
+  <slot>clearGraphSlot()</slot>
  </slots>
  <buttongroups>
   <buttongroup name="buttonGroup"/>

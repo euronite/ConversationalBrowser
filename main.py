@@ -2,6 +2,7 @@ from PyQt5 import QtWidgets, uic
 from PyQt5.QtCore import pyqtSlot
 from PyQt5.QtWidgets import QWidget, QMessageBox
 import sys
+from pyqtgraph import PlotWidget, plot
 from conversationalbrowser import data_manipulation as dm
 from conversationalbrowser.model import Model
 from pathlib import Path
@@ -48,6 +49,12 @@ class MainWindow(QtWidgets.QMainWindow):
         else:
             QMessageBox.critical(self, "Load File Error",
                                     "File not selected, please try again")
+
+
+    @pyqtSlot()
+    def clearGraphSlot(self):
+        self.GraphWidget.clear()
+
 
 
 def main():
