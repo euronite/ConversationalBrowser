@@ -14,7 +14,7 @@ class FileDialog(QWidget):
         self.init_UI()
 
     def init_UI(self):
-        self.setWindowTitle('Choose csv file')
+        self.setWindowTitle("Choose csv file")
         self.setGeometry(100, 100, 640, 480)
 
     def open_file_dialog(self):
@@ -24,7 +24,8 @@ class FileDialog(QWidget):
             "QFileDialog.getOpenFileName()",
             "",
             "CSV Files (*.csv)",
-            options=options)
+            options=options,
+        )
         return file
 
 
@@ -44,16 +45,16 @@ class MainWindow(QtWidgets.QMainWindow):
         file = file_dialog.open_file_dialog()
         if file:
             self.model.set_file_name(file)
-            QMessageBox.information(self, "Load File",
-                                    "File loaded successfully.")
+            QMessageBox.information(self, "Load File", "File loaded successfully.")
         else:
-            QMessageBox.critical(self, "Load File Error",
-                                    "File not selected, please try again")
+            QMessageBox.critical(
+                self, "Load File Error", "File not selected, please try again"
+            )
         print(dm.get_all_call_ids(self.model.get_file_content()))
+
     @pyqtSlot()
     def clearGraphSlot(self):
         self.GraphWidget.clear()
-
 
 
 def main():
