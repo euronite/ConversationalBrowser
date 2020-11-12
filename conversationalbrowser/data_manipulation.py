@@ -85,6 +85,14 @@ def get_conversation_only_df(df, non_verbal_speech):
     return df
 
 
+def get_non_verbal_speech_only(df, non_verbal_speech):
+    """
+    Return df with non-verbal speech only
+    """
+    df = df[df["person_and_type"].str.contains(non_verbal_speech)]
+    return df
+
+
 def get_rows_by_caller_and_receiver(df, caller, receiver):
     """
     Specify the caller and receiver string and returns the dataframe with those rows.
@@ -121,6 +129,25 @@ def occurrence_of_each_event(df, types):
             elif occurrence_name.count(cue_type) == 1:
                 types[cue_type] += occurrences[occurrence_name]
     return types
+
+
+def get_all_event_durations(df, cue):
+    """
+    This gets the duration of each cue and returns it as a tuple of the caller and receiver
+    """
+    if "M" in df["receiver"].iloc[0]:
+        receiver_search = f"{cue}_rM"
+    else:
+        receiver_search = f"{cue}_rF"
+    if "M" in df["caller"].iloc[0]:
+        caller_search = f"{cue}_cM"
+    else:
+        caller_search = f"{cue}_cF"
+    receiver_df = get_non_verbal_speech_only(df, receiver_search)
+    receiver_df = receiver_df["end"] - receiver_df["start"]
+    caller_df = get_non_verbal_speech_only(df, caller_search)
+    caller_df = caller_df["end"] - caller_df["start"]
+    return caller_df, receiver_df
 
 
 def occurrence_of_event(df, cue):
