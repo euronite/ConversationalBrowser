@@ -1,3 +1,10 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+
+"""
+This holds the actual data manipulation functions for the conversational data browser. They will be called when needed.
+"""
+
 import pandas as pd
 import datetime
 import itertools

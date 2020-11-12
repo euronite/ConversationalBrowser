@@ -1,3 +1,9 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+"""
+This holds the model object which is essentially the dataframe that can then be passed to the data_manipulation files.
+"""
+
 import pandas as pd
 from conversationalbrowser import data_manipulation as dm
 
@@ -21,6 +27,9 @@ class Model:
         self.fileContent = ""
 
     def set_file_name(self, file):
+        """
+        :param file: file name to retrieve contents from
+        """
         if is_valid(file):
             self.fileName = file
             self.fileContents = pd.read_csv(file, names=dm.header_names)
