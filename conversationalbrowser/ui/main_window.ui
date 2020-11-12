@@ -360,10 +360,27 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>displayBtn</sender>
+   <signal>clicked()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>displayGraphSlot()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>309</x>
+     <y>685</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>322</x>
+     <y>753</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>browseSlot()</slot>
   <slot>clearGraphSlot()</slot>
+  <slot>displayGraphSlot()</slot>
  </slots>
  <buttongroups>
   <buttongroup name="buttonGroup"/>
