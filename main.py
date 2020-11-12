@@ -2,10 +2,14 @@ from PyQt5 import QtWidgets, uic
 from PyQt5.QtCore import pyqtSlot
 from PyQt5.QtWidgets import QWidget, QMessageBox
 import sys
-from pyqtgraph import PlotWidget, plot
 from conversationalbrowser import data_manipulation as dm
 from conversationalbrowser.model import Model
 from pathlib import Path
+from matplotlib.backends.backend_qt5agg import FigureCanvasQTAgg as FigureCanvas
+from matplotlib.figure import Figure
+import matplotlib
+
+matplotlib.use("Qt5Agg")
 
 
 class FileDialog(QWidget):
@@ -38,6 +42,23 @@ class MainWindow(QtWidgets.QMainWindow):
             "conversationalbrowser/ui/main_window.ui"
         )  # This converts \ on windows etc.
         uic.loadUi(ui_location, self)
+        fig = Figure()
+        fig.add_subplot(111)
+        self.addmpl(fig)
+
+    def rmmpl(self):
+        self.mplvl.removeWidget(self.canvas)
+        self.canvas.close()
+        fig = Figure()
+        fig.add_subplot(111)
+        self.canvas = FigureCanvas(fig)
+        self.mplvl.addWidget(self.canvas)
+        self.canvas.draw()
+
+    def addmpl(self, fig):
+        self.canvas = FigureCanvas(fig)
+        self.mplvl.addWidget(self.canvas)
+        self.canvas.draw()
 
     @pyqtSlot()
     def browseSlot(self):
@@ -45,16 +66,22 @@ class MainWindow(QtWidgets.QMainWindow):
         file = file_dialog.open_file_dialog()
         if file:
             self.model.set_file_name(file)
+            self.callerDropdown.addItems(
+                dm.get_all_call_ids(self.model.get_file_content())
+            )
             QMessageBox.information(self, "Load File", "File loaded successfully.")
         else:
             QMessageBox.critical(
                 self, "Load File Error", "File not selected, please try again"
             )
-        print(dm.get_all_call_ids(self.model.get_file_content()))
 
     @pyqtSlot()
     def clearGraphSlot(self):
-        self.GraphWidget.clear()
+        self.rmmpl()
+
+    @pyqtSlot()
+    def displayGraphSlot(self):
+        pass
 
 
 def main():

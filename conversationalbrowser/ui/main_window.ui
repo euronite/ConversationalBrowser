@@ -305,27 +305,32 @@
      </item>
     </layout>
    </widget>
-   <widget class="PlotWidget" name="GraphWidget" native="true">
+   <widget class="QWidget" name="mplwindow" native="true">
     <property name="geometry">
      <rect>
       <x>440</x>
       <y>80</y>
-      <width>611</width>
+      <width>641</width>
       <height>641</height>
      </rect>
     </property>
+    <property name="sizePolicy">
+     <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+      <horstretch>0</horstretch>
+      <verstretch>0</verstretch>
+     </sizepolicy>
+    </property>
+    <property name="minimumSize">
+     <size>
+      <width>0</width>
+      <height>0</height>
+     </size>
+    </property>
+    <layout class="QVBoxLayout" name="mplvl"/>
    </widget>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
  </widget>
- <customwidgets>
-  <customwidget>
-   <class>PlotWidget</class>
-   <extends>QWidget</extends>
-   <header>pyqtgraph</header>
-   <container>1</container>
-  </customwidget>
- </customwidgets>
  <resources/>
  <connections>
   <connection>
