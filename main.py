@@ -4,12 +4,8 @@ from PyQt5.QtWidgets import QWidget, QMessageBox
 import sys
 from conversationalbrowser import data_manipulation as dm
 from conversationalbrowser.model import Model
+from conversationalbrowser import graph
 from pathlib import Path
-from matplotlib.backends.backend_qt5agg import FigureCanvasQTAgg as FigureCanvas
-from matplotlib.figure import Figure
-import matplotlib
-
-matplotlib.use("Qt5Agg")
 
 
 class FileDialog(QWidget):
@@ -42,23 +38,8 @@ class MainWindow(QtWidgets.QMainWindow):
             "conversationalbrowser/ui/main_window.ui"
         )  # This converts \ on windows etc.
         uic.loadUi(ui_location, self)
-        fig = Figure()
-        fig.add_subplot(111)
-        self.addmpl(fig)
+        graph.initmpl(self)
 
-    def rmmpl(self):
-        self.mplvl.removeWidget(self.canvas)
-        self.canvas.close()
-        fig = Figure()
-        fig.add_subplot(111)
-        self.canvas = FigureCanvas(fig)
-        self.mplvl.addWidget(self.canvas)
-        self.canvas.draw()
-
-    def addmpl(self, fig):
-        self.canvas = FigureCanvas(fig)
-        self.mplvl.addWidget(self.canvas)
-        self.canvas.draw()
 
     @pyqtSlot()
     def browseSlot(self):
@@ -77,7 +58,7 @@ class MainWindow(QtWidgets.QMainWindow):
 
     @pyqtSlot()
     def clearGraphSlot(self):
-        self.rmmpl()
+        graph.rmmpl(self)
 
     @pyqtSlot()
     def displayGraphSlot(self):
