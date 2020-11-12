@@ -6,6 +6,7 @@ This holds the functions to draw the graph on the user interface using matplotli
 from matplotlib.backends.backend_qt5agg import FigureCanvasQTAgg as FigureCanvas
 from matplotlib.figure import Figure
 import matplotlib
+
 matplotlib.use("Qt5Agg")
 
 

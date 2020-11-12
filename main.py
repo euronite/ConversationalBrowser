@@ -46,7 +46,6 @@ class MainWindow(QtWidgets.QMainWindow):
         uic.loadUi(ui_location, self)
         graph.initmpl(self)
 
-
     @pyqtSlot()
     def browseSlot(self):
         file_dialog = FileDialog()
@@ -68,7 +67,18 @@ class MainWindow(QtWidgets.QMainWindow):
 
     @pyqtSlot()
     def displayGraphSlot(self):
-        pass
+        if self.occurrencesRadioBtn.isChecked():
+            print("occurrences")
+        else:
+            print("duration")
+        if self.averageCheckbox.isChecked():
+            print("Average selected")
+        gender = self.genderDropdown.currentText()
+        role = self.roleDropdown.currentText()
+        cue = self.cueDropdown.currentText()
+        caller_id = self.callerDropdown.currentText()
+        chart = self.chartDropdown.currentText()
+        print(gender, role, cue, caller_id, chart)
 
 
 def main():
