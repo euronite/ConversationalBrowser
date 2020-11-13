@@ -6,7 +6,7 @@ This contains the main Controller/View of the GUI.
 
 from PyQt5 import QtWidgets, uic
 from PyQt5.QtCore import pyqtSlot
-from PyQt5.QtWidgets import QWidget, QMessageBox
+from PyQt5.QtWidgets import QWidget, QMessageBox, QDialog, QDialogButtonBox, QVBoxLayout
 import sys
 from conversationalbrowser import data_manipulation as dm
 from conversationalbrowser.model import Model
@@ -35,6 +35,13 @@ class FileDialog(QWidget):
         return file
 
 
+class CallerDialog(QDialog):
+    def __init__(self, *args, **kwargs):
+        super(CallerDialog, self).__init__(*args, **kwargs)
+        uic.loadUi(Path("conversationalbrowser/ui/dialog_caller_id.ui"), self)
+        self.setWindowTitle("Choose caller IDs")
+
+
 class MainWindow(QtWidgets.QMainWindow):
     def __init__(self, *args, **kwargs):
         self.model = Model()
@@ -45,6 +52,11 @@ class MainWindow(QtWidgets.QMainWindow):
         )  # This converts \ on windows etc.
         uic.loadUi(ui_location, self)
         graph.initmpl(self)
+
+    def openCallerDialog(self):
+        caller_dialog = CallerDialog()
+        caller_dialog.exec_()
+        caller_dialog.show()
 
     @pyqtSlot()
     def browseSlot(self):
@@ -63,7 +75,8 @@ class MainWindow(QtWidgets.QMainWindow):
 
     @pyqtSlot()
     def clearGraphSlot(self):
-        graph.rmmpl(self)
+        self.openCallerDialog()
+        # graph.rmmpl(self)
 
     @pyqtSlot()
     def displayGraphSlot(self):
