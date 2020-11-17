@@ -20,11 +20,20 @@ def is_valid(file):
         return False
 
 
+class CallerModel:
+    def __init__(self):
+        self.selected = []
+
+    def set_selected_items(self, id_list):
+        self.selected = id_list
+
+
 class Model:
     def __init__(self):
         self.fileContents = ""
         self.fileName = None
         self.fileContent = ""
+        self.callerIds = []
 
     def set_file_name(self, file):
         """
@@ -42,3 +51,6 @@ class Model:
         :return: dataframe
         """
         return self.fileContents
+
+    def set_caller_ids(self, id_list):
+        self.callerIds = id_list
