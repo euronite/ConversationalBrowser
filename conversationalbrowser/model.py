@@ -42,6 +42,7 @@ class Model:
         if is_valid(file):
             self.fileName = file
             self.fileContents = pd.read_csv(file, names=dm.header_names)
+            self.fileContents = dm.receiver_and_caller_column(self.fileContents)
         else:
             self.fileName = ""
 
