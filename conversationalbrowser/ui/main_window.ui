@@ -39,7 +39,7 @@
      <rect>
       <x>20</x>
       <y>80</y>
-      <width>362</width>
+      <width>388</width>
       <height>641</height>
      </rect>
     </property>
@@ -50,8 +50,8 @@
      <property name="bottomMargin">
       <number>0</number>
      </property>
-     <item row="8" column="1" colspan="2" alignment="Qt::AlignHCenter">
-      <widget class="QComboBox" name="callerDropdown">
+     <item row="10" column="1" colspan="2" alignment="Qt::AlignHCenter">
+      <widget class="QComboBox" name="chartDropdown">
        <property name="sizePolicy">
         <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
          <horstretch>0</horstretch>
@@ -66,12 +66,17 @@
        </property>
        <item>
         <property name="text">
-         <string>All Caller ID</string>
+         <string>Barchart</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Histogram</string>
         </property>
        </item>
       </widget>
      </item>
-     <item row="7" column="1" colspan="2" alignment="Qt::AlignHCenter">
+     <item row="8" column="1" colspan="2" alignment="Qt::AlignHCenter">
       <widget class="QComboBox" name="cueDropdown">
        <property name="sizePolicy">
         <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
@@ -112,119 +117,7 @@
        </item>
       </widget>
      </item>
-     <item row="0" column="1" colspan="2" alignment="Qt::AlignHCenter">
-      <widget class="QPushButton" name="loadDataBtn">
-       <property name="sizePolicy">
-        <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-         <horstretch>0</horstretch>
-         <verstretch>0</verstretch>
-        </sizepolicy>
-       </property>
-       <property name="minimumSize">
-        <size>
-         <width>300</width>
-         <height>50</height>
-        </size>
-       </property>
-       <property name="text">
-        <string>Load Data</string>
-       </property>
-      </widget>
-     </item>
-     <item row="5" column="1" colspan="2" alignment="Qt::AlignHCenter">
-      <widget class="QComboBox" name="genderDropdown">
-       <property name="sizePolicy">
-        <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-         <horstretch>0</horstretch>
-         <verstretch>0</verstretch>
-        </sizepolicy>
-       </property>
-       <property name="minimumSize">
-        <size>
-         <width>300</width>
-         <height>50</height>
-        </size>
-       </property>
-       <item>
-        <property name="text">
-         <string>Male and Female</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>Male</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>Female</string>
-        </property>
-       </item>
-      </widget>
-     </item>
-     <item row="9" column="1" colspan="2" alignment="Qt::AlignHCenter">
-      <widget class="QComboBox" name="chartDropdown">
-       <property name="sizePolicy">
-        <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-         <horstretch>0</horstretch>
-         <verstretch>0</verstretch>
-        </sizepolicy>
-       </property>
-       <property name="minimumSize">
-        <size>
-         <width>300</width>
-         <height>50</height>
-        </size>
-       </property>
-       <item>
-        <property name="text">
-         <string>Barchart</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>Histogram</string>
-        </property>
-       </item>
-      </widget>
-     </item>
-     <item row="10" column="1">
-      <widget class="QPushButton" name="clearBtn">
-       <property name="font">
-        <font>
-         <pointsize>12</pointsize>
-        </font>
-       </property>
-       <property name="text">
-        <string>Clear</string>
-       </property>
-      </widget>
-     </item>
-     <item row="4" column="1" colspan="2">
-      <widget class="QCheckBox" name="averageCheckbox">
-       <property name="font">
-        <font>
-         <pointsize>12</pointsize>
-        </font>
-       </property>
-       <property name="text">
-        <string>Average</string>
-       </property>
-      </widget>
-     </item>
-     <item row="10" column="2">
-      <widget class="QPushButton" name="displayBtn">
-       <property name="font">
-        <font>
-         <pointsize>12</pointsize>
-        </font>
-       </property>
-       <property name="text">
-        <string>Display</string>
-       </property>
-      </widget>
-     </item>
-     <item row="6" column="1" colspan="2" alignment="Qt::AlignHCenter">
+     <item row="7" column="1" colspan="2" alignment="Qt::AlignHCenter">
       <widget class="QComboBox" name="roleDropdown">
        <property name="sizePolicy">
         <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
@@ -255,6 +148,21 @@
        </item>
       </widget>
      </item>
+     <item row="3" column="1" colspan="2">
+      <widget class="QRadioButton" name="durationRadioBtn">
+       <property name="font">
+        <font>
+         <pointsize>12</pointsize>
+        </font>
+       </property>
+       <property name="text">
+        <string>Duration</string>
+       </property>
+       <attribute name="buttonGroup">
+        <string notr="true">buttonGroup</string>
+       </attribute>
+      </widget>
+     </item>
      <item row="1" column="1" colspan="2">
       <widget class="QLabel" name="label_2">
        <property name="sizePolicy">
@@ -273,19 +181,47 @@
        </property>
       </widget>
      </item>
-     <item row="3" column="1" colspan="2">
-      <widget class="QRadioButton" name="durationRadioBtn">
+     <item row="0" column="1" colspan="2" alignment="Qt::AlignHCenter">
+      <widget class="QPushButton" name="loadDataBtn">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="minimumSize">
+        <size>
+         <width>300</width>
+         <height>50</height>
+        </size>
+       </property>
+       <property name="text">
+        <string>Load Data</string>
+       </property>
+      </widget>
+     </item>
+     <item row="11" column="1">
+      <widget class="QPushButton" name="clearBtn">
        <property name="font">
         <font>
          <pointsize>12</pointsize>
         </font>
        </property>
        <property name="text">
-        <string>Duration</string>
+        <string>Clear</string>
        </property>
-       <attribute name="buttonGroup">
-        <string notr="true">buttonGroup</string>
-       </attribute>
+      </widget>
+     </item>
+     <item row="4" column="1" colspan="2">
+      <widget class="QCheckBox" name="averageCheckbox">
+       <property name="font">
+        <font>
+         <pointsize>12</pointsize>
+        </font>
+       </property>
+       <property name="text">
+        <string>Average</string>
+       </property>
       </widget>
      </item>
      <item row="2" column="1" colspan="2">
@@ -304,6 +240,68 @@
        <attribute name="buttonGroup">
         <string notr="true">buttonGroup</string>
        </attribute>
+      </widget>
+     </item>
+     <item row="6" column="1" colspan="2" alignment="Qt::AlignHCenter">
+      <widget class="QComboBox" name="genderDropdown">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="minimumSize">
+        <size>
+         <width>300</width>
+         <height>50</height>
+        </size>
+       </property>
+       <item>
+        <property name="text">
+         <string>Male and Female</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Male</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Female</string>
+        </property>
+       </item>
+      </widget>
+     </item>
+     <item row="11" column="2">
+      <widget class="QPushButton" name="displayBtn">
+       <property name="font">
+        <font>
+         <pointsize>12</pointsize>
+        </font>
+       </property>
+       <property name="text">
+        <string>Display</string>
+       </property>
+      </widget>
+     </item>
+     <item row="5" column="1" colspan="2" alignment="Qt::AlignHCenter">
+      <widget class="QPushButton" name="callerBtn">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="minimumSize">
+        <size>
+         <width>300</width>
+         <height>50</height>
+        </size>
+       </property>
+       <property name="text">
+        <string>Caller ID</string>
+       </property>
       </widget>
      </item>
     </layout>
@@ -384,11 +382,28 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>callerBtn</sender>
+   <signal>clicked()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>displayCallerDialog()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>107</x>
+     <y>377</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>33</x>
+     <y>381</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>browseSlot()</slot>
   <slot>clearGraphSlot()</slot>
   <slot>displayGraphSlot()</slot>
+  <slot>displayCallerDialog()</slot>
  </slots>
  <buttongroups>
   <buttongroup name="buttonGroup"/>

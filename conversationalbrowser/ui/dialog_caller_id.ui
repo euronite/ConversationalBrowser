@@ -16,10 +16,10 @@
   <widget class="QDialogButtonBox" name="callerOkButton">
    <property name="geometry">
     <rect>
-     <x>30</x>
-     <y>240</y>
-     <width>341</width>
-     <height>32</height>
+     <x>190</x>
+     <y>241</y>
+     <width>181</width>
+     <height>41</height>
     </rect>
    </property>
    <property name="orientation">
@@ -37,6 +37,30 @@
      <width>361</width>
      <height>221</height>
     </rect>
+   </property>
+   <property name="selectionMode">
+    <enum>QAbstractItemView::MultiSelection</enum>
+   </property>
+   <item>
+    <property name="text">
+     <string>All Caller IDs</string>
+    </property>
+    <property name="checkState">
+     <enum>Unchecked</enum>
+    </property>
+   </item>
+  </widget>
+  <widget class="QPushButton" name="pushButton">
+   <property name="geometry">
+    <rect>
+     <x>20</x>
+     <y>240</y>
+     <width>111</width>
+     <height>41</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Clear Selection</string>
    </property>
   </widget>
  </widget>
@@ -74,5 +98,24 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>pushButton</sender>
+   <signal>clicked()</signal>
+   <receiver>Dialog</receiver>
+   <slot>clearCallerList()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>60</x>
+     <y>257</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>12</x>
+     <y>172</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
+ <slots>
+  <slot>clearCallerList()</slot>
+ </slots>
 </ui>
