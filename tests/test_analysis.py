@@ -149,6 +149,10 @@ def test_occurrence_of_event(individual_call_data):
     assert [2, 1] == dm.occurrence_of_event(individual_call_data, "laughter")
 
 
+def test_get_list_of_call_id_df(test_data):
+    assert len(dm.get_list_of_call_id_df(test_data, ["F01", "F02"])) == 11
+
+
 def test_total_time_of_event(individual_call_data):
     assert [1.316, 0.9], dm.total_time_of_event(individual_call_data, "laughter")
 
