@@ -43,7 +43,9 @@ class MainWindow(QtWidgets.QMainWindow):
         self.callerIds.selected = []
         for item in caller_dialog.callerListWidget.selectedItems():
             # This appends the caller ID and the position in the list to the caller model.
-            self.callerIds.selected.append((item.text(), caller_dialog.callerListWidget.row(item)))
+            self.callerIds.selected.append(
+                (item.text(), caller_dialog.callerListWidget.row(item))
+            )
 
     @pyqtSlot()
     def browseSlot(self):
@@ -51,7 +53,9 @@ class MainWindow(QtWidgets.QMainWindow):
         file = file_dialog.openFileDialog()
         if file:
             self.model.set_file_name(file)
-            self.model.set_caller_ids(dm.get_all_call_ids(self.model.get_file_content()))
+            self.model.set_caller_ids(
+                dm.get_all_call_ids(self.model.get_file_content())
+            )
 
             QMessageBox.information(self, "Load File", "File loaded successfully.")
         else:
@@ -70,19 +74,8 @@ class MainWindow(QtWidgets.QMainWindow):
     @pyqtSlot()
     def displayGraphSlot(self):
         if not self.callerIds.selected:
-            self.callerIds.selected = [('All Caller IDs', 0)]
-        if self.occurrencesRadioBtn.isChecked():
-            print("occurrences")
-        else:
-            print("duration")
-        if self.averageCheckbox.isChecked():
-            print("Average selected")
-        gender = self.genderDropdown.currentText()
-        role = self.roleDropdown.currentText()
-        cue = self.cueDropdown.currentText()
-        caller_id = self.callerIds.selected
-        chart = self.chartDropdown.currentText()
-        print(gender, role, cue, caller_id, chart)
+            self.callerIds.selected = [("All Caller IDs", 0)]
+        graph.displaympl(self, self.model, self.callerIds)
 
 
 class FileDialog(QWidget):

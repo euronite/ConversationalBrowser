@@ -39,7 +39,7 @@
      <rect>
       <x>20</x>
       <y>80</y>
-      <width>388</width>
+      <width>408</width>
       <height>641</height>
      </rect>
     </property>
@@ -50,7 +50,50 @@
      <property name="bottomMargin">
       <number>0</number>
      </property>
-     <item row="10" column="1" colspan="2" alignment="Qt::AlignHCenter">
+     <item row="4" column="1" colspan="2">
+      <widget class="QCheckBox" name="averageCheckbox">
+       <property name="font">
+        <font>
+         <pointsize>12</pointsize>
+        </font>
+       </property>
+       <property name="text">
+        <string>Average</string>
+       </property>
+      </widget>
+     </item>
+     <item row="5" column="1" colspan="2" alignment="Qt::AlignHCenter">
+      <widget class="QPushButton" name="callerBtn">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="minimumSize">
+        <size>
+         <width>300</width>
+         <height>50</height>
+        </size>
+       </property>
+       <property name="text">
+        <string>Caller ID</string>
+       </property>
+      </widget>
+     </item>
+     <item row="13" column="2">
+      <widget class="QPushButton" name="displayBtn">
+       <property name="font">
+        <font>
+         <pointsize>12</pointsize>
+        </font>
+       </property>
+       <property name="text">
+        <string>Display</string>
+       </property>
+      </widget>
+     </item>
+     <item row="12" column="1" colspan="2" alignment="Qt::AlignHCenter">
       <widget class="QComboBox" name="chartDropdown">
        <property name="sizePolicy">
         <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
@@ -76,7 +119,59 @@
        </item>
       </widget>
      </item>
-     <item row="8" column="1" colspan="2" alignment="Qt::AlignHCenter">
+     <item row="1" column="1" colspan="2">
+      <widget class="QLabel" name="label_2">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="font">
+        <font>
+         <pointsize>15</pointsize>
+        </font>
+       </property>
+       <property name="text">
+        <string>Filters</string>
+       </property>
+      </widget>
+     </item>
+     <item row="3" column="1" colspan="2">
+      <widget class="QRadioButton" name="durationRadioBtn">
+       <property name="font">
+        <font>
+         <pointsize>12</pointsize>
+        </font>
+       </property>
+       <property name="text">
+        <string>Duration</string>
+       </property>
+       <attribute name="buttonGroup">
+        <string notr="true">buttonGroup</string>
+       </attribute>
+      </widget>
+     </item>
+     <item row="0" column="1" colspan="2" alignment="Qt::AlignHCenter">
+      <widget class="QPushButton" name="loadDataBtn">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="minimumSize">
+        <size>
+         <width>300</width>
+         <height>50</height>
+        </size>
+       </property>
+       <property name="text">
+        <string>Load Data</string>
+       </property>
+      </widget>
+     </item>
+     <item row="10" column="1" colspan="2" alignment="Qt::AlignHCenter">
       <widget class="QComboBox" name="cueDropdown">
        <property name="sizePolicy">
         <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
@@ -117,7 +212,37 @@
        </item>
       </widget>
      </item>
-     <item row="7" column="1" colspan="2" alignment="Qt::AlignHCenter">
+     <item row="13" column="1">
+      <widget class="QPushButton" name="clearBtn">
+       <property name="font">
+        <font>
+         <pointsize>12</pointsize>
+        </font>
+       </property>
+       <property name="text">
+        <string>Clear</string>
+       </property>
+      </widget>
+     </item>
+     <item row="2" column="1" colspan="2">
+      <widget class="QRadioButton" name="occurrencesRadioBtn">
+       <property name="font">
+        <font>
+         <pointsize>12</pointsize>
+        </font>
+       </property>
+       <property name="text">
+        <string>Occurrences</string>
+       </property>
+       <property name="checked">
+        <bool>true</bool>
+       </property>
+       <attribute name="buttonGroup">
+        <string notr="true">buttonGroup</string>
+       </attribute>
+      </widget>
+     </item>
+     <item row="6" column="1" colspan="2" alignment="Qt::AlignHCenter">
       <widget class="QComboBox" name="roleDropdown">
        <property name="sizePolicy">
         <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
@@ -148,41 +273,39 @@
        </item>
       </widget>
      </item>
-     <item row="3" column="1" colspan="2">
-      <widget class="QRadioButton" name="durationRadioBtn">
-       <property name="font">
-        <font>
-         <pointsize>12</pointsize>
-        </font>
-       </property>
-       <property name="text">
-        <string>Duration</string>
-       </property>
-       <attribute name="buttonGroup">
-        <string notr="true">buttonGroup</string>
-       </attribute>
-      </widget>
-     </item>
-     <item row="1" column="1" colspan="2">
-      <widget class="QLabel" name="label_2">
+     <item row="7" column="2">
+      <widget class="QComboBox" name="receiverGenderDropdown">
        <property name="sizePolicy">
-        <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+        <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
          <horstretch>0</horstretch>
          <verstretch>0</verstretch>
         </sizepolicy>
        </property>
-       <property name="font">
-        <font>
-         <pointsize>15</pointsize>
-        </font>
+       <property name="minimumSize">
+        <size>
+         <width>200</width>
+         <height>50</height>
+        </size>
        </property>
-       <property name="text">
-        <string>Filters</string>
-       </property>
+       <item>
+        <property name="text">
+         <string>Receiver Both Genders</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Receiver Male</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Receiver Female</string>
+        </property>
+       </item>
       </widget>
      </item>
-     <item row="0" column="1" colspan="2" alignment="Qt::AlignHCenter">
-      <widget class="QPushButton" name="loadDataBtn">
+     <item row="7" column="1">
+      <widget class="QComboBox" name="callerGenderDropdown">
        <property name="sizePolicy">
         <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
          <horstretch>0</horstretch>
@@ -191,117 +314,25 @@
        </property>
        <property name="minimumSize">
         <size>
-         <width>300</width>
-         <height>50</height>
-        </size>
-       </property>
-       <property name="text">
-        <string>Load Data</string>
-       </property>
-      </widget>
-     </item>
-     <item row="11" column="1">
-      <widget class="QPushButton" name="clearBtn">
-       <property name="font">
-        <font>
-         <pointsize>12</pointsize>
-        </font>
-       </property>
-       <property name="text">
-        <string>Clear</string>
-       </property>
-      </widget>
-     </item>
-     <item row="4" column="1" colspan="2">
-      <widget class="QCheckBox" name="averageCheckbox">
-       <property name="font">
-        <font>
-         <pointsize>12</pointsize>
-        </font>
-       </property>
-       <property name="text">
-        <string>Average</string>
-       </property>
-      </widget>
-     </item>
-     <item row="2" column="1" colspan="2">
-      <widget class="QRadioButton" name="occurrencesRadioBtn">
-       <property name="font">
-        <font>
-         <pointsize>12</pointsize>
-        </font>
-       </property>
-       <property name="text">
-        <string>Occurrences</string>
-       </property>
-       <property name="checked">
-        <bool>true</bool>
-       </property>
-       <attribute name="buttonGroup">
-        <string notr="true">buttonGroup</string>
-       </attribute>
-      </widget>
-     </item>
-     <item row="6" column="1" colspan="2" alignment="Qt::AlignHCenter">
-      <widget class="QComboBox" name="genderDropdown">
-       <property name="sizePolicy">
-        <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-         <horstretch>0</horstretch>
-         <verstretch>0</verstretch>
-        </sizepolicy>
-       </property>
-       <property name="minimumSize">
-        <size>
-         <width>300</width>
+         <width>200</width>
          <height>50</height>
         </size>
        </property>
        <item>
         <property name="text">
-         <string>Male and Female</string>
+         <string>Caller Both Genders</string>
         </property>
        </item>
        <item>
         <property name="text">
-         <string>Male</string>
+         <string>Caller Male</string>
         </property>
        </item>
        <item>
         <property name="text">
-         <string>Female</string>
+         <string>Caller Female</string>
         </property>
        </item>
-      </widget>
-     </item>
-     <item row="11" column="2">
-      <widget class="QPushButton" name="displayBtn">
-       <property name="font">
-        <font>
-         <pointsize>12</pointsize>
-        </font>
-       </property>
-       <property name="text">
-        <string>Display</string>
-       </property>
-      </widget>
-     </item>
-     <item row="5" column="1" colspan="2" alignment="Qt::AlignHCenter">
-      <widget class="QPushButton" name="callerBtn">
-       <property name="sizePolicy">
-        <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-         <horstretch>0</horstretch>
-         <verstretch>0</verstretch>
-        </sizepolicy>
-       </property>
-       <property name="minimumSize">
-        <size>
-         <width>300</width>
-         <height>50</height>
-        </size>
-       </property>
-       <property name="text">
-        <string>Caller ID</string>
-       </property>
       </widget>
      </item>
     </layout>
