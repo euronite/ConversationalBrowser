@@ -111,7 +111,6 @@ def get_rows_by_caller_and_receiver(df, caller, receiver):
     """
     Specify the caller and receiver string and returns the dataframe with those rows.
     """
-    print("here", caller, receiver)
     if receiver != None and caller == None:
         return df.loc[(df["receiver"] == receiver)]
     elif caller != None and receiver == None:
