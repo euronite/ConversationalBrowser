@@ -9,7 +9,6 @@ import pandas as pd
 import datetime
 import itertools
 
-
 header_names = [
     "call",
     "conversation_topic",
@@ -111,14 +110,15 @@ def get_rows_by_caller_and_receiver(df, caller, receiver):
     """
     Specify the caller and receiver string and returns the dataframe with those rows.
     """
-    if receiver != None and caller == None:
+    if receiver is not None and caller is None:
         return df.loc[(df["receiver"] == receiver)]
-    elif caller != None and receiver == None:
+    elif caller is not None and receiver is None:
         return df.loc[(df["caller"] == caller)]
-    elif caller != None and receiver != None:
+    elif caller is not None and receiver is not None:
         return df.loc[(df["caller"] == caller) & (df["receiver"] == receiver)]
     else:
         return df
+
 
 def convert_to_minutes_and_seconds(seconds):
     return datetime.timedelta(seconds=seconds)
