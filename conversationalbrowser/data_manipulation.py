@@ -111,8 +111,15 @@ def get_rows_by_caller_and_receiver(df, caller, receiver):
     """
     Specify the caller and receiver string and returns the dataframe with those rows.
     """
-    return df.loc[(df["caller"] == caller) & (df["receiver"] == receiver)]
-
+    print("here", caller, receiver)
+    if receiver != None and caller == None:
+        return df.loc[(df["receiver"] == receiver)]
+    elif caller != None and receiver == None:
+        return df.loc[(df["caller"] == caller)]
+    elif caller != None and receiver != None:
+        return df.loc[(df["caller"] == caller) & (df["receiver"] == receiver)]
+    else:
+        return df
 
 def convert_to_minutes_and_seconds(seconds):
     return datetime.timedelta(seconds=seconds)

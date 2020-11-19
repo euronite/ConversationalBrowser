@@ -63,13 +63,24 @@ def displaympl(self, model, callerIds):
     else:
         df = dm.get_list_of_call_id_df(df, [i[0] for i in callerIds.selected])
 
-    gender = self.genderDropdown.currentText()
-    if gender == "Male":
-        # TODO: implement gender filters
-        pass
-    elif gender == "Female":
-        # TODO: implement gender filters
-        pass
+    caller_gender = self.callerGenderDropdown.currentText()
+    receiver_gender = self.receiverGenderDropdown.currentText()
+
+    if caller_gender == "Caller Male":
+        caller_gender = "caller_M"
+    elif caller_gender == "Caller Female":
+        caller_gender = "caller_F"
+    else:
+        caller_gender = None
+
+    if receiver_gender == "Receiver Female":
+        receiver_gender = "receiver_F"
+    elif receiver_gender == "Receiver Male":
+        receiver_gender = "receiver_M"
+    else:
+        receiver_gender = None
+
+    df = dm.get_rows_by_caller_and_receiver(df, caller_gender, receiver_gender)
 
     cue = self.cueDropdown.currentText()
     if cue in ["Filler", "Laughter", "Silence"]:
