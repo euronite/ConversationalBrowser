@@ -25,6 +25,18 @@ class MainWindow(QtWidgets.QMainWindow):
         )  # This converts \ on windows etc.
         uic.loadUi(ui_location, self)
         graph.initmpl(self)
+        self.roleDropdown.activated[str].connect(self.callerReceiverToggle)
+
+    def callerReceiverToggle(self):
+        if self.roleDropdown.currentText() == "Receiver and Caller":
+            self.callerGenderDropdown.setEnabled(True)
+            self.receiverGenderDropdown.setEnabled(True)
+        elif self.roleDropdown.currentText() == "Caller":
+            self.receiverGenderDropdown.setEnabled(False)
+            self.callerGenderDropdown.setEnabled(True)
+        elif self.roleDropdown.currentText() == "Receiver":
+            self.callerGenderDropdown.setEnabled(False)
+            self.receiverGenderDropdown.setEnabled(True)
 
     def openCallerDialog(self):
         caller_dialog = CallerDialog(self)

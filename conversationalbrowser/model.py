@@ -30,9 +30,8 @@ class CallerModel:
 
 class Model:
     def __init__(self):
-        self.fileContents = ""
+        self.fileContents = None
         self.fileName = None
-        self.fileContent = ""
         self.callerIds = []
 
     def set_file_name(self, file):
