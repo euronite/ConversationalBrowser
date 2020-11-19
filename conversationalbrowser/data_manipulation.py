@@ -76,6 +76,13 @@ def get_all_call_ids(df):
     return df.call.unique()
 
 
+def get_list_of_call_id_df(df, call_id_list):
+    """
+    Returns df containing only rows that are in the call id list.
+    """
+    return df[(df.call.isin(call_id_list))]
+
+
 def get_all_conversation_topics(df):
     """
     Returns array of all the names of the conversation topics
