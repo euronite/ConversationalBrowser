@@ -67,7 +67,6 @@ def displaympl(self, model, callerIds):
 
     if callerIds.selected[0][1] == 0:
         # This means select all ids has been chosen
-        pass
     else:
         df = dm.get_list_of_call_id_df(df, [i[0] for i in callerIds.selected])
 
@@ -89,7 +88,6 @@ def displaympl(self, model, callerIds):
         receiver_gender = None
 
     df = dm.get_rows_by_caller_and_receiver(df, caller_gender, receiver_gender)
-
     cue = self.cueDropdown.currentText()
 
     if cue in ["Filler", "Laughter", "Silence"]:
@@ -107,12 +105,12 @@ def displaympl(self, model, callerIds):
         if self.chartDropdown.currentText() == "Barchart":
             display_barchart(self, df, cue_types, ax, "occurrences")
         else:
-            display_histogram(self,)
+            display_histogram(self, )
     else:
         if self.chartDropdown.currentText() == "Barchart":
             display_barchart(self, df, cue_types, ax, "durations")
         else:
-            display_histogram(self,)
+            display_histogram(self, )
 
     self.mplvl.removeWidget(self.canvas)
     self.canvas.close()
@@ -128,7 +126,7 @@ def display_barchart(self, df, cue_types, ax, radio_type):
             ax.set_title("Total Cue Occurrences")
             ax.set_ylabel("Total Number of Occurrences")
         else:
-            result = dm.total_time_of_event(df, cue_types)
+            result = dm.total_time_of_each_event(df, cue_types)
             ax.set_title("Total Cue Duration")
             ax.set_ylabel("Total Duration")
     elif not self.callerGenderDropdown.isEnabled():
@@ -167,6 +165,7 @@ def display_barchart(self, df, cue_types, ax, radio_type):
             ax.set_title("Total Cue Duration for Callers")
     ax.bar(result.keys(), result.values())
     ax.set_xlabel("Cue")
+
 
 def display_histogram(self):
     pass
