@@ -67,6 +67,7 @@ def displaympl(self, model, callerIds):
 
     if callerIds.selected[0][1] == 0:
         # This means select all ids has been chosen
+        pass
     else:
         df = dm.get_list_of_call_id_df(df, [i[0] for i in callerIds.selected])
 
