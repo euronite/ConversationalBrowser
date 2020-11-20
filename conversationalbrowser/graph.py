@@ -104,43 +104,69 @@ def displaympl(self, model, callerIds):
         cue_types = {"laughter": 0, "silence": 0, "filler": 0, "bc": 0}
 
     if self.occurrencesRadioBtn.isChecked():
-        if self.callerGenderDropdown.isEnabled() and self.receiverGenderDropdown.isEnabled():
-            result = dm.occurrence_of_each_event(df, cue_types)
-            ax.set_title("Total Cue Occurrences")
-        elif not self.callerGenderDropdown.isEnabled():
-            result = {}
-            for cue in cue_types:
-                try:
-                    cue_result = dm.occurrence_of_event(df, cue)
-                except ValueError:
-                    return
-                result[cue] = cue_result[0]  # This gets the occurrence of each cue of the caller
-            if "silence" in result:
-                result.pop("silence")  # Remove silence since this applies for both parties, not individually
-            ax.set_title("Total Cue Occurrences for Receivers")
+        if self.chartDropdown.currentText() == "Barchart":
+            display_barchart(self, df, cue_types, ax, "occurrences")
         else:
-            result = {}
-            for cue in cue_types:
-                try:
-                    cue_result = dm.occurrence_of_event(df, cue)
-                except ValueError:
-                    return
-                result[cue] = cue_result[1]  # This gets occurrence of each cue of the receiver
-            if "silence" in result:
-                result.pop("silence")
-            ax.set_title("Total Cue Occurrences for Callers")
-        ax.bar(result.keys(), result.values())
-        ax.set_xlabel("Cue")
-        ax.set_ylabel("Total Number of Occurrences")
+            display_histogram(self,)
     else:
-        result = dm.total_time_of_each_event(df, cue_types)
-        ax.bar(result.keys(), result.values())
-        ax.set_title("Cue Duration")
-        ax.set_xlabel("Cue")
-        ax.set_ylabel("Total Duration Time (s)")
+        if self.chartDropdown.currentText() == "Barchart":
+            display_barchart(self, df, cue_types, ax, "durations")
+        else:
+            display_histogram(self,)
 
     self.mplvl.removeWidget(self.canvas)
     self.canvas.close()
     self.canvas = FigureCanvas(fig)
     self.mplvl.addWidget(self.canvas)
     self.canvas.draw()
+
+
+def display_barchart(self, df, cue_types, ax, radio_type):
+    if self.callerGenderDropdown.isEnabled() and self.receiverGenderDropdown.isEnabled():
+        if radio_type == "occurrences":
+            result = dm.occurrence_of_each_event(df, cue_types)
+            ax.set_title("Total Cue Occurrences")
+            ax.set_ylabel("Total Number of Occurrences")
+        else:
+            result = dm.total_time_of_event(df, cue_types)
+            ax.set_title("Total Cue Duration")
+            ax.set_ylabel("Total Duration")
+    elif not self.callerGenderDropdown.isEnabled():
+        result = {}
+        for cue in cue_types:
+            try:
+                if radio_type == "occurrences":
+                    cue_result = dm.occurrence_of_event(df, cue)
+                else:
+                    cue_result = dm.total_time_of_event(df, cue)
+            except ValueError:
+                return
+            result[cue] = cue_result[0]  # This gets the occurrence of each cue of the caller
+        if "silence" in result:
+            result.pop("silence")  # Remove silence since this applies for both parties, not individually
+        if radio_type == "occurrences":
+            ax.set_title("Total Cue Occurrences for Receivers")
+        else:
+            ax.set_title("Total Cue Duration for Receivers")
+    else:
+        result = {}
+        for cue in cue_types:
+            try:
+                if radio_type == "occurrences":
+                    cue_result = dm.occurrence_of_event(df, cue)
+                else:
+                    cue_result = dm.total_time_of_event(df, cue)
+            except ValueError:
+                return
+            result[cue] = cue_result[1]  # This gets occurrence of each cue of the receiver
+        if "silence" in result:
+            result.pop("silence")
+        if radio_type == "occurrences":
+            ax.set_title("Total Cue Occurrences for Callers")
+        else:
+            ax.set_title("Total Cue Duration for Callers")
+    ax.bar(result.keys(), result.values())
+    ax.set_xlabel("Cue")
+
+def display_histogram(self):
+    pass

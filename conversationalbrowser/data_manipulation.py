@@ -191,6 +191,8 @@ def occurrence_of_event(df, cue):
 def total_time_of_event(df, cue):
     # dataframe input should be an individual call.
     # returns a list of two vals. Length of time caller did cue and length of time the receiver did the cue
+    if df.empty:
+        raise ValueError("Dataframe empty")
     if "M" in df["receiver"].iloc[0]:
         receiver_search = f"{cue}_rM"
     else:
