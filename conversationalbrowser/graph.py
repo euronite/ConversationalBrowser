@@ -28,6 +28,7 @@ def rmmpl(self):
 def addmpl(self, fig):
     """
     Adds a figure to the UI
+    :param self:
     :param fig: this contains the values that are to be displayed on the plot
     """
     self.canvas = FigureCanvas(fig)
@@ -49,6 +50,7 @@ def initmpl(self):
 def displaympl(self, model, callerIds):
     """
     This is used to display the graph upon Display button click.
+    :param callerIds:
     :param model:
     :param self:
     :return:
@@ -108,7 +110,10 @@ def displaympl(self, model, callerIds):
         elif not self.callerGenderDropdown.isEnabled():
             result = {}
             for cue in cue_types:
-                cue_result = dm.occurrence_of_event(df, cue)
+                try:
+                    cue_result = dm.occurrence_of_event(df, cue)
+                except ValueError:
+                    return
                 result[cue] = cue_result[0]  # This gets the occurrence of each cue of the caller
             if "silence" in result:
                 result.pop("silence")  # Remove silence since this applies for both parties, not individually
@@ -116,7 +121,10 @@ def displaympl(self, model, callerIds):
         else:
             result = {}
             for cue in cue_types:
-                cue_result = dm.occurrence_of_event(df, cue)
+                try:
+                    cue_result = dm.occurrence_of_event(df, cue)
+                except ValueError:
+                    return
                 result[cue] = cue_result[1]  # This gets occurrence of each cue of the receiver
             if "silence" in result:
                 result.pop("silence")
