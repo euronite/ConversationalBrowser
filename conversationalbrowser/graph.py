@@ -145,8 +145,10 @@ def display_barchart(self, df, cue_types, ax, radio_type):
             result.pop("silence")  # Remove silence since this applies for both parties, not individually
         if radio_type == "occurrences":
             ax.set_title("Total Cue Occurrences for Receivers")
+            ax.set_ylabel("Total Occurrences")
         else:
             ax.set_title("Total Cue Duration for Receivers")
+            ax.set_ylabel("Total Duration")
     else:
         result = {}
         for cue in cue_types:
@@ -164,6 +166,11 @@ def display_barchart(self, df, cue_types, ax, radio_type):
             ax.set_title("Total Cue Occurrences for Callers")
         else:
             ax.set_title("Total Cue Duration for Callers")
+    if self.averageCheckbox.isChecked():
+        for cue in result:
+            result[cue] = result[cue] / len(dm.get_all_call_ids(df))
+        ax.set_title("Average " + ax.get_title() + " Per Call")
+        ax.set_ylabel("Average " + ax.get_ylabel())
     ax.bar(result.keys(), result.values())
     ax.set_xlabel("Cue")
 
