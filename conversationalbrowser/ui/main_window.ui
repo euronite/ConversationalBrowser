@@ -109,12 +109,12 @@
        </property>
        <item>
         <property name="text">
-         <string>Barchart</string>
+         <string>Total Amount</string>
         </property>
        </item>
        <item>
         <property name="text">
-         <string>Histogram</string>
+         <string>Per Call</string>
         </property>
        </item>
       </widget>
