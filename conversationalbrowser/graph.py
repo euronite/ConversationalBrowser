@@ -106,12 +106,12 @@ def displaympl(self, model, callerIds):
         if self.chartDropdown.currentText() == "Barchart":
             display_barchart(self, df, cue_types, ax, "occurrences")
         else:
-            display_histogram(self, )
+            display_histogram(self, df, cue_types, ax, "occurrences")
     else:
         if self.chartDropdown.currentText() == "Barchart":
             display_barchart(self, df, cue_types, ax, "durations")
         else:
-            display_histogram(self, )
+            display_histogram(self, df, cue_types, ax, "durations")
 
     self.mplvl.removeWidget(self.canvas)
     self.canvas.close()
@@ -171,9 +171,12 @@ def display_barchart(self, df, cue_types, ax, radio_type):
             result[cue] = result[cue] / len(dm.get_all_call_ids(df))
         ax.set_title("Average " + ax.get_title() + " Per Call")
         ax.set_ylabel("Average " + ax.get_ylabel())
+    print(result.values())
     ax.bar(result.keys(), result.values())
     ax.set_xlabel("Cue")
 
 
-def display_histogram(self):
-    pass
+def display_histogram(self, df, cue_types, ax, radio_type):
+    if self.callerGenderDropdown.isEnabled() and self.receiverGenderDropdown.isEnabled():
+        if radio_type == "occurrences":
+            result = dm.occurrence_of_event(df, cue_types)
