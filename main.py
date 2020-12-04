@@ -26,6 +26,13 @@ class MainWindow(QtWidgets.QMainWindow):
         uic.loadUi(ui_location, self)
         graph.initmpl(self)
         self.roleDropdown.activated[str].connect(self.callerReceiverToggle)
+        self.chartDropdown.activated[str].connect(self.averageToggle)
+
+    def averageToggle(self):
+        if self.chartDropdown.currentText() == "Display Totals":
+            self.averageCheckbox.setEnabled(True)
+        else:
+            self.averageCheckbox.setEnabled(False)
 
     def callerReceiverToggle(self):
         if self.roleDropdown.currentText() == "Receiver and Caller":
