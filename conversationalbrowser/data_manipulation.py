@@ -167,7 +167,7 @@ def get_all_event_durations(df, cue):
     receiver_df = receiver_df["end"] - receiver_df["start"]
     caller_df = get_non_verbal_speech_only(df, caller_search)
     caller_df = caller_df["end"] - caller_df["start"]
-    return caller_df, receiver_df
+    return [caller_df, receiver_df]
 
 
 def occurrence_of_event(df, cue):

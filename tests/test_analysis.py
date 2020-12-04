@@ -199,6 +199,11 @@ def test_total_time_of_each_event(test_data):
     assert result["bc"] == 0
 
 
+def test_get_all_event_durations(test_data):
+    result = dm.get_all_event_durations(test_data, "laughter")
+    assert len(result[0]) == 0 and result[1].iloc[0] == 0.76
+
+
 def test_remove_conversation_topic_df(test_data):
     df = dm.remove_conversation_topic_df(test_data, "other")
     assert "other" not in df.conversation_topic.unique()
