@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1115</width>
+    <width>1337</width>
     <height>845</height>
    </rect>
   </property>
@@ -109,12 +109,12 @@
        </property>
        <item>
         <property name="text">
-         <string>Total Amount</string>
+         <string>Display Totals</string>
         </property>
        </item>
        <item>
         <property name="text">
-         <string>Per Call</string>
+         <string>Display Per Call</string>
         </property>
        </item>
       </widget>
@@ -342,7 +342,7 @@
      <rect>
       <x>440</x>
       <y>80</y>
-      <width>641</width>
+      <width>871</width>
       <height>641</height>
      </rect>
     </property>

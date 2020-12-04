@@ -8,6 +8,7 @@ from matplotlib.backends.backend_qt5agg import FigureCanvasQTAgg as FigureCanvas
 from matplotlib.figure import Figure
 import matplotlib
 from conversationalbrowser import data_manipulation as dm
+from numpy import arange
 
 matplotlib.use("Qt5Agg")
 
@@ -65,15 +66,16 @@ def displaympl(self, model, callerIds):
     ax = fig.add_subplot(111)
     df = model.fileContents
 
+    # Get the dataframe of relevant call IDs
     if callerIds.selected[0][1] == 0:
         # This means select all ids has been chosen
         pass
     else:
         df = dm.get_list_of_call_id_df(df, [i[0] for i in callerIds.selected])
 
+    # Get relevant genders and the corresponding dataframe
     caller_gender = self.callerGenderDropdown.currentText()
     receiver_gender = self.receiverGenderDropdown.currentText()
-
     if caller_gender == "Caller Male":
         caller_gender = "caller_M"
     elif caller_gender == "Caller Female":
@@ -87,10 +89,10 @@ def displaympl(self, model, callerIds):
         receiver_gender = "receiver_M"
     else:
         receiver_gender = None
-
     df = dm.get_rows_by_caller_and_receiver(df, caller_gender, receiver_gender)
-    cue = self.cueDropdown.currentText()
 
+    # Get the cue types
+    cue = self.cueDropdown.currentText()
     if cue in ["Filler", "Laughter", "Silence"]:
         cue = cue.lower()
         cue_types = {cue: 0}
@@ -103,21 +105,61 @@ def displaympl(self, model, callerIds):
         cue_types = {"laughter": 0, "silence": 0, "filler": 0, "bc": 0}
 
     if self.occurrencesRadioBtn.isChecked():
-        if self.chartDropdown.currentText() == "Barchart":
+        if self.chartDropdown.currentText() == "Display Totals":
             display_barchart(self, df, cue_types, ax, "occurrences")
         else:
-            display_histogram(self, df, cue_types, ax, "occurrences")
+            get_occurrences_per_call(self, df, cue_types, ax)
     else:
-        if self.chartDropdown.currentText() == "Barchart":
+        if self.chartDropdown.currentText() == "Display Totals":
             display_barchart(self, df, cue_types, ax, "durations")
         else:
             display_histogram(self, df, cue_types, ax, "durations")
 
+
+    # Display the actual graph
     self.mplvl.removeWidget(self.canvas)
     self.canvas.close()
     self.canvas = FigureCanvas(fig)
     self.mplvl.addWidget(self.canvas)
     self.canvas.draw()
+
+def get_occurrences_per_call(self, df, cue_types, ax):
+    """
+    This will get the occurrences for all 160 callers of the cues
+    :return:
+    """
+    cue_names = cue_types.keys()
+    cue_results = []
+    ids = dm.get_all_call_ids(df)
+    for cue in cue_names:
+        cue_results_temp = []
+        for call in ids:
+                cue_results_temp.append(dm.occurrence_of_event(dm.get_call_df(df, call), cue))
+        if self.callerGenderDropdown.isEnabled() and self.receiverGenderDropdown.isEnabled():
+            cue_results.append(sorted([val for sublist in cue_results_temp for val in sublist]))
+        elif self.callerGenderDropdown.isEnabled():
+            # so this is if caller is enabled, but not receiver. Remove every second since thats receiver data
+            sorted_list = sorted([val for sublist in cue_results_temp for val in sublist])
+            del sorted_list[1:2]
+            cue_results.append(sorted_list)
+        else:
+            # receiver only info. Remove any caller data
+            sorted_list = sorted([val for sublist in cue_results_temp for val in sublist])
+            del sorted_list[::2]
+            cue_results.append(sorted_list)
+
+    ax.set_title("Occurrences of Cue For Each Caller")
+    ax.set_xlabel("Caller Number")
+    ax.set_ylabel("Total Times Occurred")
+    X = arange(len(cue_results[0]))
+    if len(cue_results) == 1:
+        ax.bar(X, cue_results[0])
+        return
+    step = 0.00
+    for cue in cue_results:
+        ax.bar(X + step, cue, width=0.4)
+        step += 0.4
+    ax.legend(cue_names, loc=2)
 
 
 def display_barchart(self, df, cue_types, ax, radio_type):
@@ -171,7 +213,6 @@ def display_barchart(self, df, cue_types, ax, radio_type):
             result[cue] = result[cue] / len(dm.get_all_call_ids(df))
         ax.set_title("Average " + ax.get_title() + " Per Call")
         ax.set_ylabel("Average " + ax.get_ylabel())
-    print(result.values())
     ax.bar(result.keys(), result.values())
     ax.set_xlabel("Cue")
 
@@ -179,4 +220,25 @@ def display_barchart(self, df, cue_types, ax, radio_type):
 def display_histogram(self, df, cue_types, ax, radio_type):
     if self.callerGenderDropdown.isEnabled() and self.receiverGenderDropdown.isEnabled():
         if radio_type == "occurrences":
-            result = dm.occurrence_of_event(df, cue_types)
+            results = []  # this will hold the results for each cue type
+            all_ids = dm.get_all_call_ids(df)
+            for cue in cue_types:
+                # for each cue, get the occurrences per call, sort and add the results to results var.
+                result = []
+                for call in all_ids:
+                    # remove caller or receiver if that is disabled
+                    sub_result = dm.occurrence_of_event(dm.get_call_df(df, call), cue)
+
+                    if self.callerGenderDropdown.isEnabled() and self.receiverGenderDropdown.isEnabled() == False:
+                        for res in sub_result:
+                            res.pop(0)
+                    elif self.callerGenderDropdown.isEnabled() == False and self.receiverGenderDropdown.isEnabled():
+                        for res in sub_result:
+                            res.pop(1)
+                    result.append(sub_result)
+                # sort list and flatten results
+                results.append(sorted([val for sublist in result for val in sublist]))
+            w = -0.2
+            for each_cue, cue_name in zip(results, cue_types):
+                ax.bar(arange(len(each_cue)) + w, each_cue, width=0.2, align="center")
+                w += 0.2
