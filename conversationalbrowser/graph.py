@@ -8,7 +8,7 @@ from matplotlib.backends.backend_qt5agg import FigureCanvasQTAgg as FigureCanvas
 from matplotlib.figure import Figure
 import matplotlib
 from conversationalbrowser import data_manipulation as dm
-from numpy import arange
+from numpy import arange, concatenate
 
 matplotlib.use("Qt5Agg")
 
@@ -63,7 +63,6 @@ def displaympl(self, model, callerIds):
         )
 
     fig = Figure()  # New graph setup
-    ax = fig.add_subplot(111)
     df = model.fileContents
 
     # Get the dataframe of relevant call IDs
@@ -106,15 +105,14 @@ def displaympl(self, model, callerIds):
 
     if self.occurrencesRadioBtn.isChecked():
         if self.chartDropdown.currentText() == "Display Totals":
-            display_barchart(self, df, cue_types, ax, "occurrences")
+            get_total_cue_data(self, df, cue_types, fig, "occurrences")
         else:
-            get_occurrences_per_call(self, df, cue_types, ax)
+            get_occurrences_per_call(self, df, cue_types, fig)
     else:
         if self.chartDropdown.currentText() == "Display Totals":
-            display_barchart(self, df, cue_types, ax, "durations")
+            get_total_cue_data(self, df, cue_types, fig, "durations")
         else:
-            display_histogram(self, df, cue_types, ax, "durations")
-
+            get_duration_per_call(self, df, cue_types, fig)
 
     # Display the actual graph
     self.mplvl.removeWidget(self.canvas)
@@ -123,20 +121,49 @@ def displaympl(self, model, callerIds):
     self.mplvl.addWidget(self.canvas)
     self.canvas.draw()
 
-def get_occurrences_per_call(self, df, cue_types, ax):
+
+def get_duration_per_call(self, df, cue_types, fig):
+    cue_names = list(cue_types.keys())
+    cue_results = []
+    for cue in cue_names:
+        # this holds the cue results temporarily
+        cue_results_temp = dm.get_all_event_durations(df, cue)
+        if self.callerGenderDropdown.isEnabled() and self.receiverGenderDropdown.isEnabled():
+            cue_results.append(concatenate((cue_results_temp[0], cue_results_temp[1])))
+        elif self.callerGenderDropdown.isEnabled():
+            # so this is if caller is enabled, but not receiver. Remove every second since that's receiver data
+            cue_results.append(cue_results_temp[0])
+        else:
+            # receiver only info. Remove any caller data
+            cue_results.append(cue_results_temp[1])
+
+    ax = []
+    num_bins = 90
+    for index, cue in enumerate(cue_results):
+        if len(cue_names) == 1:
+            ax.append(fig.add_subplot(111))
+        else:
+            ax.append(fig.add_subplot(2, 2, index + 1))
+        ax[index].set(xlabel='Duration (Bins)', ylabel='Duration of Cue (s)')
+        ax[index].set_title(cue_names[index])
+        ax[index].hist(cue, bins=num_bins)
+    fig.subplots_adjust(hspace=0.4)
+    fig.suptitle("Cue Event Duration")
+
+def get_occurrences_per_call(self, df, cue_types, fig):
     """
-    This will get the occurrences for all 160 callers of the cues
+    This will get the occurrences for all callers of the cues
     :return:
     """
-    cue_names = cue_types.keys()
+    cue_names = list(cue_types.keys())
     cue_results = []
     ids = dm.get_all_call_ids(df)
     for cue in cue_names:
         cue_results_temp = []
         for call in ids:
-                cue_results_temp.append(dm.occurrence_of_event(dm.get_call_df(df, call), cue))
+            cue_results_temp.append(dm.occurrence_of_event(dm.get_call_df(df, call), cue))
         if self.callerGenderDropdown.isEnabled() and self.receiverGenderDropdown.isEnabled():
-            cue_results.append(sorted([val for sublist in cue_results_temp for val in sublist]))
+            cue_results.append(sorted([val for pair in cue_results_temp for val in pair]))
         elif self.callerGenderDropdown.isEnabled():
             # so this is if caller is enabled, but not receiver. Remove every second since thats receiver data
             sorted_list = sorted([val for sublist in cue_results_temp for val in sublist])
@@ -144,25 +171,27 @@ def get_occurrences_per_call(self, df, cue_types, ax):
             cue_results.append(sorted_list)
         else:
             # receiver only info. Remove any caller data
-            sorted_list = sorted([val for sublist in cue_results_temp for val in sublist])
+            sorted_list = sorted([val for pair in cue_results_temp for val in pair])
             del sorted_list[::2]
             cue_results.append(sorted_list)
 
-    ax.set_title("Occurrences of Cue For Each Caller")
-    ax.set_xlabel("Caller Number")
-    ax.set_ylabel("Total Times Occurred")
     X = arange(len(cue_results[0]))
-    if len(cue_results) == 1:
-        ax.bar(X, cue_results[0])
-        return
-    step = 0.00
-    for cue in cue_results:
-        ax.bar(X + step, cue, width=0.4)
-        step += 0.4
-    ax.legend(cue_names, loc=2)
+    ax = []
+    for index, cue in enumerate(cue_results):
+        if len(cue_names) == 1:
+            ax.append(fig.add_subplot(111))
+        else:
+            ax.append(fig.add_subplot(2, 2, index + 1))
+        ax[index].set(xlabel='Participant Number', ylabel='Total Occurrences Count')
+        ax[index].set_title(cue_names[index])
+        ax[index].bar(X, cue)
+
+    fig.subplots_adjust(hspace=0.4)
+    fig.suptitle("Total Occurrences for All Participants")
 
 
-def display_barchart(self, df, cue_types, ax, radio_type):
+def get_total_cue_data(self, df, cue_types, fig, radio_type):
+    ax = fig.add_subplot(111)
     if self.callerGenderDropdown.isEnabled() and self.receiverGenderDropdown.isEnabled():
         if radio_type == "occurrences":
             result = dm.occurrence_of_each_event(df, cue_types)
@@ -215,30 +244,3 @@ def display_barchart(self, df, cue_types, ax, radio_type):
         ax.set_ylabel("Average " + ax.get_ylabel())
     ax.bar(result.keys(), result.values())
     ax.set_xlabel("Cue")
-
-
-def display_histogram(self, df, cue_types, ax, radio_type):
-    if self.callerGenderDropdown.isEnabled() and self.receiverGenderDropdown.isEnabled():
-        if radio_type == "occurrences":
-            results = []  # this will hold the results for each cue type
-            all_ids = dm.get_all_call_ids(df)
-            for cue in cue_types:
-                # for each cue, get the occurrences per call, sort and add the results to results var.
-                result = []
-                for call in all_ids:
-                    # remove caller or receiver if that is disabled
-                    sub_result = dm.occurrence_of_event(dm.get_call_df(df, call), cue)
-
-                    if self.callerGenderDropdown.isEnabled() and self.receiverGenderDropdown.isEnabled() == False:
-                        for res in sub_result:
-                            res.pop(0)
-                    elif self.callerGenderDropdown.isEnabled() == False and self.receiverGenderDropdown.isEnabled():
-                        for res in sub_result:
-                            res.pop(1)
-                    result.append(sub_result)
-                # sort list and flatten results
-                results.append(sorted([val for sublist in result for val in sublist]))
-            w = -0.2
-            for each_cue, cue_name in zip(results, cue_types):
-                ax.bar(arange(len(each_cue)) + w, each_cue, width=0.2, align="center")
-                w += 0.2
