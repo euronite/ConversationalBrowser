@@ -128,7 +128,10 @@ def get_duration_per_call(self, df, cue_types, fig):
     for cue in cue_names:
         # this holds the cue results temporarily
         cue_results_temp = dm.get_all_event_durations(df, cue)
-        if self.callerGenderDropdown.isEnabled() and self.receiverGenderDropdown.isEnabled():
+        if (
+            self.callerGenderDropdown.isEnabled()
+            and self.receiverGenderDropdown.isEnabled()
+        ):
             cue_results.append(concatenate((cue_results_temp[0], cue_results_temp[1])))
         elif self.callerGenderDropdown.isEnabled():
             # so this is if caller is enabled, but not receiver. Remove every second since that's receiver data
@@ -144,11 +147,12 @@ def get_duration_per_call(self, df, cue_types, fig):
             ax.append(fig.add_subplot(111))
         else:
             ax.append(fig.add_subplot(2, 2, index + 1))
-        ax[index].set(xlabel='Duration (Bins)', ylabel='Duration of Cue (s)')
+        ax[index].set(xlabel="Duration (Bins)", ylabel="Duration of Cue (s)")
         ax[index].set_title(cue_names[index])
         ax[index].hist(cue, bins=num_bins)
     fig.subplots_adjust(hspace=0.4)
     fig.suptitle("Cue Event Duration")
+
 
 def get_occurrences_per_call(self, df, cue_types, fig):
     """
@@ -161,12 +165,21 @@ def get_occurrences_per_call(self, df, cue_types, fig):
     for cue in cue_names:
         cue_results_temp = []
         for call in ids:
-            cue_results_temp.append(dm.occurrence_of_event(dm.get_call_df(df, call), cue))
-        if self.callerGenderDropdown.isEnabled() and self.receiverGenderDropdown.isEnabled():
-            cue_results.append(sorted([val for pair in cue_results_temp for val in pair]))
+            cue_results_temp.append(
+                dm.occurrence_of_event(dm.get_call_df(df, call), cue)
+            )
+        if (
+            self.callerGenderDropdown.isEnabled()
+            and self.receiverGenderDropdown.isEnabled()
+        ):
+            cue_results.append(
+                sorted([val for pair in cue_results_temp for val in pair])
+            )
         elif self.callerGenderDropdown.isEnabled():
             # so this is if caller is enabled, but not receiver. Remove every second since thats receiver data
-            sorted_list = sorted([val for sublist in cue_results_temp for val in sublist])
+            sorted_list = sorted(
+                [val for sublist in cue_results_temp for val in sublist]
+            )
             del sorted_list[1:2]
             cue_results.append(sorted_list)
         else:
@@ -182,7 +195,7 @@ def get_occurrences_per_call(self, df, cue_types, fig):
             ax.append(fig.add_subplot(111))
         else:
             ax.append(fig.add_subplot(2, 2, index + 1))
-        ax[index].set(xlabel='Participant Number', ylabel='Total Occurrences Count')
+        ax[index].set(xlabel="Participant Number", ylabel="Total Occurrences Count")
         ax[index].set_title(cue_names[index])
         ax[index].bar(X, cue)
 
@@ -192,7 +205,10 @@ def get_occurrences_per_call(self, df, cue_types, fig):
 
 def get_total_cue_data(self, df, cue_types, fig, radio_type):
     ax = fig.add_subplot(111)
-    if self.callerGenderDropdown.isEnabled() and self.receiverGenderDropdown.isEnabled():
+    if (
+        self.callerGenderDropdown.isEnabled()
+        and self.receiverGenderDropdown.isEnabled()
+    ):
         if radio_type == "occurrences":
             result = dm.occurrence_of_each_event(df, cue_types)
             ax.set_title("Total Cue Occurrences")
@@ -211,9 +227,13 @@ def get_total_cue_data(self, df, cue_types, fig, radio_type):
                     cue_result = dm.total_time_of_event(df, cue)
             except ValueError:
                 return
-            result[cue] = cue_result[0]  # This gets the occurrence of each cue of the caller
+            result[cue] = cue_result[
+                0
+            ]  # This gets the occurrence of each cue of the caller
         if "silence" in result:
-            result.pop("silence")  # Remove silence since this applies for both parties, not individually
+            result.pop(
+                "silence"
+            )  # Remove silence since this applies for both parties, not individually
         if radio_type == "occurrences":
             ax.set_title("Total Cue Occurrences for Receivers")
             ax.set_ylabel("Total Occurrences")
@@ -230,7 +250,9 @@ def get_total_cue_data(self, df, cue_types, fig, radio_type):
                     cue_result = dm.total_time_of_event(df, cue)
             except ValueError:
                 return
-            result[cue] = cue_result[1]  # This gets occurrence of each cue of the receiver
+            result[cue] = cue_result[
+                1
+            ]  # This gets occurrence of each cue of the receiver
         if "silence" in result:
             result.pop("silence")
         if radio_type == "occurrences":
