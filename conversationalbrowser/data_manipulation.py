@@ -155,6 +155,8 @@ def get_all_event_durations(df, cue):
     """
     This gets the duration of each cue and returns it as a tuple of the caller and receiver
     """
+    if df.empty:
+        raise ValueError("Dataframe is empty")
     if "M" in df["receiver"].iloc[0]:
         receiver_search = f"{cue}_rM"
     else:
