@@ -147,7 +147,7 @@ def get_duration_per_call(self, df, cue_types, fig):
             ax.append(fig.add_subplot(111))
         else:
             ax.append(fig.add_subplot(2, 2, index + 1))
-        ax[index].set(xlabel="Duration (Bins)", ylabel="Duration of Cue (s)")
+        ax[index].set(xlabel="Duration (s)", ylabel="Number of Occurrences")
         ax[index].set_title(cue_names[index])
         ax[index].hist(cue, bins=num_bins)
     fig.subplots_adjust(hspace=0.4)
