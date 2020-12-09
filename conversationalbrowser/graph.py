@@ -3,7 +3,7 @@
 """
 This holds the functions to draw the graph on the user interface using matplotlib.
 """
-from PyQt5.QtWidgets import QMessageBox
+from PyQt5.QtWidgets import QMessageBox, QErrorMessage
 from matplotlib.backends.backend_qt5agg import FigureCanvasQTAgg as FigureCanvas
 from matplotlib.figure import Figure
 import matplotlib
@@ -127,7 +127,11 @@ def get_duration_per_call(self, df, cue_types, fig):
     cue_results = []
     for cue in cue_names:
         # this holds the cue results temporarily
-        cue_results_temp = dm.get_all_event_durations(df, cue)
+        try:
+            cue_results_temp = dm.get_all_event_durations(df, cue)
+        except ValueError:
+            fig.add_subplot(111)
+            return
         if (
             self.callerGenderDropdown.isEnabled()
             and self.receiverGenderDropdown.isEnabled()
@@ -150,7 +154,7 @@ def get_duration_per_call(self, df, cue_types, fig):
         ax[index].set(xlabel="Duration (s)", ylabel="Number of Occurrences")
         ax[index].set_title(cue_names[index])
         ax[index].hist(cue, bins=num_bins)
-    fig.subplots_adjust(hspace=0.4)
+    fig.subplots_adjust(hspace=0.4, wspace=0.4)
     fig.suptitle("Cue Event Duration")
 
 
@@ -199,12 +203,14 @@ def get_occurrences_per_call(self, df, cue_types, fig):
         ax[index].set_title(cue_names[index])
         ax[index].bar(X, cue)
 
-    fig.subplots_adjust(hspace=0.4)
+    fig.subplots_adjust(hspace=0.4, wspace=0.3)
     fig.suptitle("Total Occurrences for All Participants")
 
 
 def get_total_cue_data(self, df, cue_types, fig, radio_type):
     ax = fig.add_subplot(111)
+    if df.empty:
+        return
     if (
         self.callerGenderDropdown.isEnabled()
         and self.receiverGenderDropdown.isEnabled()
