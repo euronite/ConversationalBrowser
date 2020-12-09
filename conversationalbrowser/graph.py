@@ -3,7 +3,7 @@
 """
 This holds the functions to draw the graph on the user interface using matplotlib.
 """
-from PyQt5.QtWidgets import QMessageBox, QErrorMessage
+from PyQt5.QtWidgets import QMessageBox
 from matplotlib.backends.backend_qt5agg import FigureCanvasQTAgg as FigureCanvas
 from matplotlib.figure import Figure
 import matplotlib
@@ -102,18 +102,23 @@ def displaympl(self, model, callerIds):
         df = dm.get_non_verbal_speech_only(df, cue)
     else:
         cue_types = {"laughter": 0, "silence": 0, "filler": 0, "bc": 0}
-
-    if self.occurrencesRadioBtn.isChecked():
-        if self.chartDropdown.currentText() == "Display Totals":
-            get_total_cue_data(self, df, cue_types, fig, "occurrences")
+    try:
+        if self.occurrencesRadioBtn.isChecked():
+            if self.chartDropdown.currentText() == "Display Totals":
+                get_total_cue_data(self, df, cue_types, fig, "occurrences")
+            else:
+                get_occurrences_per_call(self, df, cue_types, fig)
         else:
-            get_occurrences_per_call(self, df, cue_types, fig)
-    else:
-        if self.chartDropdown.currentText() == "Display Totals":
-            get_total_cue_data(self, df, cue_types, fig, "durations")
-        else:
-            get_duration_per_call(self, df, cue_types, fig)
-
+            if self.chartDropdown.currentText() == "Display Totals":
+                get_total_cue_data(self, df, cue_types, fig, "durations")
+            else:
+                get_duration_per_call(self, df, cue_types, fig)
+    except ValueError:
+        error_dialog = QMessageBox()
+        error_dialog.setText("Caller/Receiver Combination Not Valid")
+        error_dialog.setStandardButtons(QMessageBox.Ok)
+        error_dialog.setIcon(QMessageBox.Critical)
+        error_dialog.exec_()
     # Display the actual graph
     self.mplvl.removeWidget(self.canvas)
     self.canvas.close()
@@ -131,7 +136,7 @@ def get_duration_per_call(self, df, cue_types, fig):
             cue_results_temp = dm.get_all_event_durations(df, cue)
         except ValueError:
             fig.add_subplot(111)
-            return
+            raise
         if (
             self.callerGenderDropdown.isEnabled()
             and self.receiverGenderDropdown.isEnabled()
@@ -163,6 +168,9 @@ def get_occurrences_per_call(self, df, cue_types, fig):
     This will get the occurrences for all callers of the cues
     :return:
     """
+    if df.empty:
+        fig.add_subplot(111)
+        raise ValueError
     cue_names = list(cue_types.keys())
     cue_results = []
     ids = dm.get_all_call_ids(df)
@@ -210,7 +218,7 @@ def get_occurrences_per_call(self, df, cue_types, fig):
 def get_total_cue_data(self, df, cue_types, fig, radio_type):
     ax = fig.add_subplot(111)
     if df.empty:
-        return
+        raise ValueError
     if (
         self.callerGenderDropdown.isEnabled()
         and self.receiverGenderDropdown.isEnabled()
@@ -226,13 +234,10 @@ def get_total_cue_data(self, df, cue_types, fig, radio_type):
     elif not self.callerGenderDropdown.isEnabled():
         result = {}
         for cue in cue_types:
-            try:
-                if radio_type == "occurrences":
-                    cue_result = dm.occurrence_of_event(df, cue)
-                else:
-                    cue_result = dm.total_time_of_event(df, cue)
-            except ValueError:
-                return
+            if radio_type == "occurrences":
+                cue_result = dm.occurrence_of_event(df, cue)
+            else:
+                cue_result = dm.total_time_of_event(df, cue)
             result[cue] = cue_result[
                 0
             ]  # This gets the occurrence of each cue of the caller
@@ -249,13 +254,10 @@ def get_total_cue_data(self, df, cue_types, fig, radio_type):
     else:
         result = {}
         for cue in cue_types:
-            try:
-                if radio_type == "occurrences":
-                    cue_result = dm.occurrence_of_event(df, cue)
-                else:
-                    cue_result = dm.total_time_of_event(df, cue)
-            except ValueError:
-                return
+            if radio_type == "occurrences":
+                cue_result = dm.occurrence_of_event(df, cue)
+            else:
+                cue_result = dm.total_time_of_event(df, cue)
             result[cue] = cue_result[
                 1
             ]  # This gets occurrence of each cue of the receiver
