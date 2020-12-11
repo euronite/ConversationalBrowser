@@ -6,7 +6,7 @@ This contains the main Controller/View of the GUI.
 
 from PyQt5 import QtWidgets, uic
 from PyQt5.QtCore import pyqtSlot
-from PyQt5.QtWidgets import QWidget, QMessageBox, QDialog, QDialogButtonBox, QVBoxLayout
+from PyQt5.QtWidgets import QWidget, QMessageBox, QDialog
 import sys
 from conversationalbrowser import data_manipulation as dm
 from conversationalbrowser.model import Model, CallerModel
@@ -83,6 +83,15 @@ class MainWindow(QtWidgets.QMainWindow):
             )
 
     @pyqtSlot()
+    def exportGraph(self):
+        file_dialog = FileDialog()
+        location = file_dialog.saveFileDialog()
+        try:
+            graph.export(self, location)
+        except IOError:
+            QMessageBox.critical(self, "Saving File Error", "Unable to save file!")
+
+    @pyqtSlot()
     def clearGraphSlot(self):
         graph.rmmpl(self)
 
@@ -116,6 +125,16 @@ class FileDialog(QWidget):
             options=options,
         )
         return file
+
+    def saveFileDialog(self):
+        options = QtWidgets.QFileDialog.Options()
+        filename, _ = QtWidgets.QFileDialog.getSaveFileName(
+            None,
+            "QFileDialog.getSaveFileName()",
+            directory="plot.png",
+            options=options,
+        )
+        return filename
 
 
 class CallerDialog(QDialog):

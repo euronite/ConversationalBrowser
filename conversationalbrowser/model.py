@@ -33,6 +33,7 @@ class Model:
         self.fileContents = None
         self.fileName = None
         self.callerIds = []
+        self.figure = None
 
     def set_file_name(self, file):
         """
@@ -54,3 +55,6 @@ class Model:
 
     def set_caller_ids(self, id_list):
         self.callerIds = id_list
+
+    def set_figure(self, fig):
+        self.figure = fig

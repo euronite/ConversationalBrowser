@@ -13,6 +13,19 @@ from numpy import arange, concatenate
 matplotlib.use("Qt5Agg")
 
 
+def export(self, location):
+    """
+    Exports graph in the location user specifies
+    :param self:
+    :param location:
+    :return:
+    """
+    try:
+        self.model.figure.savefig(location)
+    except IOError:
+        raise
+
+
 def rmmpl(self):
     """
     removes existing graph
@@ -125,6 +138,7 @@ def displaympl(self, model, callerIds):
     self.canvas = FigureCanvas(fig)
     self.mplvl.addWidget(self.canvas)
     self.canvas.draw()
+    model.set_figure(fig)
 
 
 def get_duration_per_call(self, df, cue_types, fig):
