@@ -9,6 +9,7 @@ from matplotlib.figure import Figure
 import matplotlib
 from conversationalbrowser import data_manipulation as dm
 from numpy import arange, concatenate
+import pandas as pd
 
 matplotlib.use("Qt5Agg")
 
@@ -61,7 +62,7 @@ def initmpl(self):
     self.canvas.draw()
 
 
-def displaympl(self, model, callerIds):
+def displaympl(self, model, callModel):
     """
     This is used to display the graph upon Display button click.
     :param callerIds:
@@ -79,11 +80,11 @@ def displaympl(self, model, callerIds):
     df = model.fileContents
 
     # Get the dataframe of relevant call IDs
-    if callerIds.selected[0][1] == 0:
+    if callModel.selected[0][1] == 0:
         # This means select all ids has been chosen
         pass
     else:
-        df = dm.get_list_of_call_id_df(df, [i[0] for i in callerIds.selected])
+        df = dm.get_list_of_call_id_df(df, [i[0] for i in callModel.selected])
 
     # Get relevant genders and the corresponding dataframe
     caller_gender = self.callerGenderDropdown.currentText()
@@ -104,17 +105,24 @@ def displaympl(self, model, callerIds):
     df = dm.get_rows_by_caller_and_receiver(df, caller_gender, receiver_gender)
 
     # Get the cue types
-    cue = self.cueDropdown.currentText()
-    if cue in ["Filler", "Laughter", "Silence"]:
-        cue = cue.lower()
-        cue_types = {cue: 0}
-        df = dm.get_non_verbal_speech_only(df, cue)
-    elif cue == "Backchat":
-        cue = "bc"
-        cue_types = {cue: 0}
-        df = dm.get_non_verbal_speech_only(df, cue)
-    else:
-        cue_types = {"laughter": 0, "silence": 0, "filler": 0, "bc": 0}
+    cue_types = {}
+    temp_df = []
+    for cue_pair in callModel.cues_selected:
+        cue = cue_pair[0]
+        if cue == "All Cues":
+            cue_types = {"filler": 0, "laughter": 0, "silence": 0, "bc": 0}
+            break
+        if cue in ["Filler", "Laughter", "Silence"]:
+            cue = cue.lower()
+            cue_types[cue] = 0
+        elif cue == "Backchat":
+            cue = "bc"
+            cue_types[cue] = 0
+        temp_df.append(dm.get_non_verbal_speech_only(df, cue))
+    # Get the cue data and concatenate to make final df
+    if temp_df:
+        df = pd.concat(temp_df)
+
     try:
         if self.occurrencesRadioBtn.isChecked():
             if self.chartDropdown.currentText() == "Display Totals":
@@ -152,8 +160,8 @@ def get_duration_per_call(self, df, cue_types, fig):
             fig.add_subplot(111)
             raise
         if (
-            self.callerGenderDropdown.isEnabled()
-            and self.receiverGenderDropdown.isEnabled()
+                self.callerGenderDropdown.isEnabled()
+                and self.receiverGenderDropdown.isEnabled()
         ):
             cue_results.append(concatenate((cue_results_temp[0], cue_results_temp[1])))
         elif self.callerGenderDropdown.isEnabled():
@@ -195,8 +203,8 @@ def get_occurrences_per_call(self, df, cue_types, fig):
                 dm.occurrence_of_event(dm.get_call_df(df, call), cue)
             )
         if (
-            self.callerGenderDropdown.isEnabled()
-            and self.receiverGenderDropdown.isEnabled()
+                self.callerGenderDropdown.isEnabled()
+                and self.receiverGenderDropdown.isEnabled()
         ):
             cue_results.append(
                 sorted([val for pair in cue_results_temp for val in pair])
@@ -234,8 +242,8 @@ def get_total_cue_data(self, df, cue_types, fig, radio_type):
     if df.empty:
         raise ValueError
     if (
-        self.callerGenderDropdown.isEnabled()
-        and self.receiverGenderDropdown.isEnabled()
+            self.callerGenderDropdown.isEnabled()
+            and self.receiverGenderDropdown.isEnabled()
     ):
         if radio_type == "occurrences":
             result = dm.occurrence_of_each_event(df, cue_types)

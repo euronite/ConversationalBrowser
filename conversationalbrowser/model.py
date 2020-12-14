@@ -23,6 +23,7 @@ def is_valid(file):
 class CallerModel:
     def __init__(self):
         self.selected = []
+        self.cues_selected = []
 
     def set_selected_items(self, id_list):
         self.selected = id_list
