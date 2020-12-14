@@ -111,29 +111,22 @@ def get_df(self, callModel, df):
     :return:
     """
     # Get the dataframe of relevant call IDs
-    if callModel.selected[0][1] == 0:
-        # This means select all ids has been chosen
-        pass
-    else:
+    if callModel.selected[0][1] != 0:
         df = dm.get_list_of_call_id_df(df, [i[0] for i in callModel.selected])
 
     # Get relevant genders and the corresponding dataframe
     caller_gender = self.callerGenderDropdown.currentText()
     receiver_gender = self.receiverGenderDropdown.currentText()
+    caller, receiver = None, None
     if caller_gender == "Caller Male":
-        caller_gender = "caller_M"
+        caller = "caller_M"
     elif caller_gender == "Caller Female":
-        caller_gender = "caller_F"
-    else:
-        caller_gender = None
-
+        caller = "caller_F"
     if receiver_gender == "Receiver Female":
-        receiver_gender = "receiver_F"
+        receiver = "receiver_F"
     elif receiver_gender == "Receiver Male":
-        receiver_gender = "receiver_M"
-    else:
-        receiver_gender = None
-    df = dm.get_rows_by_caller_and_receiver(df, caller_gender, receiver_gender)
+        receiver = "receiver_M"
+    df = dm.get_rows_by_caller_and_receiver(df, caller, receiver)
 
     # Get the cue types
     cue_types = {}
@@ -143,12 +136,10 @@ def get_df(self, callModel, df):
         if cue == "All Cues":
             cue_types = {"filler": 0, "laughter": 0, "silence": 0, "bc": 0}
             break
-        if cue in ["Filler", "Laughter", "Silence"]:
-            cue = cue.lower()
-            cue_types[cue] = 0
-        elif cue == "Backchat":
+        if cue == "Backchat":
             cue = "bc"
-            cue_types[cue] = 0
+        cue = cue.lower()
+        cue_types[cue] = 0
         temp_df.append(dm.get_non_verbal_speech_only(df, cue))
     # Get the cue data and concatenate to make final df
     if temp_df:
