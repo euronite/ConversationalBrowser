@@ -65,7 +65,7 @@ def initmpl(self):
 def displaympl(self, model, callModel):
     """
     This is used to display the graph upon Display button click.
-    :param callerIds:
+    :param callModel:
     :param model:
     :param self:
     :return:
@@ -78,7 +78,38 @@ def displaympl(self, model, callModel):
 
     fig = Figure()  # New graph setup
     df = model.fileContents
+    df, cue_types = get_df(self, callModel, df)
+    try:
+        if self.occurrencesRadioBtn.isChecked():
+            if self.chartDropdown.currentText() == "Display Totals":
+                get_total_cue_data(self, df, cue_types, fig, "occurrences")
+            else:
+                get_occurrences_per_call(self, df, cue_types, fig)
+        else:
+            if self.chartDropdown.currentText() == "Display Totals":
+                get_total_cue_data(self, df, cue_types, fig, "durations")
+            else:
+                get_duration_per_call(self, df, cue_types, fig)
+    except ValueError:
+        error_dialog("Caller/Receiver Combination Not Valid")
 
+    # Display the actual graph
+    self.mplvl.removeWidget(self.canvas)
+    self.canvas.close()
+    self.canvas = FigureCanvas(fig)
+    self.mplvl.addWidget(self.canvas)
+    self.canvas.draw()
+    model.set_figure(fig)
+
+
+def get_df(self, callModel, df):
+    """
+    This gets the dataframe which has the parameters which the data is constrained by. Returns dataframe of what to use.
+    :param self:
+    :param callModel:
+    :param df:
+    :return:
+    """
     # Get the dataframe of relevant call IDs
     if callModel.selected[0][1] == 0:
         # This means select all ids has been chosen
@@ -123,30 +154,15 @@ def displaympl(self, model, callModel):
     if temp_df:
         df = pd.concat(temp_df)
 
-    try:
-        if self.occurrencesRadioBtn.isChecked():
-            if self.chartDropdown.currentText() == "Display Totals":
-                get_total_cue_data(self, df, cue_types, fig, "occurrences")
-            else:
-                get_occurrences_per_call(self, df, cue_types, fig)
-        else:
-            if self.chartDropdown.currentText() == "Display Totals":
-                get_total_cue_data(self, df, cue_types, fig, "durations")
-            else:
-                get_duration_per_call(self, df, cue_types, fig)
-    except ValueError:
-        error_dialog = QMessageBox()
-        error_dialog.setText("Caller/Receiver Combination Not Valid")
-        error_dialog.setStandardButtons(QMessageBox.Ok)
-        error_dialog.setIcon(QMessageBox.Critical)
-        error_dialog.exec_()
-    # Display the actual graph
-    self.mplvl.removeWidget(self.canvas)
-    self.canvas.close()
-    self.canvas = FigureCanvas(fig)
-    self.mplvl.addWidget(self.canvas)
-    self.canvas.draw()
-    model.set_figure(fig)
+    return df, cue_types
+
+
+def error_dialog(message):
+    dialog = QMessageBox()
+    dialog.setText(message)
+    dialog.setStandardButtons(QMessageBox.Ok)
+    dialog.setIcon(QMessageBox.Critical)
+    dialog.exec_()
 
 
 def get_duration_per_call(self, df, cue_types, fig):
