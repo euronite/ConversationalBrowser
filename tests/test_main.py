@@ -16,7 +16,7 @@ def test_ui(qtbot):
     assert widget.displayBtn.text() == "Display"
     assert widget.clearBtn.text() == "Clear"
     assert widget.chartDropdown.currentText() == "Display Totals"
-    assert widget.cueDropdown.currentText() == "All"
+    assert widget.cueBtn.text() == "Cue Types"
     assert widget.exportBtn.text() == "Export"
     assert widget.callerGenderDropdown.currentText() == "Caller Both Genders"
     assert widget.receiverGenderDropdown.currentText() == "Receiver Both Genders"
