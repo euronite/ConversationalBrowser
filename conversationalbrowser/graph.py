@@ -62,10 +62,10 @@ def initmpl(self):
     self.canvas.draw()
 
 
-def displaympl(self, model, callModel):
+def displaympl(self, model, call_model):
     """
     This is used to display the graph upon Display button click.
-    :param callModel:
+    :param call_model:
     :param model:
     :param self:
     :return:
@@ -78,9 +78,11 @@ def displaympl(self, model, callModel):
 
     fig = Figure()  # New graph setup
     df = model.fileContents
-    df, cue_types = get_df(self, callModel, df)
+    df, cue_types = get_df(self, call_model, df)
     try:
-        if self.occurrencesRadioBtn.isChecked():
+        if df.empty:
+            error_dialog("Caller/Receiver Combination Not Found")
+        elif self.occurrencesRadioBtn.isChecked():
             if self.chartDropdown.currentText() == "Display Totals":
                 get_total_cue_data(self, df, cue_types, fig, "occurrences")
             else:
@@ -90,8 +92,8 @@ def displaympl(self, model, callModel):
                 get_total_cue_data(self, df, cue_types, fig, "durations")
             else:
                 get_duration_per_call(self, df, cue_types, fig)
-    except ValueError:
-        error_dialog("Caller/Receiver Combination Not Valid")
+    except Exception as e:
+        error_dialog(f"Exception occurred: {e}")
 
     # Display the actual graph
     self.mplvl.removeWidget(self.canvas)
@@ -102,17 +104,17 @@ def displaympl(self, model, callModel):
     model.set_figure(fig)
 
 
-def get_df(self, callModel, df):
+def get_df(self, call_model, df):
     """
     This gets the dataframe which has the parameters which the data is constrained by. Returns dataframe of what to use.
     :param self:
-    :param callModel:
+    :param call_model:
     :param df:
     :return:
     """
     # Get the dataframe of relevant call IDs
-    if callModel.selected[0][1] != 0:
-        df = dm.get_list_of_call_id_df(df, [i[0] for i in callModel.selected])
+    if call_model.selected[0][1] != 0:
+        df = dm.get_list_of_call_id_df(df, [i[0] for i in call_model.selected])
 
     # Get relevant genders and the corresponding dataframe
     caller_gender = self.callerGenderDropdown.currentText()
@@ -131,7 +133,7 @@ def get_df(self, callModel, df):
     # Get the cue types
     cue_types = {}
     temp_df = []
-    for cue_pair in callModel.cues_selected:
+    for cue_pair in call_model.cues_selected:
         cue = cue_pair[0]
         if cue == "All Cues":
             cue_types = {"filler": 0, "laughter": 0, "silence": 0, "bc": 0}
@@ -167,8 +169,8 @@ def get_duration_per_call(self, df, cue_types, fig):
             fig.add_subplot(111)
             raise
         if (
-                self.callerGenderDropdown.isEnabled()
-                and self.receiverGenderDropdown.isEnabled()
+            self.callerGenderDropdown.isEnabled()
+            and self.receiverGenderDropdown.isEnabled()
         ):
             cue_results.append(concatenate((cue_results_temp[0], cue_results_temp[1])))
         elif self.callerGenderDropdown.isEnabled():
@@ -197,9 +199,7 @@ def get_occurrences_per_call(self, df, cue_types, fig):
     This will get the occurrences for all callers of the cues
     :return:
     """
-    if df.empty:
-        fig.add_subplot(111)
-        raise ValueError
+    fig.add_subplot(111)
     cue_names = list(cue_types.keys())
     cue_results = []
     ids = dm.get_all_call_ids(df)
@@ -210,8 +210,8 @@ def get_occurrences_per_call(self, df, cue_types, fig):
                 dm.occurrence_of_event(dm.get_call_df(df, call), cue)
             )
         if (
-                self.callerGenderDropdown.isEnabled()
-                and self.receiverGenderDropdown.isEnabled()
+            self.callerGenderDropdown.isEnabled()
+            and self.receiverGenderDropdown.isEnabled()
         ):
             cue_results.append(
                 sorted([val for pair in cue_results_temp for val in pair])
@@ -229,7 +229,7 @@ def get_occurrences_per_call(self, df, cue_types, fig):
             del sorted_list[::2]
             cue_results.append(sorted_list)
 
-    X = arange(len(cue_results[0]))
+    x = arange(len(cue_results[0]))
     ax = []
     for index, cue in enumerate(cue_results):
         if len(cue_names) == 1:
@@ -238,7 +238,7 @@ def get_occurrences_per_call(self, df, cue_types, fig):
             ax.append(fig.add_subplot(2, 2, index + 1))
         ax[index].set(xlabel="Participant Number", ylabel="Total Occurrences Count")
         ax[index].set_title(cue_names[index])
-        ax[index].bar(X, cue)
+        ax[index].bar(x, cue)
 
     fig.subplots_adjust(hspace=0.4, wspace=0.3)
     fig.suptitle("Total Occurrences for All Participants")
@@ -246,60 +246,62 @@ def get_occurrences_per_call(self, df, cue_types, fig):
 
 def get_total_cue_data(self, df, cue_types, fig, radio_type):
     ax = fig.add_subplot(111)
-    if df.empty:
-        raise ValueError
+    average = self.averageCheckbox.isChecked()
+    caller_or_receiver = False
     if (
-            self.callerGenderDropdown.isEnabled()
-            and self.receiverGenderDropdown.isEnabled()
+        self.callerGenderDropdown.isEnabled()
+        and self.receiverGenderDropdown.isEnabled()
     ):
         if radio_type == "occurrences":
             result = dm.occurrence_of_each_event(df, cue_types)
-            ax.set_title("Total Cue Occurrences")
-            ax.set_ylabel("Total Number of Occurrences")
         else:
             result = dm.total_time_of_each_event(df, cue_types)
-            ax.set_title("Total Cue Duration")
-            ax.set_ylabel("Total Duration")
     elif not self.callerGenderDropdown.isEnabled():
+        caller_or_receiver = "Receivers"
         result = {}
         for cue in cue_types:
             if radio_type == "occurrences":
                 cue_result = dm.occurrence_of_event(df, cue)
             else:
                 cue_result = dm.total_time_of_event(df, cue)
-            result[cue] = cue_result[
-                0
-            ]  # This gets the occurrence of each cue of the caller
-        if "silence" in result:
-            result.pop(
-                "silence"
-            )  # Remove silence since this applies for both parties, not individually
-        if radio_type == "occurrences":
-            ax.set_title("Total Cue Occurrences for Receivers")
-            ax.set_ylabel("Total Occurrences")
-        else:
-            ax.set_title("Total Cue Duration for Receivers")
-            ax.set_ylabel("Total Duration")
+            # This gets the occurrence of each cue of the caller
+            result[cue] = cue_result[0]
     else:
+        caller_or_receiver = "Callers"
         result = {}
         for cue in cue_types:
             if radio_type == "occurrences":
                 cue_result = dm.occurrence_of_event(df, cue)
             else:
                 cue_result = dm.total_time_of_event(df, cue)
-            result[cue] = cue_result[
-                1
-            ]  # This gets occurrence of each cue of the receiver
-        if "silence" in result:
-            result.pop("silence")
-        if radio_type == "occurrences":
-            ax.set_title("Total Cue Occurrences for Callers")
-        else:
-            ax.set_title("Total Cue Duration for Callers")
-    if self.averageCheckbox.isChecked():
+            # This gets occurrence of each cue of the receiver
+            result[cue] = cue_result[1]
+
+    if average:
         for cue in result:
             result[cue] = result[cue] / len(dm.get_all_call_ids(df))
-        ax.set_title("Average " + ax.get_title() + " Per Call")
-        ax.set_ylabel("Average " + ax.get_ylabel())
     ax.bar(result.keys(), result.values())
-    ax.set_xlabel("Cue")
+    set_label(ax, caller_or_receiver, radio_type, average)
+
+
+def set_label(ax, caller_or_receiver, radio_type, average):
+    title = ""
+    x_label = "cue"
+    y_label = ""
+    if radio_type == "occurrences":
+        title += "Total Cue Occurrences"
+        y_label += "Total Number of Occurrences"
+    else:
+        title += "Total Cue Duration"
+        y_label += "Total Duration (s)"
+
+    if caller_or_receiver:
+        title += " for " + caller_or_receiver
+
+    if average:
+        title = f"Average {title} Per Call"
+        y_label = f"Average {y_label}"
+
+    ax.set_title(title)
+    ax.set_xlabel(x_label)
+    ax.set_ylabel(y_label)
