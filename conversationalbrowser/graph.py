@@ -119,6 +119,7 @@ def get_df(self, call_model, df):
     # Get relevant genders and the corresponding dataframe
     caller_gender = self.callerGenderDropdown.currentText()
     receiver_gender = self.receiverGenderDropdown.currentText()
+
     caller, receiver = None, None
     if caller_gender == "Caller Male":
         caller = "caller_M"
@@ -199,7 +200,6 @@ def get_occurrences_per_call(self, df, cue_types, fig):
     This will get the occurrences for all callers of the cues
     :return:
     """
-    fig.add_subplot(111)
     cue_names = list(cue_types.keys())
     cue_results = []
     ids = dm.get_all_call_ids(df)
