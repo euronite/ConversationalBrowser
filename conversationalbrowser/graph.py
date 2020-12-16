@@ -10,7 +10,9 @@ import matplotlib
 from conversationalbrowser import data_manipulation as dm
 from numpy import arange, concatenate
 import pandas as pd
-
+import matplotlib.pyplot as pyplot
+pyplot.style.use('fivethirtyeight')
+matplotlib.rcParams.update({'font.size': 10})
 matplotlib.use("Qt5Agg")
 
 
@@ -228,7 +230,6 @@ def get_occurrences_per_call(self, df, cue_types, fig):
             sorted_list = sorted([val for pair in cue_results_temp for val in pair])
             del sorted_list[::2]
             cue_results.append(sorted_list)
-
     x = arange(len(cue_results[0]))
     ax = []
     for index, cue in enumerate(cue_results):
