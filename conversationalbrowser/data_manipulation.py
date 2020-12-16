@@ -68,6 +68,13 @@ def get_call_df(df, call_id):
     return df.loc[df["call"] == call_id]
 
 
+def get_calls_df(df, call_id):
+    """
+    This takes in a list, call_id, and matches to that.
+    """
+    return df[df["call"].isin(call_id)]
+
+
 def get_all_call_ids(df):
     """
     Returns an array of the names of the call ids

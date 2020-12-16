@@ -141,6 +141,11 @@ def individual_call_data():
     return pd.DataFrame(dummy_data)
 
 
+def test_get_calls_df(test_data):
+    assert len(dm.get_calls_df(test_data, ["F01"])) == 7
+    assert len(dm.get_calls_df(test_data, ["F01", "F02"])) == len(test_data)
+
+
 def test_read_in():
     assert dm.read_in_data(Path("tests/test_data.csv")) is not None
 
