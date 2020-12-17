@@ -34,7 +34,6 @@ def caller_data():
     widget.populateListView(ids)
     return widget
 
-
 @pytest.fixture
 def main_window():
     return main.MainWindow()
@@ -60,7 +59,6 @@ def test_disable_receiver_dropdown(main_window):
     main_window.callerReceiverToggle()
     assert main_window.receiverGenderDropdown.isEnabled() is False
 
-
 def test_display_totals(main_window):
     main_window.chartDropdown.setCurrentIndex(1)
     assert main_window.chartDropdown.currentText() == "Display Per Call"
@@ -69,8 +67,6 @@ def test_display_totals(main_window):
     main_window.chartDropdown.setCurrentIndex(0)
     main_window.averageToggle()
     assert main_window.averageCheckbox.isEnabled() is True
-
-
 def test_select_individual_caller_dialog(qtbot):
     cue_dialog = main.CueDialog()
     qtbot.mouseClick(cue_dialog.pushBtn, QtCore.Qt.LeftButton)
@@ -126,7 +122,7 @@ def test_select_all_caller_id_dialog(qtbot, caller_data):
     assert len(caller_list.selectedItems()) == 5
 
 
-def test_select_individual_caller_dialog(qtbot, caller_data):
+def test_select_individual_caller_dialog_individual(qtbot, caller_data):
     qtbot.mouseClick(caller_data.pushButton, QtCore.Qt.LeftButton)
     qtbot.addWidget(caller_data)
     caller_list = caller_data.callerListWidget
