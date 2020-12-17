@@ -287,7 +287,7 @@ def get_total_cue_data(self, df, cue_types, fig, radio_type):
 
 def set_label(ax, caller_or_receiver, radio_type, average):
     title = ""
-    x_label = "cue"
+    x_label = "Cue"
     y_label = ""
     if radio_type == "occurrences":
         title += "Total Cue Occurrences"
