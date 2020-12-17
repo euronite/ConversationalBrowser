@@ -9,13 +9,6 @@ def test_assert():
     assert test_value == 1
 
 
-@pytest.fixture
-def test_data_model(test_data):
-    mod = model.Model()
-    mod.fileContents = pd.DataFrame(test_data)
-    return mod
-
-
 def test_is_valid():
     assert model.is_valid("test.file") is False
 
@@ -23,6 +16,27 @@ def test_is_valid():
 def test_get_file_contents(test_data_model):
     result = test_data_model.get_file_content()
     assert result is not None and not result.empty
+
+
+def test_call_model_params(test_call_model):
+    assert len(test_call_model.cues_selected) == 2
+    assert test_call_model.cues_selected[0][0] == "Silence"
+    assert len(test_call_model.selected) == 3
+
+
+@pytest.fixture
+def test_call_model():
+    mod = model.CallerModel()
+    mod.cues_selected = [("Silence", 1), ("Laughter", 3)]
+    mod.selected = [("F01", 1), ("F02", 2), ("F03", 3)]
+    return mod
+
+
+@pytest.fixture
+def test_data_model(test_data):
+    mod = model.Model()
+    mod.fileContents = pd.DataFrame(test_data)
+    return mod
 
 
 @pytest.fixture
