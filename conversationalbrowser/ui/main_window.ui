@@ -144,7 +144,7 @@
           </item>
           <item>
            <property name="text">
-            <string>Display Per Call</string>
+            <string>Display per Cue Event</string>
            </property>
           </item>
          </widget>

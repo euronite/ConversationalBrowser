@@ -44,23 +44,6 @@ def receiver_and_caller_column(df):
     return df
 
 
-def get_conversation_topic_df(df, topic):
-    """
-    Gets the rows that match the conversation topic specified.
-    """
-    return df.loc[df["conversation_topic"] == topic]
-
-
-def remove_conversation_topic_df(df, topic):
-    """
-    Gets the rows that do not contain a specific topic. Can pass a string containing topics to remove.
-    Delimited by a comma
-    """
-    for individual_topic in topic.split(","):
-        df = df.loc[df["conversation_topic"] != individual_topic]
-    return df
-
-
 def get_call_df(df, call_id):
     """
     This gets the rows containing the call_id.
@@ -89,22 +72,6 @@ def get_list_of_call_id_df(df, call_id_list):
     return df[(df.call.isin(call_id_list))]
 
 
-def get_all_conversation_topics(df):
-    """
-    Returns array of all the names of the conversation topics
-    """
-    return df.conversation_topic.unique()
-
-
-def get_conversation_only_df(df, non_verbal_speech):
-    """
-    Return df with non-verbal speech removed
-    """
-    for cue in non_verbal_speech:
-        df = df[~df["person_and_type"].str.contains(cue)]
-    return df
-
-
 def get_non_verbal_speech_only(df, non_verbal_speech):
     """
     Return df with non-verbal speech only
@@ -125,10 +92,6 @@ def get_rows_by_caller_and_receiver(df, caller, receiver):
         return df.loc[(df["caller"] == caller) & (df["receiver"] == receiver)]
     else:
         return df
-
-
-def convert_to_minutes_and_seconds(seconds):
-    return datetime.timedelta(seconds=seconds)
 
 
 def get_permutations_of_gender_and_position():

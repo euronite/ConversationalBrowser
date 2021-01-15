@@ -178,6 +178,12 @@ def test_get_rows_by_caller_and_receiver(test_data):
     df = dm.get_rows_by_caller_and_receiver(test_data, "caller_F", "receiver_F")
     assert "caller_F" in df.caller.unique() and len(df.caller.unique()) == 1
     assert "receiver_F" in df.receiver.unique() and len(df.receiver.unique()) == 1
+    df = dm.get_rows_by_caller_and_receiver(test_data, "caller_F", "receiver_M")
+    assert "caller_F" in df.caller.unique() and len(df.caller.unique()) == 1
+    assert "receiver_M" in df.receiver.unique() and len(df.receiver.unique()) == 1
+    df = dm.get_rows_by_caller_and_receiver(test_data, None, None)
+    assert len(df.caller.unique()) == 1
+    assert len(df.receiver.unique()) == 2
 
 
 def test_occurrence_of_each_event(test_data):
@@ -207,31 +213,8 @@ def test_total_time_of_each_event(test_data):
 def test_get_all_event_durations(test_data):
     result = dm.get_all_event_durations(test_data, "laughter")
     assert len(result[0]) == 0 and result[1].iloc[0] == 0.76
-
-
-def test_remove_conversation_topic_df(test_data):
-    df = dm.remove_conversation_topic_df(test_data, "other")
-    assert "other" not in df.conversation_topic.unique()
-
-
-def test_get_conversation_only_df(test_data):
-    df = dm.get_conversation_only_df(test_data, dm.cue_types.keys())
-    assert not any(
-        elem in df["person_and_type"].tolist() for elem in dm.cue_types.keys()
-    )
-
-
-def test_get_conversation_topic_df(test_data):
-    df = dm.get_conversation_topic_df(test_data, "end")
-    assert "other" not in df.conversation_topic.unique()
-
-
-def test_convert_to_minutes_and_seconds():
-    assert str(dm.convert_to_minutes_and_seconds(10000)) == "2:46:40"
-
-
-def test_get_all_conversation_topics(test_data):
-    assert len(dm.get_all_conversation_topics(test_data)) == 2
+    result = dm.get_all_event_durations(test_data, "silence")
+    assert len(result[0]) == 3 and result[1].iloc[0] == 1.01
 
 
 def test_total_overlap_occurrence(test_data):
