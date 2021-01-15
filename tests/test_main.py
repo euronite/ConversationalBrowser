@@ -61,7 +61,7 @@ def test_disable_receiver_dropdown(main_window):
 
 def test_display_totals(main_window):
     main_window.chartDropdown.setCurrentIndex(1)
-    assert main_window.chartDropdown.currentText() == "Display Per Call"
+    assert main_window.chartDropdown.currentText() == "Display per Cue Event"
     main_window.averageToggle()
     assert main_window.averageCheckbox.isEnabled() is False
     main_window.chartDropdown.setCurrentIndex(0)
