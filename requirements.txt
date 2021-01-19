@@ -1,7 +1,7 @@
 pre-commit==2.9.3
 pyqt5==5.15.2
 pyqt5-tools==5.15.2.3.0.2
-pandas==1.2.0
+pandas==1.1.5
 numpy==1.19.5
 matplotlib==3.3.3
 pytest==6.2.1
