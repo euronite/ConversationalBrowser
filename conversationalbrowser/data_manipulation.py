@@ -6,8 +6,7 @@ This holds the actual data manipulation functions for the conversational data br
 """
 
 import pandas as pd
-import datetime
-import itertools
+from itertools import permutations as iterpermutations
 
 header_names = [
     "call",
@@ -98,7 +97,7 @@ def get_permutations_of_gender_and_position():
     """
     Takes in the gender_and_position var and returns the possible combinations of size 2
     """
-    permutations = list(itertools.permutations(gender_and_position, 2))
+    permutations = list(iterpermutations(gender_and_position, 2))
     final_permutation = []
     for perm in permutations:
         if "caller" in perm[0]:

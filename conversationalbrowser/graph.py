@@ -6,14 +6,15 @@ This holds the functions to draw the graph on the user interface using matplotli
 from PyQt5.QtWidgets import QMessageBox
 from matplotlib.backends.backend_qt5agg import FigureCanvasQTAgg as FigureCanvas
 from matplotlib.figure import Figure
-import matplotlib
+from matplotlib import rcParams as mpl_rcParams
+from matplotlib import use as mpl_use
 from conversationalbrowser import data_manipulation as dm
 from numpy import arange, concatenate
-import pandas as pd
+from pandas import concat as pd_concat
 import matplotlib.pyplot as pyplot
 pyplot.style.use('fivethirtyeight')
-matplotlib.rcParams.update({'font.size': 10})
-matplotlib.use("Qt5Agg")
+mpl_rcParams.update({'font.size': 10})
+mpl_use("Qt5Agg")
 
 
 def export(self, location):
@@ -148,7 +149,7 @@ def get_df(self, call_model, df):
         temp_df.append(dm.get_non_verbal_speech_only(df, cue))
     # Get the cue data and concatenate to make final df
     if temp_df:
-        df = pd.concat(temp_df)
+        df = pd_concat(temp_df)
 
     return df, cue_types
 

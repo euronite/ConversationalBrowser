@@ -7,7 +7,8 @@ This contains the main Controller/View of the GUI.
 from PyQt5 import QtWidgets, uic
 from PyQt5.QtCore import pyqtSlot
 from PyQt5.QtWidgets import QWidget, QMessageBox, QDialog
-import sys
+from sys import exit as s_exit
+from sys import argv as s_argv
 from conversationalbrowser import data_manipulation as dm
 from conversationalbrowser.model import Model, CallerModel
 from conversationalbrowser import graph
@@ -217,10 +218,10 @@ class CueDialog(QDialog):
 
 
 def main():
-    app = QtWidgets.QApplication(sys.argv)
+    app = QtWidgets.QApplication(s_argv)
     main_window = MainWindow()
     main_window.show()
-    sys.exit(app.exec_())
+    s_exit(app.exec())
 
 
 if __name__ == "__main__":

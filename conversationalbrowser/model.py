@@ -3,8 +3,7 @@
 """
 This holds the model object which is essentially the dataframe that can then be passed to the data_manipulation files.
 """
-
-import pandas as pd
+from pandas import read_csv
 from conversationalbrowser import data_manipulation as dm
 
 
@@ -42,7 +41,7 @@ class Model:
         """
         if is_valid(file):
             self.fileName = file
-            self.fileContents = pd.read_csv(file, names=dm.header_names)
+            self.fileContents = read_csv(file, names=dm.header_names)
             self.fileContents = dm.receiver_and_caller_column(self.fileContents)
         else:
             self.fileName = ""
