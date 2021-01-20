@@ -25,7 +25,8 @@ You  may want to use a virtual environment.
 * Update pip using `pip install --upgrade pip`
 * A couple of ways. Recommended way is to have Anaconda installed.
 * In the Anaconda Prompt navigate to the folder containing requirements.txt
-  and run `pip install -r requirements.txt`
+  and run `pip install -r requirements.txt`. Filelock installation error
+  may occur but shouldn't affect the running of the program.
 * Then do python main.py
 
 ### Troubleshooting
