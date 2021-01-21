@@ -36,3 +36,6 @@ You  may want to use a virtual environment.
   If this fails, it probably means your pip installation is broken. Follow the
   relevant uninstall/reinstall guides
   for your system.
+* Mac systems might have some issues with pip installation of packages.
+  The workaround is to install the packages manually and ignore the version
+  number.
