@@ -118,6 +118,11 @@
             <height>50</height>
            </size>
           </property>
+          <property name="font">
+           <font>
+            <pointsize>12</pointsize>
+           </font>
+          </property>
           <property name="text">
            <string>Load Data</string>
           </property>
@@ -136,6 +141,11 @@
             <width>300</width>
             <height>50</height>
            </size>
+          </property>
+          <property name="font">
+           <font>
+            <pointsize>12</pointsize>
+           </font>
           </property>
           <item>
            <property name="text">
@@ -162,6 +172,11 @@
             <width>200</width>
             <height>50</height>
            </size>
+          </property>
+          <property name="font">
+           <font>
+            <pointsize>12</pointsize>
+           </font>
           </property>
           <item>
            <property name="text">
@@ -193,6 +208,11 @@
             <width>300</width>
             <height>50</height>
            </size>
+          </property>
+          <property name="font">
+           <font>
+            <pointsize>12</pointsize>
+           </font>
           </property>
           <property name="text">
            <string>Cue Types</string>
@@ -230,6 +250,11 @@
             <width>300</width>
             <height>50</height>
            </size>
+          </property>
+          <property name="font">
+           <font>
+            <pointsize>12</pointsize>
+           </font>
           </property>
           <property name="text">
            <string>Caller ID</string>
@@ -295,6 +320,11 @@
             <height>50</height>
            </size>
           </property>
+          <property name="font">
+           <font>
+            <pointsize>12</pointsize>
+           </font>
+          </property>
           <item>
            <property name="text">
             <string>Receiver and Caller</string>
@@ -325,6 +355,11 @@
             <width>200</width>
             <height>50</height>
            </size>
+          </property>
+          <property name="font">
+           <font>
+            <pointsize>12</pointsize>
+           </font>
           </property>
           <item>
            <property name="text">
