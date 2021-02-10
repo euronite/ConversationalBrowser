@@ -47,6 +47,8 @@ class MainWindow(QtWidgets.QMainWindow):
 
     @pyqtSlot()
     def exportGraph(self):
+        if self.model.figure is None:
+            return QMessageBox.critical(self, "Export Error", "No graph to export!")
         file_dialog = FileDialog()
         location = file_dialog.saveFileDialog()
         try:
