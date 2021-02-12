@@ -78,7 +78,7 @@ def test_select_individual_caller_dialog(qtbot):
     assert cue_list.itemAt(center).text() == "Silence"
     rec = cue_list.visualItemRect(cue_list.item(2))
     center = rec.center()
-    assert cue_list.itemAt(center).text() == "Backchat"
+    assert cue_list.itemAt(center).text() == "Back-channel"
     qtbot.mouseClick(cue_list.viewport(), QtCore.Qt.LeftButton, pos=center)
     assert len(cue_list.selectedItems()) == 2
 

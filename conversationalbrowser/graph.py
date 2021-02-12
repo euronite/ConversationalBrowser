@@ -142,7 +142,7 @@ def get_df(self, call_model, df):
         if cue == "All Cues":
             cue_types = {"filler": 0, "laughter": 0, "silence": 0, "bc": 0}
             break
-        if cue == "Backchat":
+        if cue == "Back-channel":
             cue = "bc"
         cue = cue.lower()
         cue_types[cue] = 0

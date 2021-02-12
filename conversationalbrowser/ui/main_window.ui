@@ -57,7 +57,7 @@
        </widget>
       </item>
       <item row="1" column="0">
-       <widget class="QLabel" name="label_3">
+       <widget class="QLabel" name="hint_info">
         <property name="font">
          <font>
           <pointsize>10</pointsize>
@@ -276,7 +276,7 @@
            </font>
           </property>
           <property name="toolTip">
-           <string/>
+           <string>Cues to display. Laughter, filler (like erm) and back-channel (like uh huh while other is talking)</string>
           </property>
           <property name="text">
            <string>Cue Types</string>
