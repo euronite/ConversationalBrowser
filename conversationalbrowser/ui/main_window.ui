@@ -276,7 +276,7 @@
            </font>
           </property>
           <property name="toolTip">
-           <string>Cues to display. Laughter, filler (like erm) and back-channel (like uh huh while other is talking)</string>
+           <string>Cues to display. Laughter, silence, filler (like erm) and back-channel (like uh huh while other is talking)</string>
           </property>
           <property name="text">
            <string>Cue Types</string>
