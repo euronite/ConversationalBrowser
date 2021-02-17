@@ -86,6 +86,62 @@ def test_data():
 
 
 @pytest.fixture
+def individual_call_data_2():
+    dummy_data = {
+        "call": ["F01", "F01", "F01", "F01", "F01", "F01"],
+        "conversation_topic": [
+            "other",
+            "other",
+            "other",
+            "other",
+            "other",
+            "end",
+        ],
+        "person_and_type": [
+            "silence",
+            "filler_cM filler_rF",
+            "laughter_cM",
+            "laughter_rF",
+            "laughter_cM",
+            "end",
+        ],
+        "start": [
+            0,
+            1.01,
+            1.24,
+            2.0,
+            2.9,
+            3.456,
+        ],
+        "end": [
+            1.01,
+            1.24,
+            2.0,
+            2.9,
+            3.456,
+            4.0,
+        ],
+        "caller": [
+            "caller_M",
+            "caller_M",
+            "caller_M",
+            "caller_M",
+            "caller_M",
+            "caller_M",
+        ],
+        "receiver": [
+            "receiver_F",
+            "receiver_F",
+            "receiver_F",
+            "receiver_F",
+            "receiver_F",
+            "receiver_F",
+        ],
+    }
+    return pd.DataFrame(dummy_data)
+
+
+@pytest.fixture
 def individual_call_data():
     dummy_data = {
         "call": ["F01", "F01", "F01", "F01", "F01", "F01"],
@@ -155,19 +211,23 @@ def test_read_in():
     assert dm.read_in_data(Path("tests/test_data.csv")) is not None
 
 
-def test_occurrence_of_event(individual_call_data):
+def test_occurrence_of_event(individual_call_data, individual_call_data_2):
     assert [2, 1] == dm.occurrence_of_event(individual_call_data, "laughter")
     assert [1, 1] == dm.occurrence_of_event(individual_call_data, "silence")
     with pytest.raises(ValueError):
         dm.occurrence_of_event(pd.DataFrame(), "laughter")
+
+    assert [2, 1] == dm.occurrence_of_event(individual_call_data_2, "laughter")
+    assert [1, 1] == dm.occurrence_of_event(individual_call_data_2, "silence")
 
 
 def test_get_list_of_call_id_df(test_data):
     assert len(dm.get_list_of_call_id_df(test_data, ["F01", "F02"])) == 11
 
 
-def test_total_time_of_event(individual_call_data):
+def test_total_time_of_event(individual_call_data, individual_call_data_2):
     assert pytest.approx([1.316, 0.9]) == dm.total_time_of_event(individual_call_data, "laughter")
+    assert pytest.approx([1.316, 0.9]) == dm.total_time_of_event(individual_call_data_2, "laughter")
     with pytest.raises(ValueError):
         dm.total_time_of_event(pd.DataFrame(), "laughter")
 
@@ -203,19 +263,20 @@ def test_get_rows_by_caller_and_receiver_with_missing_pos(test_data):
     assert "receiver_F" in df.receiver.unique() and len(df.receiver.unique()) == 1
 
 
-def test_occurrence_of_each_event(test_data):
+def test_occurrence_of_each_event(test_data, individual_call_data_2):
     result = dm.occurrence_of_each_event(test_data, dm.cue_types)
     assert pytest.approx(result["silence"]) == 3
     assert pytest.approx(result["laughter"]) == 1
     assert result["filler"] == 0
     assert result["bc"] == 0
+    assert dm.occurrence_of_each_event(individual_call_data_2, dm.cue_types)["filler"] == 2
 
 
 def test_mean_time_of_each_event(test_data):
     result = dm.mean_time_of_each_event(test_data, dm.cue_types)
     assert pytest.approx(result["silence"]) == 0.705333333
     assert pytest.approx(result["laughter"]) == 0.76
-    assert result["filler"] == 0
+    assert result["filler"] == 2
     assert result["bc"] == 0
 
 
