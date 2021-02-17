@@ -9,8 +9,32 @@ def test_assert():
     assert test_value == 1
 
 
-def test_is_valid():
+def test_is_valid_error():
     assert model.is_valid("test.file") is False
+
+
+def test_is_valid():
+    model.is_valid("main.py")
+
+
+def test_set_file_name(test_data_model):
+    test_data_model.set_file_name("error.csv")
+    assert test_data_model.fileName == ""
+
+
+def test_set_selected_items(test_call_model):
+    test_call_model.set_selected_items(["F01", "F02"])
+    assert test_call_model.selected == ["F01", "F02"]
+
+
+def test_set_caller_ids(test_data_model):
+    test_data_model.set_caller_ids(["F01", "F02", "F03"])
+    assert test_data_model.callerIds == ["F01", "F02", "F03"]
+
+
+def test_set_figure(test_data_model):
+    test_data_model.set_figure("TEST FIGURE")
+    assert test_data_model.figure == "TEST FIGURE"
 
 
 def test_get_file_contents(test_data_model):

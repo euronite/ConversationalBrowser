@@ -34,9 +34,17 @@ def caller_data():
     widget.populateListView(ids)
     return widget
 
+
 @pytest.fixture
 def main_window():
     return main.MainWindow()
+
+
+def test_enable_caller_receiver_dropdown(main_window):
+    main_window.callerReceiverToggle()
+    assert main_window.roleDropdown.currentText() == "Receiver and Caller"
+    assert main_window.callerGenderDropdown.isEnabled()
+    assert main_window.receiverGenderDropdown.isEnabled()
 
 
 def test_disable_caller_dropdown(main_window):
@@ -59,6 +67,7 @@ def test_disable_receiver_dropdown(main_window):
     main_window.callerReceiverToggle()
     assert main_window.receiverGenderDropdown.isEnabled() is False
 
+
 def test_display_totals(main_window):
     main_window.chartDropdown.setCurrentIndex(1)
     assert main_window.chartDropdown.currentText() == "Display per Cue Event"
@@ -67,6 +76,8 @@ def test_display_totals(main_window):
     main_window.chartDropdown.setCurrentIndex(0)
     main_window.averageToggle()
     assert main_window.averageCheckbox.isEnabled() is True
+
+
 def test_select_individual_caller_dialog(qtbot):
     cue_dialog = main.CueDialog()
     qtbot.mouseClick(cue_dialog.pushBtn, QtCore.Qt.LeftButton)

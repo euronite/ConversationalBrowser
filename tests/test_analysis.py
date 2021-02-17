@@ -146,12 +146,20 @@ def test_get_calls_df(test_data):
     assert len(dm.get_calls_df(test_data, ["F01", "F02"])) == len(test_data)
 
 
+def test_get_non_verbal_speech(test_data):
+    assert len(dm.get_non_verbal_speech_only(test_data, "silence")) == 3
+    assert len(dm.get_non_verbal_speech_only(test_data, "laughter_cF")) == 0
+
+
 def test_read_in():
     assert dm.read_in_data(Path("tests/test_data.csv")) is not None
 
 
 def test_occurrence_of_event(individual_call_data):
     assert [2, 1] == dm.occurrence_of_event(individual_call_data, "laughter")
+    assert [1, 1] == dm.occurrence_of_event(individual_call_data, "silence")
+    with pytest.raises(ValueError):
+        dm.occurrence_of_event(pd.DataFrame(), "laughter")
 
 
 def test_get_list_of_call_id_df(test_data):
@@ -159,7 +167,9 @@ def test_get_list_of_call_id_df(test_data):
 
 
 def test_total_time_of_event(individual_call_data):
-    assert [1.316, 0.9], dm.total_time_of_event(individual_call_data, "laughter")
+    assert pytest.approx([1.316, 0.9]) == dm.total_time_of_event(individual_call_data, "laughter")
+    with pytest.raises(ValueError):
+        dm.total_time_of_event(pd.DataFrame(), "laughter")
 
 
 def test_get_permutations_of_gender_and_position():
@@ -184,6 +194,13 @@ def test_get_rows_by_caller_and_receiver(test_data):
     df = dm.get_rows_by_caller_and_receiver(test_data, None, None)
     assert len(df.caller.unique()) == 1
     assert len(df.receiver.unique()) == 2
+
+
+def test_get_rows_by_caller_and_receiver_with_missing_pos(test_data):
+    df = dm.get_rows_by_caller_and_receiver(test_data, "caller_F", None)
+    assert "caller_F" in df.caller.unique() and len(df.caller.unique()) == 1
+    df = dm.get_rows_by_caller_and_receiver(test_data, None, "receiver_F")
+    assert "receiver_F" in df.receiver.unique() and len(df.receiver.unique()) == 1
 
 
 def test_occurrence_of_each_event(test_data):
@@ -215,6 +232,11 @@ def test_get_all_event_durations(test_data):
     assert len(result[0]) == 0 and result[1].iloc[0] == 0.76
     result = dm.get_all_event_durations(test_data, "silence")
     assert len(result[0]) == 3 and result[1].iloc[0] == 1.01
+
+
+def test_get_all_event_durations_raised_error(test_data):
+    with pytest.raises(ValueError):
+        dm.get_all_event_durations(pd.DataFrame({'A': []}), "silence")
 
 
 def test_total_overlap_occurrence(test_data):
