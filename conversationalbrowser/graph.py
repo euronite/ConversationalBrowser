@@ -12,8 +12,9 @@ from conversationalbrowser import data_manipulation as dm
 from numpy import arange, concatenate
 from pandas import concat as pd_concat
 import matplotlib.pyplot as pyplot
-pyplot.style.use('fivethirtyeight')
-mpl_rcParams.update({'font.size': 10})
+
+pyplot.style.use("fivethirtyeight")
+mpl_rcParams.update({"font.size": 10})
 mpl_use("Qt5Agg")
 
 
