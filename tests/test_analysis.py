@@ -226,8 +226,12 @@ def test_get_list_of_call_id_df(test_data):
 
 
 def test_total_time_of_event(individual_call_data, individual_call_data_2):
-    assert pytest.approx([1.316, 0.9]) == dm.total_time_of_event(individual_call_data, "laughter")
-    assert pytest.approx([1.316, 0.9]) == dm.total_time_of_event(individual_call_data_2, "laughter")
+    assert pytest.approx([1.316, 0.9]) == dm.total_time_of_event(
+        individual_call_data, "laughter"
+    )
+    assert pytest.approx([1.316, 0.9]) == dm.total_time_of_event(
+        individual_call_data_2, "laughter"
+    )
     with pytest.raises(ValueError):
         dm.total_time_of_event(pd.DataFrame(), "laughter")
 
@@ -269,7 +273,9 @@ def test_occurrence_of_each_event(test_data, individual_call_data_2):
     assert pytest.approx(result["laughter"]) == 1
     assert result["filler"] == 0
     assert result["bc"] == 0
-    assert dm.occurrence_of_each_event(individual_call_data_2, dm.cue_types)["filler"] == 2
+    assert (
+        dm.occurrence_of_each_event(individual_call_data_2, dm.cue_types)["filler"] == 2
+    )
 
 
 def test_mean_time_of_each_event(test_data):
@@ -297,7 +303,7 @@ def test_get_all_event_durations(test_data):
 
 def test_get_all_event_durations_raised_error(test_data):
     with pytest.raises(ValueError):
-        dm.get_all_event_durations(pd.DataFrame({'A': []}), "silence")
+        dm.get_all_event_durations(pd.DataFrame({"A": []}), "silence")
 
 
 def test_total_overlap_occurrence(test_data):
