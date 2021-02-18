@@ -16,6 +16,8 @@ from pathlib import Path
 
 
 class MainWindow(QtWidgets.QMainWindow):
+    """ This is the main window of the application, containing the various logic for buttons and menus. """
+
     def __init__(self, *args, **kwargs):
         self.model = Model()
         self.callModel = CallerModel()
@@ -31,6 +33,9 @@ class MainWindow(QtWidgets.QMainWindow):
 
     @pyqtSlot()
     def browseSlot(self):
+        """
+        This is a slot that gets called whenever the load file button is pressed. It loads the data and saves to model.
+        """
         file_dialog = FileDialog()
         file = file_dialog.openFileDialog()
         if file:
@@ -47,6 +52,7 @@ class MainWindow(QtWidgets.QMainWindow):
 
     @pyqtSlot()
     def exportGraph(self):
+        """ This calls the file dialog call to then save the file. """
         if self.model.figure is None:
             return QMessageBox.critical(self, "Export Error", "No graph to export!")
         file_dialog = FileDialog()
@@ -70,6 +76,7 @@ class MainWindow(QtWidgets.QMainWindow):
 
     @pyqtSlot()
     def displayGraphSlot(self):
+        """ This calls the functions from graph.py to process the filter options and display the graph. """
         if not self.callModel.selected:
             self.callModel.selected = [("All Caller IDs", 0)]
         if not self.callModel.cues_selected:
@@ -77,12 +84,16 @@ class MainWindow(QtWidgets.QMainWindow):
         graph.displaympl(self, self.model, self.callModel)
 
     def averageToggle(self):
+        """ Average toggle disables the average checkbox whenever the 'Display per Cue Event' is selected. """
         if self.chartDropdown.currentText() == "Display Totals":
             self.averageCheckbox.setEnabled(True)
         else:
             self.averageCheckbox.setEnabled(False)
 
     def callerReceiverToggle(self):
+        """
+        This is used to enable/disable the caller and receiver gender dropdown menu based on the role dropdown selection
+        """
         if self.roleDropdown.currentText() == "Receiver and Caller":
             self.callerGenderDropdown.setEnabled(True)
             self.receiverGenderDropdown.setEnabled(True)
@@ -94,6 +105,7 @@ class MainWindow(QtWidgets.QMainWindow):
             self.receiverGenderDropdown.setEnabled(True)
 
     def openCueDialog(self):
+        """ This calls the cue dialog box and allows selection of the cues wanted. """
         cue_dialog = CueDialog(self)
         if not self.callModel.cues_selected:
             cue_dialog.selectAll()
@@ -112,6 +124,7 @@ class MainWindow(QtWidgets.QMainWindow):
             )
 
     def openCallerDialog(self):
+        """ This opens the caller dialog box to choose which caller ids to display. """
         caller_dialog = CallerDialog(self)
         caller_dialog.populateListView(self.model.callerIds)
         if not self.callModel.selected:
@@ -134,6 +147,8 @@ class MainWindow(QtWidgets.QMainWindow):
 
 
 class FileDialog(QWidget):
+    """ This is the file dialog box that is created and shown whenever the user wants to load in data. """
+
     def __init__(self):
         super(FileDialog, self).__init__()
         self.initUI()
@@ -142,7 +157,12 @@ class FileDialog(QWidget):
         self.setWindowTitle("Choose csv file")
         self.setGeometry(100, 100, 640, 480)
 
-    def openFileDialog(self):
+    def openFileDialog(self) -> str:
+        """This is called and opens the system file explorer to choose the files. Options are set such as only
+        allowing csv.
+        :return:
+        file: str is the name of the file location.
+        """
         options = QtWidgets.QFileDialog.Options()
         file, _ = QtWidgets.QFileDialog.getOpenFileName(
             None,
@@ -153,7 +173,12 @@ class FileDialog(QWidget):
         )
         return file
 
-    def saveFileDialog(self):
+    def saveFileDialog(self) -> str:
+        """
+        This is called to select the location to save the file. Options are set with a default name, plot.png
+        :return:
+        filename: str is the name of the file location to save to.
+        """
         options = QtWidgets.QFileDialog.Options()
         filename, _ = QtWidgets.QFileDialog.getSaveFileName(
             None,
@@ -165,26 +190,32 @@ class FileDialog(QWidget):
 
 
 class CallerDialog(QDialog):
+    """ This is caller id selection dialog class that is shown to the user. """
+
     def __init__(self, *args, **kwargs):
         super(CallerDialog, self).__init__(*args, **kwargs)
         uic.loadUi(Path("conversationalbrowser/ui/dialog_caller_id.ui"), self)
         self.setWindowTitle("Choose caller IDs")
         self.callerListWidget.selectionModel().currentChanged.connect(self.onRowChanged)
 
-    def populateListView(self, id_list):
+    def populateListView(self, id_list: list):
+        """ This is called to update the list view of caller ids. """
         self.callerListWidget.addItems(id_list)
 
     def onRowChanged(self, current):
+        """ Whenever an ID is selected/deselected, this is called to select or deselect the item """
         if current.row() != 0:
             self.callerListWidget.item(0).setSelected(False)
         elif current.row() == 0:
             self.selectAll()
 
     def deselectAll(self):
+        """ This is called when clear selection button is pressed. Deselects all caller ids. """
         for i in range(self.callerListWidget.count()):
             self.callerListWidget.item(i).setSelected(False)
 
     def selectAll(self):
+        """ This is called when row 0, which is All Ids is pressed. This selects all ids. """
         for i in range(self.callerListWidget.count()):
             self.callerListWidget.item(i).setSelected(True)
 
@@ -194,6 +225,8 @@ class CallerDialog(QDialog):
 
 
 class CueDialog(QDialog):
+    """ This shows the cue dialog box as well as the functions within the class. """
+
     def __init__(self, *args, **kwargs):
         super(CueDialog, self).__init__(*args, **kwargs)
         uic.loadUi(Path("conversationalbrowser/ui/dialog_cue.ui"), self)
@@ -201,16 +234,19 @@ class CueDialog(QDialog):
         self.cueListWidget.selectionModel().currentChanged.connect(self.onRowChanged)
 
     def onRowChanged(self, current):
+        """ This selects or deselects the cues when pressed. If the first row is pressed, this is all cues. """
         if current.row() != 0:
             self.cueListWidget.item(0).setSelected(False)
         elif current.row() == 0:
             self.selectAll()
 
     def deselectAll(self):
+        """ This clears the cue selection whenever the clear selection button is pressed. """
         for i in range(self.cueListWidget.count()):
             self.cueListWidget.item(i).setSelected(False)
 
     def selectAll(self):
+        """ This is used to select all the cues whenever the first row is pressed. """
         for i in range(self.cueListWidget.count()):
             self.cueListWidget.item(i).setSelected(True)
 
