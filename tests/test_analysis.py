@@ -197,11 +197,6 @@ def individual_call_data():
     return pd.DataFrame(dummy_data)
 
 
-def test_get_calls_df(test_data):
-    assert len(dm.get_calls_df(test_data, ["F01"])) == 7
-    assert len(dm.get_calls_df(test_data, ["F01", "F02"])) == len(test_data)
-
-
 def test_get_non_verbal_speech(test_data):
     assert len(dm.get_non_verbal_speech_only(test_data, "silence")) == 3
     assert len(dm.get_non_verbal_speech_only(test_data, "laughter_cF")) == 0
