@@ -30,6 +30,7 @@ def receiver_and_caller_column(df):
     """
     Takes in the dataframe, header names and gender/position.
     This then looks at person_and_type column and fills the caller and receiver column with the appropriate value
+    :return: df data frame containing the data set with additional caller and receiver columns
     """
     call_id = get_all_call_ids(df)
     for call in call_id:
@@ -43,30 +44,31 @@ def receiver_and_caller_column(df):
     return df
 
 
-def get_call_df(df, call_id):
+def get_call_df(df, call_id: str):
     """
-    This gets the rows containing the call_id.
+    This gets the rows containing a specific caller ID.
+    :param df: dataset that is being searched
+    :param call_id: str the caller ID that is being located
+    :return: df of rows with caller id.
     """
     return df.loc[df["call"] == call_id]
-
-
-def get_calls_df(df, call_id):
-    """
-    This takes in a list, call_id, and matches to that.
-    """
-    return df[df["call"].isin(call_id)]
 
 
 def get_all_call_ids(df):
     """
     Returns an array of the names of the call ids
+    :param: df dataframe of the dataset being searched
+    :return: array of call IDs.
     """
     return df.call.unique()
 
 
-def get_list_of_call_id_df(df, call_id_list):
+def get_list_of_call_id_df(df, call_id_list: list):
     """
-    Returns df containing only rows that are in the call id list.
+    This finds the rows where the call ID matches one of the call ids being searched for.
+    :param df: dataset that is being searched
+    :param call_id_list: a list of call ids that are being matched.
+    :return: df of rows where the call id is in the call_id list
     """
     return df[(df.call.isin(call_id_list))]
 
@@ -165,9 +167,13 @@ def occurrence_of_event(df, cue):
     return [caller_cue_count, receiver_cue_count]
 
 
-def total_time_of_event(df, cue):
-    # dataframe input should be an individual call.
-    # returns a list of two vals. Length of time caller did cue and length of time the receiver did the cue
+def total_time_of_event(df, cue: str):
+    """
+    This calculates the total duration of a single cue, for a single call.
+    :param df: this is a dataframe containing the rows of a single call ID.
+    :param cue: cue that is being used.
+    :return: [caller_cue_time, receiver_cue_time] a list of the duration of the cue chosen.
+    """
     if df.empty:
         raise ValueError("Dataframe empty")
     if "M" in df["receiver"].iloc[0]:
@@ -187,9 +193,12 @@ def total_time_of_event(df, cue):
     return [caller_cue_time, receiver_cue_time]
 
 
-def total_time_of_each_event(df, types):
+def total_time_of_each_event(df, types: dict):
     """
-    This calculates the total time of each cue in the dataset, returning a dictionary of each cue
+    This calculates the total time of each cue from the types dict in the dataset, returning a dictionary of each cue.
+    :param df: contains the dataset.
+    :param types: dict of the cues being searched for
+    :return: types: dict of the cue durations.
     """
     for cue in types:
         new_df = df[
