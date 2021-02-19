@@ -243,20 +243,6 @@ def mean_time_of_each_event(df, types: dict) -> dict:
     return types
 
 
-def individual_call_length(df):
-    """
-    Gets the the call length of each conversation and returns a dictionary of call id and length of time
-    :param df:
-    :return:
-    """
-    total = {}
-    ids = get_all_call_ids(df)
-    for call in ids:
-        temp_df = df[df["call"].str.match(call)]  # gets the df that matches call id
-        total[call] = temp_df.iloc[-1]["end"]
-    return total
-
-
 def total_overlap_occurrence(df):
     """
     Returns the number of times there was two people talking over on another

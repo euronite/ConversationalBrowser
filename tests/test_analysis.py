@@ -313,11 +313,6 @@ def test_mean_overlap_time(test_data):
     assert pytest.approx(dm.mean_overlap_time(test_data)) == 0.625
 
 
-def test_individual_call_length(test_data):
-    expected = {"F01": 4.2, "F02": 2.1}
-    assert expected == dm.individual_call_length(test_data)
-
-
 def test_get_all_call_ids(test_data):
     assert len((dm.get_all_call_ids(test_data))) == 2
 
