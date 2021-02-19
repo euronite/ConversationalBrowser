@@ -22,7 +22,12 @@ gender_types = dict.fromkeys(gender_and_position, 0)
 cue_types = {"laughter": 0, "silence": 0, "filler": 0, "bc": 0}
 
 
-def read_in_data(location):
+def read_in_data(location: str):
+    """
+    Reads in the csv as a panda dataframe.
+    :param location: str of the filepath
+    :return: dataframe of the dataset
+    """
     return pd.read_csv(location, sep=",", names=header_names)
 
 
