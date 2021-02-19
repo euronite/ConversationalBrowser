@@ -18,12 +18,10 @@ mpl_rcParams.update({"font.size": 10})
 mpl_use("Qt5Agg")
 
 
-def export(self, location):
+def export(self, location: str):
     """
-    Exports graph in the location user specifies
-    :param self:
-    :param location:
-    :return:
+    Exports graph in the location user specifies, raises IOError if its unable to.
+    :param location: str is the filepath location of where to save.
     """
     try:
         self.model.figure.savefig(location)
@@ -32,9 +30,7 @@ def export(self, location):
 
 
 def rmmpl(self):
-    """
-    removes existing graph
-    """
+    """ removes existing graph from the canvas. """
     self.mplvl.removeWidget(self.canvas)
     self.canvas.close()
     fig = Figure()
@@ -46,8 +42,7 @@ def rmmpl(self):
 
 def addmpl(self, fig):
     """
-    Adds a figure to the UI
-    :param self:
+    Adds a figure to the canvas.
     :param fig: this contains the values that are to be displayed on the plot
     """
     self.canvas = FigureCanvas(fig)
@@ -56,9 +51,7 @@ def addmpl(self, fig):
 
 
 def initmpl(self):
-    """
-    this is used to initialise a blank plot when the application is first run.
-    """
+    """ this is used to initialise a blank plot when the application is first run. """
     fig = Figure()
     fig.add_subplot(111)
     self.canvas = FigureCanvas(fig)
@@ -72,7 +65,6 @@ def displaympl(self, model, call_model):
     :param call_model:
     :param model:
     :param self:
-    :return:
     """
 
     if model.fileContents is None:
@@ -111,10 +103,10 @@ def displaympl(self, model, call_model):
 def get_df(self, call_model, df):
     """
     This gets the dataframe which has the parameters which the data is constrained by. Returns dataframe of what to use.
-    :param self:
-    :param call_model:
-    :param df:
-    :return:
+    :param call_model: This contains the class with caller ids. Used to get the selected ones.
+    :param df: This is the dataframe of the data that will be used to display the graph.
+    :return: df: Returns datafram that has been processed, removing not needed genders etc.
+    :return: cue_types: This returns the cue types that are selected by the user.
     """
     # Get the dataframe of relevant call IDs
     if call_model.selected[0][1] != 0:
@@ -135,7 +127,7 @@ def get_df(self, call_model, df):
         receiver = "receiver_M"
     df = dm.get_rows_by_caller_and_receiver(df, caller, receiver)
 
-    # Get the cue types
+    # Get the cue types that were selected.
     cue_types = {}
     temp_df = []
     for cue_pair in call_model.cues_selected:
@@ -201,8 +193,10 @@ def get_duration_per_call(self, df, cue_types, fig):
 
 def get_occurrences_per_call(self, df, cue_types, fig):
     """
-    This will get the occurrences for all callers of the cues
-    :return:
+    This will get the occurrences for all participants cues total. A graph is then created.
+    :param df: This is the dataframe containing the filtered data so far.
+    :param cue_types: this is the cues that have been selected.
+    :param fig: this contains the matplotlib figures that can be then used to display graphs.
     """
     cue_names = list(cue_types.keys())
     cue_results = []
@@ -247,10 +241,17 @@ def get_occurrences_per_call(self, df, cue_types, fig):
     fig.suptitle("Total Occurrences for All Participants")
 
 
-def get_total_cue_data(self, df, cue_types, fig, radio_type):
+def get_total_cue_data(self, df, cue_types, fig, radio_type: str):
+    """
+    This function is used to get the cue occurrences or duration. It then creates the graph.
+    :param df: dataframe of filtered data so far.
+    :param cue_types: this contains the cue types that have been selected by user.
+    :param fig: this contains the matplotlib plot that will be used to then display graph.
+    :param radio_type: str this is the radio button type that was selected, occurrences or duration.
+    """
     ax = fig.add_subplot(111)
     average = self.averageCheckbox.isChecked()
-    caller_or_receiver = False
+    caller_or_receiver = ""
     if (
         self.callerGenderDropdown.isEnabled()
         and self.receiverGenderDropdown.isEnabled()
@@ -287,7 +288,15 @@ def get_total_cue_data(self, df, cue_types, fig, radio_type):
     set_label(ax, caller_or_receiver, radio_type, average)
 
 
-def set_label(ax, caller_or_receiver, radio_type, average):
+def set_label(ax, caller_or_receiver: str, radio_type: str, average: bool):
+    """
+    This is called to set the labels on the graph. The params being passed contains the strings from which the labels
+    will be created.
+    :param ax: the graph axes
+    :param caller_or_receiver: str this is the string containing whether the graph is for callers or receivers.
+    :param radio_type: str this contains whether the data is occurrences or durations.
+    :param average: bool used to set whether 'average' should be used in the title and axes.
+    """
     title = ""
     x_label = "Cue"
     y_label = ""
