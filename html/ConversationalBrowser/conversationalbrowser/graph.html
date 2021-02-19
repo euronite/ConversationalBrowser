@@ -1,0 +1,817 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
+<meta name="generator" content="pdoc 0.9.2" />
+<title>ConversationalBrowser.conversationalbrowser.graph API documentation</title>
+<meta name="description" content="This holds the functions to draw the graph on the user interface using matplotlib." />
+<link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/sanitize.min.css" integrity="sha256-PK9q560IAAa6WVRRh76LtCaI8pjTJ2z11v0miyNNjrs=" crossorigin>
+<link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/typography.min.css" integrity="sha256-7l/o7C8jubJiy74VsKTidCy1yBkRtiUGbVkYBylBqUg=" crossorigin>
+<link rel="stylesheet preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/styles/github.min.css" crossorigin>
+<style>:root{--highlight-color:#fe9}.flex{display:flex !important}body{line-height:1.5em}#content{padding:20px}#sidebar{padding:30px;overflow:hidden}#sidebar > *:last-child{margin-bottom:2cm}.http-server-breadcrumbs{font-size:130%;margin:0 0 15px 0}#footer{font-size:.75em;padding:5px 30px;border-top:1px solid #ddd;text-align:right}#footer p{margin:0 0 0 1em;display:inline-block}#footer p:last-child{margin-right:30px}h1,h2,h3,h4,h5{font-weight:300}h1{font-size:2.5em;line-height:1.1em}h2{font-size:1.75em;margin:1em 0 .50em 0}h3{font-size:1.4em;margin:25px 0 10px 0}h4{margin:0;font-size:105%}h1:target,h2:target,h3:target,h4:target,h5:target,h6:target{background:var(--highlight-color);padding:.2em 0}a{color:#058;text-decoration:none;transition:color .3s ease-in-out}a:hover{color:#e82}.title code{font-weight:bold}h2[id^="header-"]{margin-top:2em}.ident{color:#900}pre code{background:#f8f8f8;font-size:.8em;line-height:1.4em}code{background:#f2f2f1;padding:1px 4px;overflow-wrap:break-word}h1 code{background:transparent}pre{background:#f8f8f8;border:0;border-top:1px solid #ccc;border-bottom:1px solid #ccc;margin:1em 0;padding:1ex}#http-server-module-list{display:flex;flex-flow:column}#http-server-module-list div{display:flex}#http-server-module-list dt{min-width:10%}#http-server-module-list p{margin-top:0}.toc ul,#index{list-style-type:none;margin:0;padding:0}#index code{background:transparent}#index h3{border-bottom:1px solid #ddd}#index ul{padding:0}#index h4{margin-top:.6em;font-weight:bold}@media (min-width:200ex){#index .two-column{column-count:2}}@media (min-width:300ex){#index .two-column{column-count:3}}dl{margin-bottom:2em}dl dl:last-child{margin-bottom:4em}dd{margin:0 0 1em 3em}#header-classes + dl > dd{margin-bottom:3em}dd dd{margin-left:2em}dd p{margin:10px 0}.name{background:#eee;font-weight:bold;font-size:.85em;padding:5px 10px;display:inline-block;min-width:40%}.name:hover{background:#e0e0e0}dt:target .name{background:var(--highlight-color)}.name > span:first-child{white-space:nowrap}.name.class > span:nth-child(2){margin-left:.4em}.inherited{color:#999;border-left:5px solid #eee;padding-left:1em}.inheritance em{font-style:normal;font-weight:bold}.desc h2{font-weight:400;font-size:1.25em}.desc h3{font-size:1em}.desc dt code{background:inherit}.source summary,.git-link-div{color:#666;text-align:right;font-weight:400;font-size:.8em;text-transform:uppercase}.source summary > *{white-space:nowrap;cursor:pointer}.git-link{color:inherit;margin-left:1em}.source pre{max-height:500px;overflow:auto;margin:0}.source pre code{font-size:12px;overflow:visible}.hlist{list-style:none}.hlist li{display:inline}.hlist li:after{content:',\2002'}.hlist li:last-child:after{content:none}.hlist .hlist{display:inline;padding-left:1em}img{max-width:100%}td{padding:0 .5em}.admonition{padding:.1em .5em;margin-bottom:1em}.admonition-title{font-weight:bold}.admonition.note,.admonition.info,.admonition.important{background:#aef}.admonition.todo,.admonition.versionadded,.admonition.tip,.admonition.hint{background:#dfd}.admonition.warning,.admonition.versionchanged,.admonition.deprecated{background:#fd4}.admonition.error,.admonition.danger,.admonition.caution{background:lightpink}</style>
+<style media="screen and (min-width: 700px)">@media screen and (min-width:700px){#sidebar{width:30%;height:100vh;overflow:auto;position:sticky;top:0}#content{width:70%;max-width:100ch;padding:3em 4em;border-left:1px solid #ddd}pre code{font-size:1em}.item .name{font-size:1em}main{display:flex;flex-direction:row-reverse;justify-content:flex-end}.toc ul ul,#index ul{padding-left:1.5em}.toc > ul > li{margin-top:.5em}}</style>
+<style media="print">@media print{#sidebar h1{page-break-before:always}.source{display:none}}@media print{*{background:transparent !important;color:#000 !important;box-shadow:none !important;text-shadow:none !important}a[href]:after{content:" (" attr(href) ")";font-size:90%}a[href][title]:after{content:none}abbr[title]:after{content:" (" attr(title) ")"}.ir a:after,a[href^="javascript:"]:after,a[href^="#"]:after{content:""}pre,blockquote{border:1px solid #999;page-break-inside:avoid}thead{display:table-header-group}tr,img{page-break-inside:avoid}img{max-width:100% !important}@page{margin:0.5cm}p,h2,h3{orphans:3;widows:3}h1,h2,h3,h4,h5,h6{page-break-after:avoid}}</style>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/highlight.min.js" integrity="sha256-Uv3H6lx7dJmRfRvH8TH6kJD1TSK1aFcwgx+mdg3epi8=" crossorigin></script>
+<script>window.addEventListener('DOMContentLoaded', () => hljs.initHighlighting())</script>
+</head>
+<body>
+<main>
+<article id="content">
+<header>
+<h1 class="title">Module <code>ConversationalBrowser.conversationalbrowser.graph</code></h1>
+</header>
+<section id="section-intro">
+<p>This holds the functions to draw the graph on the user interface using matplotlib.</p>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+&#34;&#34;&#34;
+This holds the functions to draw the graph on the user interface using matplotlib.
+&#34;&#34;&#34;
+from PyQt5.QtWidgets import QMessageBox
+from matplotlib.backends.backend_qt5agg import FigureCanvasQTAgg as FigureCanvas
+from matplotlib.figure import Figure
+from matplotlib import rcParams as mpl_rcParams
+from matplotlib import use as mpl_use
+from conversationalbrowser import data_manipulation as dm
+from numpy import arange, concatenate
+from pandas import concat as pd_concat
+import matplotlib.pyplot as pyplot
+
+pyplot.style.use(&#34;fivethirtyeight&#34;)
+mpl_rcParams.update({&#34;font.size&#34;: 10})
+mpl_use(&#34;Qt5Agg&#34;)
+
+
+def export(self, location: str):
+    &#34;&#34;&#34;
+    Exports graph in the location user specifies, raises IOError if its unable to.
+    :param location: str is the filepath location of where to save.
+    &#34;&#34;&#34;
+    try:
+        self.model.figure.savefig(location)
+    except IOError:
+        raise
+
+
+def rmmpl(self):
+    &#34;&#34;&#34; removes existing graph from the canvas. &#34;&#34;&#34;
+    self.mplvl.removeWidget(self.canvas)
+    self.canvas.close()
+    fig = Figure()
+    fig.add_subplot(111)
+    self.canvas = FigureCanvas(fig)
+    self.mplvl.addWidget(self.canvas)
+    self.canvas.draw()
+
+
+def addmpl(self, fig):
+    &#34;&#34;&#34;
+    Adds a figure to the canvas.
+    :param fig: this contains the values that are to be displayed on the plot
+    &#34;&#34;&#34;
+    self.canvas = FigureCanvas(fig)
+    self.mplvl.addWidget(self.canvas)
+    self.canvas.draw()
+
+
+def initmpl(self):
+    &#34;&#34;&#34; this is used to initialise a blank plot when the application is first run. &#34;&#34;&#34;
+    fig = Figure()
+    fig.add_subplot(111)
+    self.canvas = FigureCanvas(fig)
+    self.mplvl.addWidget(self.canvas)
+    self.canvas.draw()
+
+
+def displaympl(self, model, call_model):
+    &#34;&#34;&#34;
+    This is used to display the graph upon Display button click.
+    :param call_model:
+    :param model:
+    :param self:
+    &#34;&#34;&#34;
+
+    if model.fileContents is None:
+        return QMessageBox.critical(
+            self, &#34;File Not Loaded&#34;, &#34;Data not loaded, please load data first!&#34;
+        )
+
+    fig = Figure()  # New graph setup
+    df = model.fileContents
+    df, cue_types = get_df(self, call_model, df)
+    try:
+        if df.empty:
+            error_dialog(&#34;Caller/Receiver Combination Not Found&#34;)
+        elif self.occurrencesRadioBtn.isChecked():
+            if self.chartDropdown.currentText() == &#34;Display Totals&#34;:
+                get_total_cue_data(self, df, cue_types, fig, &#34;occurrences&#34;)
+            else:
+                get_occurrences_per_call(self, df, cue_types, fig)
+        else:
+            if self.chartDropdown.currentText() == &#34;Display Totals&#34;:
+                get_total_cue_data(self, df, cue_types, fig, &#34;durations&#34;)
+            else:
+                get_duration_per_call(self, df, cue_types, fig)
+    except Exception as e:
+        error_dialog(f&#34;Exception occurred: {e}&#34;)
+
+    # Display the actual graph
+    self.mplvl.removeWidget(self.canvas)
+    self.canvas.close()
+    self.canvas = FigureCanvas(fig)
+    self.mplvl.addWidget(self.canvas)
+    self.canvas.draw()
+    model.set_figure(fig)
+
+
+def get_df(self, call_model, df):
+    &#34;&#34;&#34;
+    This gets the dataframe which has the parameters which the data is constrained by. Returns dataframe of what to use.
+    :param call_model: This contains the class with caller ids. Used to get the selected ones.
+    :param df: This is the dataframe of the data that will be used to display the graph.
+    :return: df: Returns datafram that has been processed, removing not needed genders etc.
+    :return: cue_types: This returns the cue types that are selected by the user.
+    &#34;&#34;&#34;
+    # Get the dataframe of relevant call IDs
+    if call_model.selected[0][1] != 0:
+        df = dm.get_list_of_call_id_df(df, [i[0] for i in call_model.selected])
+
+    # Get relevant genders and the corresponding dataframe
+    caller_gender = self.callerGenderDropdown.currentText()
+    receiver_gender = self.receiverGenderDropdown.currentText()
+
+    caller, receiver = None, None
+    if caller_gender == &#34;Caller Male&#34;:
+        caller = &#34;caller_M&#34;
+    elif caller_gender == &#34;Caller Female&#34;:
+        caller = &#34;caller_F&#34;
+    if receiver_gender == &#34;Receiver Female&#34;:
+        receiver = &#34;receiver_F&#34;
+    elif receiver_gender == &#34;Receiver Male&#34;:
+        receiver = &#34;receiver_M&#34;
+    df = dm.get_rows_by_caller_and_receiver(df, caller, receiver)
+
+    # Get the cue types that were selected.
+    cue_types = {}
+    temp_df = []
+    for cue_pair in call_model.cues_selected:
+        cue = cue_pair[0]
+        if cue == &#34;All Cues&#34;:
+            cue_types = {&#34;filler&#34;: 0, &#34;laughter&#34;: 0, &#34;silence&#34;: 0, &#34;bc&#34;: 0}
+            break
+        if cue == &#34;Back-channel&#34;:
+            cue = &#34;bc&#34;
+        cue = cue.lower()
+        cue_types[cue] = 0
+        temp_df.append(dm.get_non_verbal_speech_only(df, cue))
+    # Get the cue data and concatenate to make final df
+    if temp_df:
+        df = pd_concat(temp_df)
+
+    return df, cue_types
+
+
+def error_dialog(message):
+    dialog = QMessageBox()
+    dialog.setText(message)
+    dialog.setStandardButtons(QMessageBox.Ok)
+    dialog.setIcon(QMessageBox.Critical)
+    dialog.exec_()
+
+
+def get_duration_per_call(self, df, cue_types, fig):
+    cue_names = list(cue_types.keys())
+    cue_results = []
+    for cue in cue_names:
+        # this holds the cue results temporarily
+        try:
+            cue_results_temp = dm.get_all_event_durations(df, cue)
+        except ValueError:
+            fig.add_subplot(111)
+            raise
+        if (
+            self.callerGenderDropdown.isEnabled()
+            and self.receiverGenderDropdown.isEnabled()
+        ):
+            cue_results.append(concatenate((cue_results_temp[0], cue_results_temp[1])))
+        elif self.callerGenderDropdown.isEnabled():
+            # so this is if caller is enabled, but not receiver. Remove every second since that&#39;s receiver data
+            cue_results.append(cue_results_temp[0])
+        else:
+            # receiver only info. Remove any caller data
+            cue_results.append(cue_results_temp[1])
+
+    ax = []
+    num_bins = 90
+    for index, cue in enumerate(cue_results):
+        if len(cue_names) == 1:
+            ax.append(fig.add_subplot(111))
+        else:
+            ax.append(fig.add_subplot(2, 2, index + 1))
+        ax[index].set(xlabel=&#34;Duration (s)&#34;, ylabel=&#34;Number of Occurrences&#34;)
+        ax[index].set_title(cue_names[index])
+        ax[index].hist(cue, bins=num_bins)
+    fig.subplots_adjust(hspace=0.4, wspace=0.4)
+    fig.suptitle(&#34;Cue Event Duration&#34;)
+
+
+def get_occurrences_per_call(self, df, cue_types, fig):
+    &#34;&#34;&#34;
+    This will get the occurrences for all participants cues total. A graph is then created.
+    :param df: This is the dataframe containing the filtered data so far.
+    :param cue_types: this is the cues that have been selected.
+    :param fig: this contains the matplotlib figures that can be then used to display graphs.
+    &#34;&#34;&#34;
+    cue_names = list(cue_types.keys())
+    cue_results = []
+    ids = dm.get_all_call_ids(df)
+    for cue in cue_names:
+        cue_results_temp = []
+        for call in ids:
+            cue_results_temp.append(
+                dm.occurrence_of_event(dm.get_call_df(df, call), cue)
+            )
+        if (
+            self.callerGenderDropdown.isEnabled()
+            and self.receiverGenderDropdown.isEnabled()
+        ):
+            cue_results.append(
+                sorted([val for pair in cue_results_temp for val in pair])
+            )
+        elif self.callerGenderDropdown.isEnabled():
+            # so this is if caller is enabled, but not receiver. Remove every second since thats receiver data
+            sorted_list = sorted(
+                [val for sublist in cue_results_temp for val in sublist]
+            )
+            del sorted_list[1:2]
+            cue_results.append(sorted_list)
+        else:
+            # receiver only info. Remove any caller data
+            sorted_list = sorted([val for pair in cue_results_temp for val in pair])
+            del sorted_list[::2]
+            cue_results.append(sorted_list)
+    x = arange(len(cue_results[0]))
+    ax = []
+    for index, cue in enumerate(cue_results):
+        if len(cue_names) == 1:
+            ax.append(fig.add_subplot(111))
+        else:
+            ax.append(fig.add_subplot(2, 2, index + 1))
+        ax[index].set(xlabel=&#34;Participant Number&#34;, ylabel=&#34;Total Occurrences Count&#34;)
+        ax[index].set_title(cue_names[index])
+        ax[index].bar(x, cue)
+
+    fig.subplots_adjust(hspace=0.4, wspace=0.3)
+    fig.suptitle(&#34;Total Occurrences for All Participants&#34;)
+
+
+def get_total_cue_data(self, df, cue_types, fig, radio_type: str):
+    &#34;&#34;&#34;
+    This function is used to get the cue occurrences or duration. It then creates the graph.
+    :param df: dataframe of filtered data so far.
+    :param cue_types: this contains the cue types that have been selected by user.
+    :param fig: this contains the matplotlib plot that will be used to then display graph.
+    :param radio_type: str this is the radio button type that was selected, occurrences or duration.
+    &#34;&#34;&#34;
+    ax = fig.add_subplot(111)
+    average = self.averageCheckbox.isChecked()
+    caller_or_receiver = &#34;&#34;
+    if (
+        self.callerGenderDropdown.isEnabled()
+        and self.receiverGenderDropdown.isEnabled()
+    ):
+        if radio_type == &#34;occurrences&#34;:
+            result = dm.occurrence_of_each_event(df, cue_types)
+        else:
+            result = dm.total_time_of_each_event(df, cue_types)
+    elif not self.callerGenderDropdown.isEnabled():
+        caller_or_receiver = &#34;Receivers&#34;
+        result = {}
+        for cue in cue_types:
+            if radio_type == &#34;occurrences&#34;:
+                cue_result = dm.occurrence_of_event(df, cue)
+            else:
+                cue_result = dm.total_time_of_event(df, cue)
+            # This gets the occurrence of each cue of the caller
+            result[cue] = cue_result[0]
+    else:
+        caller_or_receiver = &#34;Callers&#34;
+        result = {}
+        for cue in cue_types:
+            if radio_type == &#34;occurrences&#34;:
+                cue_result = dm.occurrence_of_event(df, cue)
+            else:
+                cue_result = dm.total_time_of_event(df, cue)
+            # This gets occurrence of each cue of the receiver
+            result[cue] = cue_result[1]
+
+    if average:
+        for cue in result:
+            result[cue] = result[cue] / len(dm.get_all_call_ids(df))
+    ax.bar(result.keys(), result.values())
+    set_label(ax, caller_or_receiver, radio_type, average)
+
+
+def set_label(ax, caller_or_receiver: str, radio_type: str, average: bool):
+    &#34;&#34;&#34;
+    This is called to set the labels on the graph. The params being passed contains the strings from which the labels
+    will be created.
+    :param ax: the graph axes
+    :param caller_or_receiver: str this is the string containing whether the graph is for callers or receivers.
+    :param radio_type: str this contains whether the data is occurrences or durations.
+    :param average: bool used to set whether &#39;average&#39; should be used in the title and axes.
+    &#34;&#34;&#34;
+    title = &#34;&#34;
+    x_label = &#34;Cue&#34;
+    y_label = &#34;&#34;
+    if radio_type == &#34;occurrences&#34;:
+        title += &#34;Total Cue Occurrences&#34;
+        y_label += &#34;Total Number of Occurrences&#34;
+    else:
+        title += &#34;Total Cue Duration&#34;
+        y_label += &#34;Total Duration (s)&#34;
+
+    if caller_or_receiver:
+        title += &#34; for &#34; + caller_or_receiver
+
+    if average:
+        title = f&#34;Average {title} Per Call&#34;
+        y_label = f&#34;Average {y_label}&#34;
+
+    ax.set_title(title)
+    ax.set_xlabel(x_label)
+    ax.set_ylabel(y_label)</code></pre>
+</details>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+<h2 class="section-title" id="header-functions">Functions</h2>
+<dl>
+<dt id="ConversationalBrowser.conversationalbrowser.graph.addmpl"><code class="name flex">
+<span>def <span class="ident">addmpl</span></span>(<span>self, fig)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Adds a figure to the canvas.
+:param fig: this contains the values that are to be displayed on the plot</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def addmpl(self, fig):
+    &#34;&#34;&#34;
+    Adds a figure to the canvas.
+    :param fig: this contains the values that are to be displayed on the plot
+    &#34;&#34;&#34;
+    self.canvas = FigureCanvas(fig)
+    self.mplvl.addWidget(self.canvas)
+    self.canvas.draw()</code></pre>
+</details>
+</dd>
+<dt id="ConversationalBrowser.conversationalbrowser.graph.displaympl"><code class="name flex">
+<span>def <span class="ident">displaympl</span></span>(<span>self, model, call_model)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>This is used to display the graph upon Display button click.
+:param call_model:
+:param model:
+:param self:</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def displaympl(self, model, call_model):
+    &#34;&#34;&#34;
+    This is used to display the graph upon Display button click.
+    :param call_model:
+    :param model:
+    :param self:
+    &#34;&#34;&#34;
+
+    if model.fileContents is None:
+        return QMessageBox.critical(
+            self, &#34;File Not Loaded&#34;, &#34;Data not loaded, please load data first!&#34;
+        )
+
+    fig = Figure()  # New graph setup
+    df = model.fileContents
+    df, cue_types = get_df(self, call_model, df)
+    try:
+        if df.empty:
+            error_dialog(&#34;Caller/Receiver Combination Not Found&#34;)
+        elif self.occurrencesRadioBtn.isChecked():
+            if self.chartDropdown.currentText() == &#34;Display Totals&#34;:
+                get_total_cue_data(self, df, cue_types, fig, &#34;occurrences&#34;)
+            else:
+                get_occurrences_per_call(self, df, cue_types, fig)
+        else:
+            if self.chartDropdown.currentText() == &#34;Display Totals&#34;:
+                get_total_cue_data(self, df, cue_types, fig, &#34;durations&#34;)
+            else:
+                get_duration_per_call(self, df, cue_types, fig)
+    except Exception as e:
+        error_dialog(f&#34;Exception occurred: {e}&#34;)
+
+    # Display the actual graph
+    self.mplvl.removeWidget(self.canvas)
+    self.canvas.close()
+    self.canvas = FigureCanvas(fig)
+    self.mplvl.addWidget(self.canvas)
+    self.canvas.draw()
+    model.set_figure(fig)</code></pre>
+</details>
+</dd>
+<dt id="ConversationalBrowser.conversationalbrowser.graph.error_dialog"><code class="name flex">
+<span>def <span class="ident">error_dialog</span></span>(<span>message)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def error_dialog(message):
+    dialog = QMessageBox()
+    dialog.setText(message)
+    dialog.setStandardButtons(QMessageBox.Ok)
+    dialog.setIcon(QMessageBox.Critical)
+    dialog.exec_()</code></pre>
+</details>
+</dd>
+<dt id="ConversationalBrowser.conversationalbrowser.graph.export"><code class="name flex">
+<span>def <span class="ident">export</span></span>(<span>self, location: str)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Exports graph in the location user specifies, raises IOError if its unable to.
+:param location: str is the filepath location of where to save.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def export(self, location: str):
+    &#34;&#34;&#34;
+    Exports graph in the location user specifies, raises IOError if its unable to.
+    :param location: str is the filepath location of where to save.
+    &#34;&#34;&#34;
+    try:
+        self.model.figure.savefig(location)
+    except IOError:
+        raise</code></pre>
+</details>
+</dd>
+<dt id="ConversationalBrowser.conversationalbrowser.graph.get_df"><code class="name flex">
+<span>def <span class="ident">get_df</span></span>(<span>self, call_model, df)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>This gets the dataframe which has the parameters which the data is constrained by. Returns dataframe of what to use.
+:param call_model: This contains the class with caller ids. Used to get the selected ones.
+:param df: This is the dataframe of the data that will be used to display the graph.
+:return: df: Returns datafram that has been processed, removing not needed genders etc.
+:return: cue_types: This returns the cue types that are selected by the user.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def get_df(self, call_model, df):
+    &#34;&#34;&#34;
+    This gets the dataframe which has the parameters which the data is constrained by. Returns dataframe of what to use.
+    :param call_model: This contains the class with caller ids. Used to get the selected ones.
+    :param df: This is the dataframe of the data that will be used to display the graph.
+    :return: df: Returns datafram that has been processed, removing not needed genders etc.
+    :return: cue_types: This returns the cue types that are selected by the user.
+    &#34;&#34;&#34;
+    # Get the dataframe of relevant call IDs
+    if call_model.selected[0][1] != 0:
+        df = dm.get_list_of_call_id_df(df, [i[0] for i in call_model.selected])
+
+    # Get relevant genders and the corresponding dataframe
+    caller_gender = self.callerGenderDropdown.currentText()
+    receiver_gender = self.receiverGenderDropdown.currentText()
+
+    caller, receiver = None, None
+    if caller_gender == &#34;Caller Male&#34;:
+        caller = &#34;caller_M&#34;
+    elif caller_gender == &#34;Caller Female&#34;:
+        caller = &#34;caller_F&#34;
+    if receiver_gender == &#34;Receiver Female&#34;:
+        receiver = &#34;receiver_F&#34;
+    elif receiver_gender == &#34;Receiver Male&#34;:
+        receiver = &#34;receiver_M&#34;
+    df = dm.get_rows_by_caller_and_receiver(df, caller, receiver)
+
+    # Get the cue types that were selected.
+    cue_types = {}
+    temp_df = []
+    for cue_pair in call_model.cues_selected:
+        cue = cue_pair[0]
+        if cue == &#34;All Cues&#34;:
+            cue_types = {&#34;filler&#34;: 0, &#34;laughter&#34;: 0, &#34;silence&#34;: 0, &#34;bc&#34;: 0}
+            break
+        if cue == &#34;Back-channel&#34;:
+            cue = &#34;bc&#34;
+        cue = cue.lower()
+        cue_types[cue] = 0
+        temp_df.append(dm.get_non_verbal_speech_only(df, cue))
+    # Get the cue data and concatenate to make final df
+    if temp_df:
+        df = pd_concat(temp_df)
+
+    return df, cue_types</code></pre>
+</details>
+</dd>
+<dt id="ConversationalBrowser.conversationalbrowser.graph.get_duration_per_call"><code class="name flex">
+<span>def <span class="ident">get_duration_per_call</span></span>(<span>self, df, cue_types, fig)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def get_duration_per_call(self, df, cue_types, fig):
+    cue_names = list(cue_types.keys())
+    cue_results = []
+    for cue in cue_names:
+        # this holds the cue results temporarily
+        try:
+            cue_results_temp = dm.get_all_event_durations(df, cue)
+        except ValueError:
+            fig.add_subplot(111)
+            raise
+        if (
+            self.callerGenderDropdown.isEnabled()
+            and self.receiverGenderDropdown.isEnabled()
+        ):
+            cue_results.append(concatenate((cue_results_temp[0], cue_results_temp[1])))
+        elif self.callerGenderDropdown.isEnabled():
+            # so this is if caller is enabled, but not receiver. Remove every second since that&#39;s receiver data
+            cue_results.append(cue_results_temp[0])
+        else:
+            # receiver only info. Remove any caller data
+            cue_results.append(cue_results_temp[1])
+
+    ax = []
+    num_bins = 90
+    for index, cue in enumerate(cue_results):
+        if len(cue_names) == 1:
+            ax.append(fig.add_subplot(111))
+        else:
+            ax.append(fig.add_subplot(2, 2, index + 1))
+        ax[index].set(xlabel=&#34;Duration (s)&#34;, ylabel=&#34;Number of Occurrences&#34;)
+        ax[index].set_title(cue_names[index])
+        ax[index].hist(cue, bins=num_bins)
+    fig.subplots_adjust(hspace=0.4, wspace=0.4)
+    fig.suptitle(&#34;Cue Event Duration&#34;)</code></pre>
+</details>
+</dd>
+<dt id="ConversationalBrowser.conversationalbrowser.graph.get_occurrences_per_call"><code class="name flex">
+<span>def <span class="ident">get_occurrences_per_call</span></span>(<span>self, df, cue_types, fig)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>This will get the occurrences for all participants cues total. A graph is then created.
+:param df: This is the dataframe containing the filtered data so far.
+:param cue_types: this is the cues that have been selected.
+:param fig: this contains the matplotlib figures that can be then used to display graphs.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def get_occurrences_per_call(self, df, cue_types, fig):
+    &#34;&#34;&#34;
+    This will get the occurrences for all participants cues total. A graph is then created.
+    :param df: This is the dataframe containing the filtered data so far.
+    :param cue_types: this is the cues that have been selected.
+    :param fig: this contains the matplotlib figures that can be then used to display graphs.
+    &#34;&#34;&#34;
+    cue_names = list(cue_types.keys())
+    cue_results = []
+    ids = dm.get_all_call_ids(df)
+    for cue in cue_names:
+        cue_results_temp = []
+        for call in ids:
+            cue_results_temp.append(
+                dm.occurrence_of_event(dm.get_call_df(df, call), cue)
+            )
+        if (
+            self.callerGenderDropdown.isEnabled()
+            and self.receiverGenderDropdown.isEnabled()
+        ):
+            cue_results.append(
+                sorted([val for pair in cue_results_temp for val in pair])
+            )
+        elif self.callerGenderDropdown.isEnabled():
+            # so this is if caller is enabled, but not receiver. Remove every second since thats receiver data
+            sorted_list = sorted(
+                [val for sublist in cue_results_temp for val in sublist]
+            )
+            del sorted_list[1:2]
+            cue_results.append(sorted_list)
+        else:
+            # receiver only info. Remove any caller data
+            sorted_list = sorted([val for pair in cue_results_temp for val in pair])
+            del sorted_list[::2]
+            cue_results.append(sorted_list)
+    x = arange(len(cue_results[0]))
+    ax = []
+    for index, cue in enumerate(cue_results):
+        if len(cue_names) == 1:
+            ax.append(fig.add_subplot(111))
+        else:
+            ax.append(fig.add_subplot(2, 2, index + 1))
+        ax[index].set(xlabel=&#34;Participant Number&#34;, ylabel=&#34;Total Occurrences Count&#34;)
+        ax[index].set_title(cue_names[index])
+        ax[index].bar(x, cue)
+
+    fig.subplots_adjust(hspace=0.4, wspace=0.3)
+    fig.suptitle(&#34;Total Occurrences for All Participants&#34;)</code></pre>
+</details>
+</dd>
+<dt id="ConversationalBrowser.conversationalbrowser.graph.get_total_cue_data"><code class="name flex">
+<span>def <span class="ident">get_total_cue_data</span></span>(<span>self, df, cue_types, fig, radio_type: str)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>This function is used to get the cue occurrences or duration. It then creates the graph.
+:param df: dataframe of filtered data so far.
+:param cue_types: this contains the cue types that have been selected by user.
+:param fig: this contains the matplotlib plot that will be used to then display graph.
+:param radio_type: str this is the radio button type that was selected, occurrences or duration.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def get_total_cue_data(self, df, cue_types, fig, radio_type: str):
+    &#34;&#34;&#34;
+    This function is used to get the cue occurrences or duration. It then creates the graph.
+    :param df: dataframe of filtered data so far.
+    :param cue_types: this contains the cue types that have been selected by user.
+    :param fig: this contains the matplotlib plot that will be used to then display graph.
+    :param radio_type: str this is the radio button type that was selected, occurrences or duration.
+    &#34;&#34;&#34;
+    ax = fig.add_subplot(111)
+    average = self.averageCheckbox.isChecked()
+    caller_or_receiver = &#34;&#34;
+    if (
+        self.callerGenderDropdown.isEnabled()
+        and self.receiverGenderDropdown.isEnabled()
+    ):
+        if radio_type == &#34;occurrences&#34;:
+            result = dm.occurrence_of_each_event(df, cue_types)
+        else:
+            result = dm.total_time_of_each_event(df, cue_types)
+    elif not self.callerGenderDropdown.isEnabled():
+        caller_or_receiver = &#34;Receivers&#34;
+        result = {}
+        for cue in cue_types:
+            if radio_type == &#34;occurrences&#34;:
+                cue_result = dm.occurrence_of_event(df, cue)
+            else:
+                cue_result = dm.total_time_of_event(df, cue)
+            # This gets the occurrence of each cue of the caller
+            result[cue] = cue_result[0]
+    else:
+        caller_or_receiver = &#34;Callers&#34;
+        result = {}
+        for cue in cue_types:
+            if radio_type == &#34;occurrences&#34;:
+                cue_result = dm.occurrence_of_event(df, cue)
+            else:
+                cue_result = dm.total_time_of_event(df, cue)
+            # This gets occurrence of each cue of the receiver
+            result[cue] = cue_result[1]
+
+    if average:
+        for cue in result:
+            result[cue] = result[cue] / len(dm.get_all_call_ids(df))
+    ax.bar(result.keys(), result.values())
+    set_label(ax, caller_or_receiver, radio_type, average)</code></pre>
+</details>
+</dd>
+<dt id="ConversationalBrowser.conversationalbrowser.graph.initmpl"><code class="name flex">
+<span>def <span class="ident">initmpl</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>this is used to initialise a blank plot when the application is first run.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def initmpl(self):
+    &#34;&#34;&#34; this is used to initialise a blank plot when the application is first run. &#34;&#34;&#34;
+    fig = Figure()
+    fig.add_subplot(111)
+    self.canvas = FigureCanvas(fig)
+    self.mplvl.addWidget(self.canvas)
+    self.canvas.draw()</code></pre>
+</details>
+</dd>
+<dt id="ConversationalBrowser.conversationalbrowser.graph.rmmpl"><code class="name flex">
+<span>def <span class="ident">rmmpl</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>removes existing graph from the canvas.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def rmmpl(self):
+    &#34;&#34;&#34; removes existing graph from the canvas. &#34;&#34;&#34;
+    self.mplvl.removeWidget(self.canvas)
+    self.canvas.close()
+    fig = Figure()
+    fig.add_subplot(111)
+    self.canvas = FigureCanvas(fig)
+    self.mplvl.addWidget(self.canvas)
+    self.canvas.draw()</code></pre>
+</details>
+</dd>
+<dt id="ConversationalBrowser.conversationalbrowser.graph.set_label"><code class="name flex">
+<span>def <span class="ident">set_label</span></span>(<span>ax, caller_or_receiver: str, radio_type: str, average: bool)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>This is called to set the labels on the graph. The params being passed contains the strings from which the labels
+will be created.
+:param ax: the graph axes
+:param caller_or_receiver: str this is the string containing whether the graph is for callers or receivers.
+:param radio_type: str this contains whether the data is occurrences or durations.
+:param average: bool used to set whether 'average' should be used in the title and axes.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def set_label(ax, caller_or_receiver: str, radio_type: str, average: bool):
+    &#34;&#34;&#34;
+    This is called to set the labels on the graph. The params being passed contains the strings from which the labels
+    will be created.
+    :param ax: the graph axes
+    :param caller_or_receiver: str this is the string containing whether the graph is for callers or receivers.
+    :param radio_type: str this contains whether the data is occurrences or durations.
+    :param average: bool used to set whether &#39;average&#39; should be used in the title and axes.
+    &#34;&#34;&#34;
+    title = &#34;&#34;
+    x_label = &#34;Cue&#34;
+    y_label = &#34;&#34;
+    if radio_type == &#34;occurrences&#34;:
+        title += &#34;Total Cue Occurrences&#34;
+        y_label += &#34;Total Number of Occurrences&#34;
+    else:
+        title += &#34;Total Cue Duration&#34;
+        y_label += &#34;Total Duration (s)&#34;
+
+    if caller_or_receiver:
+        title += &#34; for &#34; + caller_or_receiver
+
+    if average:
+        title = f&#34;Average {title} Per Call&#34;
+        y_label = f&#34;Average {y_label}&#34;
+
+    ax.set_title(title)
+    ax.set_xlabel(x_label)
+    ax.set_ylabel(y_label)</code></pre>
+</details>
+</dd>
+</dl>
+</section>
+<section>
+</section>
+</article>
+<nav id="sidebar">
+<h1>Index</h1>
+<div class="toc">
+<ul></ul>
+</div>
+<ul id="index">
+<li><h3>Super-module</h3>
+<ul>
+<li><code><a title="ConversationalBrowser.conversationalbrowser" href="index.html">ConversationalBrowser.conversationalbrowser</a></code></li>
+</ul>
+</li>
+<li><h3><a href="#header-functions">Functions</a></h3>
+<ul class="">
+<li><code><a title="ConversationalBrowser.conversationalbrowser.graph.addmpl" href="#ConversationalBrowser.conversationalbrowser.graph.addmpl">addmpl</a></code></li>
+<li><code><a title="ConversationalBrowser.conversationalbrowser.graph.displaympl" href="#ConversationalBrowser.conversationalbrowser.graph.displaympl">displaympl</a></code></li>
+<li><code><a title="ConversationalBrowser.conversationalbrowser.graph.error_dialog" href="#ConversationalBrowser.conversationalbrowser.graph.error_dialog">error_dialog</a></code></li>
+<li><code><a title="ConversationalBrowser.conversationalbrowser.graph.export" href="#ConversationalBrowser.conversationalbrowser.graph.export">export</a></code></li>
+<li><code><a title="ConversationalBrowser.conversationalbrowser.graph.get_df" href="#ConversationalBrowser.conversationalbrowser.graph.get_df">get_df</a></code></li>
+<li><code><a title="ConversationalBrowser.conversationalbrowser.graph.get_duration_per_call" href="#ConversationalBrowser.conversationalbrowser.graph.get_duration_per_call">get_duration_per_call</a></code></li>
+<li><code><a title="ConversationalBrowser.conversationalbrowser.graph.get_occurrences_per_call" href="#ConversationalBrowser.conversationalbrowser.graph.get_occurrences_per_call">get_occurrences_per_call</a></code></li>
+<li><code><a title="ConversationalBrowser.conversationalbrowser.graph.get_total_cue_data" href="#ConversationalBrowser.conversationalbrowser.graph.get_total_cue_data">get_total_cue_data</a></code></li>
+<li><code><a title="ConversationalBrowser.conversationalbrowser.graph.initmpl" href="#ConversationalBrowser.conversationalbrowser.graph.initmpl">initmpl</a></code></li>
+<li><code><a title="ConversationalBrowser.conversationalbrowser.graph.rmmpl" href="#ConversationalBrowser.conversationalbrowser.graph.rmmpl">rmmpl</a></code></li>
+<li><code><a title="ConversationalBrowser.conversationalbrowser.graph.set_label" href="#ConversationalBrowser.conversationalbrowser.graph.set_label">set_label</a></code></li>
+</ul>
+</li>
+</ul>
+</nav>
+</main>
+<footer id="footer">
+<p>Generated by <a href="https://pdoc3.github.io/pdoc"><cite>pdoc</cite> 0.9.2</a>.</p>
+</footer>
+</body>
+</html>

@@ -4,6 +4,10 @@
 
 Level 4 Individual Project
 
+## Documentation
+
+Docs for the code can be found in the repository as an html file under html/index.html
+
 ## Installation Guide
 
 You  may want to use a virtual environment.

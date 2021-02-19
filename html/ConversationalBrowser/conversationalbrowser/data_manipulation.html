@@ -1,0 +1,719 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
+<meta name="generator" content="pdoc 0.9.2" />
+<title>ConversationalBrowser.conversationalbrowser.data_manipulation API documentation</title>
+<meta name="description" content="This holds the actual data manipulation functions for the conversational data browser. They will be called when needed." />
+<link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/sanitize.min.css" integrity="sha256-PK9q560IAAa6WVRRh76LtCaI8pjTJ2z11v0miyNNjrs=" crossorigin>
+<link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/typography.min.css" integrity="sha256-7l/o7C8jubJiy74VsKTidCy1yBkRtiUGbVkYBylBqUg=" crossorigin>
+<link rel="stylesheet preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/styles/github.min.css" crossorigin>
+<style>:root{--highlight-color:#fe9}.flex{display:flex !important}body{line-height:1.5em}#content{padding:20px}#sidebar{padding:30px;overflow:hidden}#sidebar > *:last-child{margin-bottom:2cm}.http-server-breadcrumbs{font-size:130%;margin:0 0 15px 0}#footer{font-size:.75em;padding:5px 30px;border-top:1px solid #ddd;text-align:right}#footer p{margin:0 0 0 1em;display:inline-block}#footer p:last-child{margin-right:30px}h1,h2,h3,h4,h5{font-weight:300}h1{font-size:2.5em;line-height:1.1em}h2{font-size:1.75em;margin:1em 0 .50em 0}h3{font-size:1.4em;margin:25px 0 10px 0}h4{margin:0;font-size:105%}h1:target,h2:target,h3:target,h4:target,h5:target,h6:target{background:var(--highlight-color);padding:.2em 0}a{color:#058;text-decoration:none;transition:color .3s ease-in-out}a:hover{color:#e82}.title code{font-weight:bold}h2[id^="header-"]{margin-top:2em}.ident{color:#900}pre code{background:#f8f8f8;font-size:.8em;line-height:1.4em}code{background:#f2f2f1;padding:1px 4px;overflow-wrap:break-word}h1 code{background:transparent}pre{background:#f8f8f8;border:0;border-top:1px solid #ccc;border-bottom:1px solid #ccc;margin:1em 0;padding:1ex}#http-server-module-list{display:flex;flex-flow:column}#http-server-module-list div{display:flex}#http-server-module-list dt{min-width:10%}#http-server-module-list p{margin-top:0}.toc ul,#index{list-style-type:none;margin:0;padding:0}#index code{background:transparent}#index h3{border-bottom:1px solid #ddd}#index ul{padding:0}#index h4{margin-top:.6em;font-weight:bold}@media (min-width:200ex){#index .two-column{column-count:2}}@media (min-width:300ex){#index .two-column{column-count:3}}dl{margin-bottom:2em}dl dl:last-child{margin-bottom:4em}dd{margin:0 0 1em 3em}#header-classes + dl > dd{margin-bottom:3em}dd dd{margin-left:2em}dd p{margin:10px 0}.name{background:#eee;font-weight:bold;font-size:.85em;padding:5px 10px;display:inline-block;min-width:40%}.name:hover{background:#e0e0e0}dt:target .name{background:var(--highlight-color)}.name > span:first-child{white-space:nowrap}.name.class > span:nth-child(2){margin-left:.4em}.inherited{color:#999;border-left:5px solid #eee;padding-left:1em}.inheritance em{font-style:normal;font-weight:bold}.desc h2{font-weight:400;font-size:1.25em}.desc h3{font-size:1em}.desc dt code{background:inherit}.source summary,.git-link-div{color:#666;text-align:right;font-weight:400;font-size:.8em;text-transform:uppercase}.source summary > *{white-space:nowrap;cursor:pointer}.git-link{color:inherit;margin-left:1em}.source pre{max-height:500px;overflow:auto;margin:0}.source pre code{font-size:12px;overflow:visible}.hlist{list-style:none}.hlist li{display:inline}.hlist li:after{content:',\2002'}.hlist li:last-child:after{content:none}.hlist .hlist{display:inline;padding-left:1em}img{max-width:100%}td{padding:0 .5em}.admonition{padding:.1em .5em;margin-bottom:1em}.admonition-title{font-weight:bold}.admonition.note,.admonition.info,.admonition.important{background:#aef}.admonition.todo,.admonition.versionadded,.admonition.tip,.admonition.hint{background:#dfd}.admonition.warning,.admonition.versionchanged,.admonition.deprecated{background:#fd4}.admonition.error,.admonition.danger,.admonition.caution{background:lightpink}</style>
+<style media="screen and (min-width: 700px)">@media screen and (min-width:700px){#sidebar{width:30%;height:100vh;overflow:auto;position:sticky;top:0}#content{width:70%;max-width:100ch;padding:3em 4em;border-left:1px solid #ddd}pre code{font-size:1em}.item .name{font-size:1em}main{display:flex;flex-direction:row-reverse;justify-content:flex-end}.toc ul ul,#index ul{padding-left:1.5em}.toc > ul > li{margin-top:.5em}}</style>
+<style media="print">@media print{#sidebar h1{page-break-before:always}.source{display:none}}@media print{*{background:transparent !important;color:#000 !important;box-shadow:none !important;text-shadow:none !important}a[href]:after{content:" (" attr(href) ")";font-size:90%}a[href][title]:after{content:none}abbr[title]:after{content:" (" attr(title) ")"}.ir a:after,a[href^="javascript:"]:after,a[href^="#"]:after{content:""}pre,blockquote{border:1px solid #999;page-break-inside:avoid}thead{display:table-header-group}tr,img{page-break-inside:avoid}img{max-width:100% !important}@page{margin:0.5cm}p,h2,h3{orphans:3;widows:3}h1,h2,h3,h4,h5,h6{page-break-after:avoid}}</style>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/highlight.min.js" integrity="sha256-Uv3H6lx7dJmRfRvH8TH6kJD1TSK1aFcwgx+mdg3epi8=" crossorigin></script>
+<script>window.addEventListener('DOMContentLoaded', () => hljs.initHighlighting())</script>
+</head>
+<body>
+<main>
+<article id="content">
+<header>
+<h1 class="title">Module <code>ConversationalBrowser.conversationalbrowser.data_manipulation</code></h1>
+</header>
+<section id="section-intro">
+<p>This holds the actual data manipulation functions for the conversational data browser. They will be called when needed.</p>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+
+&#34;&#34;&#34;
+This holds the actual data manipulation functions for the conversational data browser. They will be called when needed.
+&#34;&#34;&#34;
+
+import pandas as pd
+from itertools import permutations as iterpermutations
+
+header_names = [
+    &#34;call&#34;,
+    &#34;conversation_topic&#34;,
+    &#34;person_and_type&#34;,
+    &#34;start&#34;,
+    &#34;end&#34;,
+    &#34;caller&#34;,
+    &#34;receiver&#34;,
+]
+gender_and_position = {&#34;caller_F&#34;, &#34;receiver_F&#34;, &#34;caller_M&#34;, &#34;receiver_M&#34;}
+gender_types = dict.fromkeys(gender_and_position, 0)
+cue_types = {&#34;laughter&#34;: 0, &#34;silence&#34;: 0, &#34;filler&#34;: 0, &#34;bc&#34;: 0}
+
+
+def read_in_data(location: str):
+    &#34;&#34;&#34;
+    Reads in the csv as a panda dataframe.
+    :param location: str of the filepath
+    :return: dataframe of the dataset
+    &#34;&#34;&#34;
+    return pd.read_csv(location, sep=&#34;,&#34;, names=header_names)
+
+
+def receiver_and_caller_column(df):
+    &#34;&#34;&#34;
+    Takes in the dataframe, header names and gender/position.
+    This then looks at person_and_type column and fills the caller and receiver column with the appropriate value
+    :return: df data frame containing the data set with additional caller and receiver columns
+    &#34;&#34;&#34;
+    call_id = get_all_call_ids(df)
+    for call in call_id:
+        temp_df = get_call_df(df, call)  # get dataframe of only one call id
+        for gp in gender_and_position:
+            if temp_df[&#34;person_and_type&#34;].str.contains(gp).any():
+                if &#34;receiver&#34; in gp:
+                    df.loc[df.call == call, &#34;receiver&#34;] = gp
+                else:
+                    df.loc[df.call == call, &#34;caller&#34;] = gp
+    return df
+
+
+def get_call_df(df, call_id: str):
+    &#34;&#34;&#34;
+    This gets the rows containing a specific caller ID.
+    :param df: dataset that is being searched
+    :param call_id: str the caller ID that is being located
+    :return: df of rows with caller id.
+    &#34;&#34;&#34;
+    return df.loc[df[&#34;call&#34;] == call_id]
+
+
+def get_all_call_ids(df):
+    &#34;&#34;&#34;
+    Returns an array of the names of the call ids
+    :param: df dataframe of the dataset being searched
+    :return: array of call IDs.
+    &#34;&#34;&#34;
+    return df.call.unique()
+
+
+def get_list_of_call_id_df(df, call_id_list: list):
+    &#34;&#34;&#34;
+    This finds the rows where the call ID matches one of the call ids being searched for.
+    :param df: dataset that is being searched
+    :param call_id_list: a list of call ids that are being matched.
+    :return: df of rows where the call id is in the call_id list
+    &#34;&#34;&#34;
+    return df[(df.call.isin(call_id_list))]
+
+
+def get_non_verbal_speech_only(df, non_verbal_speech: str):
+    &#34;&#34;&#34;
+    Return df with non-verbal speech cue rows only.
+    :param df: dataset
+    :param non_verbal_speech: str containing the cue being searched
+    :return: df with only the rows that contain said cue.
+    &#34;&#34;&#34;
+    df = df[df[&#34;person_and_type&#34;].str.contains(non_verbal_speech)]
+    return df
+
+
+def get_rows_by_caller_and_receiver(df, caller: str, receiver: str):
+    &#34;&#34;&#34;
+    Specify the caller and receiver string and returns the dataframe with those rows by searching the receiver and
+    caller columns.
+    :param df: dataset
+    :param caller: str of caller in the format caller_&lt;M/F&gt;
+    :param receiver: str of receiver in the format receiver_&lt;M/F&gt;
+    :return: df containing the caller and receiver specified.
+    &#34;&#34;&#34;
+    if receiver is not None and caller is None:
+        return df.loc[(df[&#34;receiver&#34;] == receiver)]
+    elif caller is not None and receiver is None:
+        return df.loc[(df[&#34;caller&#34;] == caller)]
+    elif caller is not None and receiver is not None:
+        return df.loc[(df[&#34;caller&#34;] == caller) &amp; (df[&#34;receiver&#34;] == receiver)]
+    else:
+        return df
+
+
+def get_permutations_of_gender_and_position() -&gt; list:
+    &#34;&#34;&#34;
+    Takes in the gender_and_position var and returns the possible combinations of size 2
+    :return: list of gender and positions as caller/receiver.
+    &#34;&#34;&#34;
+    permutations = list(iterpermutations(gender_and_position, 2))
+    final_permutation = []
+    for perm in permutations:
+        if &#34;caller&#34; in perm[0]:
+            if &#34;receiver&#34; in perm[1]:
+                final_permutation.append(perm)
+    return [&#34; &#34;.join(i) for i in final_permutation]
+
+
+def occurrence_of_each_event(df, types: dict) -&gt; dict:
+    &#34;&#34;&#34;
+    This takes in a dataframe and produces the total number of each conversation cue occurred.
+    :param df: dataset
+    :param types: dict of types is the cue being searched for.
+    :return: types: dict of types along with their frequency.
+    &#34;&#34;&#34;
+    occurrences = df[&#34;person_and_type&#34;].value_counts()
+    for occurrence_name in occurrences.index:
+        for cue_type in types:
+            if occurrence_name.count(cue_type) &gt; 1:
+                types[cue_type] += occurrences[occurrence_name] * 2
+            elif occurrence_name.count(cue_type) == 1:
+                types[cue_type] += occurrences[occurrence_name]
+    return types
+
+
+def get_all_event_durations(df, cue: str) -&gt; list:
+    &#34;&#34;&#34;
+    This gets the duration of a single cue and returns it as a list of the caller and receiver
+    :param df: dataset
+    :param cue: the cue that is being searched
+    :return: list of caller and receiver durations.
+    &#34;&#34;&#34;
+    if df.empty:
+        raise ValueError(&#34;Dataframe is empty&#34;)
+    if &#34;M&#34; in df[&#34;receiver&#34;].iloc[0]:
+        receiver_search = f&#34;{cue}_rM&#34;
+    else:
+        receiver_search = f&#34;{cue}_rF&#34;
+    if &#34;M&#34; in df[&#34;caller&#34;].iloc[0]:
+        caller_search = f&#34;{cue}_cM&#34;
+    else:
+        caller_search = f&#34;{cue}_cF&#34;
+    if cue == &#34;silence&#34;:
+        receiver_search = &#34;silence&#34;
+        caller_search = &#34;silence&#34;
+    receiver_df = get_non_verbal_speech_only(df, receiver_search)
+    receiver_df = receiver_df[&#34;end&#34;] - receiver_df[&#34;start&#34;]
+    caller_df = get_non_verbal_speech_only(df, caller_search)
+    caller_df = caller_df[&#34;end&#34;] - caller_df[&#34;start&#34;]
+    return [caller_df, receiver_df]
+
+
+def occurrence_of_event(df, cue: str) -&gt; list:
+    &#34;&#34;&#34;
+    returns a list of two vals. number of times caller did a cue and number of times the receiver did the cue
+    :param df: datset of an individual call.
+    :param cue: str cue that is being searched
+    :return: list of the cue count, caller and receiver.
+    &#34;&#34;&#34;
+    if df.empty:
+        raise ValueError(&#34;Dataframe is empty&#34;)
+    if &#34;M&#34; in df[&#34;receiver&#34;].iloc[0]:
+        receiver_search = f&#34;{cue}_rM&#34;
+    else:
+        receiver_search = f&#34;{cue}_rF&#34;
+    if &#34;M&#34; in df[&#34;caller&#34;].iloc[0]:
+        caller_search = f&#34;{cue}_cM&#34;
+    else:
+        caller_search = f&#34;{cue}_cF&#34;
+    if cue == &#34;silence&#34;:
+        receiver_search = &#34;silence&#34;
+        caller_search = &#34;silence&#34;
+    caller_cue_count = df.person_and_type.str.count(caller_search).sum()
+    receiver_cue_count = df.person_and_type.str.count(receiver_search).sum()
+    return [caller_cue_count, receiver_cue_count]
+
+
+def total_time_of_event(df, cue: str) -&gt; list:
+    &#34;&#34;&#34;
+    This calculates the total duration of a single cue, for a single call.
+    :param df: this is a dataframe containing the rows of a single call ID.
+    :param cue: cue that is being used.
+    :return: [caller_cue_time, receiver_cue_time] a list of the duration of the cue chosen.
+    &#34;&#34;&#34;
+    if df.empty:
+        raise ValueError(&#34;Dataframe empty&#34;)
+    if &#34;M&#34; in df[&#34;receiver&#34;].iloc[0]:
+        receiver_search = f&#34;{cue}_rM&#34;
+    else:
+        receiver_search = f&#34;{cue}_rF&#34;
+    if &#34;M&#34; in df[&#34;caller&#34;].iloc[0]:
+        caller_search = f&#34;{cue}_cM&#34;
+    else:
+        caller_search = f&#34;{cue}_cF&#34;
+    caller_cue_time = df[df[&#34;person_and_type&#34;].str.contains(caller_search)]
+    caller_cue_time = (caller_cue_time[&#34;end&#34;] - caller_cue_time[&#34;start&#34;]).sum(axis=0)
+    receiver_cue_time = df[df[&#34;person_and_type&#34;].str.contains(receiver_search)]
+    receiver_cue_time = (receiver_cue_time[&#34;end&#34;] - receiver_cue_time[&#34;start&#34;]).sum(
+        axis=0
+    )
+    return [caller_cue_time, receiver_cue_time]
+
+
+def total_time_of_each_event(df, types: dict) -&gt; dict:
+    &#34;&#34;&#34;
+    This calculates the total time of each cue from the types dict in the dataset, returning a dictionary of each cue.
+    :param df: contains the dataset.
+    :param types: dict of the cues being searched for
+    :return: types: dict of the cue durations.
+    &#34;&#34;&#34;
+    for cue in types:
+        new_df = df[
+            df[&#34;person_and_type&#34;].str.contains(cue)
+        ]  # for each cue, get df of all rows containing cue
+        types[cue] = (new_df[&#34;end&#34;] - new_df[&#34;start&#34;]).sum(
+            axis=0
+        )  # end time - start time and sum them all
+    return types
+
+
+def mean_time_of_each_event(df, types: dict) -&gt; dict:
+    &#34;&#34;&#34;
+    Gets the mean of each conversation cue. Returns the cue average time.
+    :param df: dataset being searched
+    :param types: dict of the cues being searched and the duration at 0
+    :return: dict of average cue durations.
+    &#34;&#34;&#34;
+    for cue in types:
+        new_df = df[df[&#34;person_and_type&#34;].str.contains(cue)]
+        if len(new_df) &gt; 0:
+            types[cue] = (new_df[&#34;end&#34;] - new_df[&#34;start&#34;]).mean(axis=0)
+    return types</code></pre>
+</details>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+<h2 class="section-title" id="header-functions">Functions</h2>
+<dl>
+<dt id="ConversationalBrowser.conversationalbrowser.data_manipulation.get_all_call_ids"><code class="name flex">
+<span>def <span class="ident">get_all_call_ids</span></span>(<span>df)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Returns an array of the names of the call ids
+:param: df dataframe of the dataset being searched
+:return: array of call IDs.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def get_all_call_ids(df):
+    &#34;&#34;&#34;
+    Returns an array of the names of the call ids
+    :param: df dataframe of the dataset being searched
+    :return: array of call IDs.
+    &#34;&#34;&#34;
+    return df.call.unique()</code></pre>
+</details>
+</dd>
+<dt id="ConversationalBrowser.conversationalbrowser.data_manipulation.get_all_event_durations"><code class="name flex">
+<span>def <span class="ident">get_all_event_durations</span></span>(<span>df, cue: str) ‑> list</span>
+</code></dt>
+<dd>
+<div class="desc"><p>This gets the duration of a single cue and returns it as a list of the caller and receiver
+:param df: dataset
+:param cue: the cue that is being searched
+:return: list of caller and receiver durations.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def get_all_event_durations(df, cue: str) -&gt; list:
+    &#34;&#34;&#34;
+    This gets the duration of a single cue and returns it as a list of the caller and receiver
+    :param df: dataset
+    :param cue: the cue that is being searched
+    :return: list of caller and receiver durations.
+    &#34;&#34;&#34;
+    if df.empty:
+        raise ValueError(&#34;Dataframe is empty&#34;)
+    if &#34;M&#34; in df[&#34;receiver&#34;].iloc[0]:
+        receiver_search = f&#34;{cue}_rM&#34;
+    else:
+        receiver_search = f&#34;{cue}_rF&#34;
+    if &#34;M&#34; in df[&#34;caller&#34;].iloc[0]:
+        caller_search = f&#34;{cue}_cM&#34;
+    else:
+        caller_search = f&#34;{cue}_cF&#34;
+    if cue == &#34;silence&#34;:
+        receiver_search = &#34;silence&#34;
+        caller_search = &#34;silence&#34;
+    receiver_df = get_non_verbal_speech_only(df, receiver_search)
+    receiver_df = receiver_df[&#34;end&#34;] - receiver_df[&#34;start&#34;]
+    caller_df = get_non_verbal_speech_only(df, caller_search)
+    caller_df = caller_df[&#34;end&#34;] - caller_df[&#34;start&#34;]
+    return [caller_df, receiver_df]</code></pre>
+</details>
+</dd>
+<dt id="ConversationalBrowser.conversationalbrowser.data_manipulation.get_call_df"><code class="name flex">
+<span>def <span class="ident">get_call_df</span></span>(<span>df, call_id: str)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>This gets the rows containing a specific caller ID.
+:param df: dataset that is being searched
+:param call_id: str the caller ID that is being located
+:return: df of rows with caller id.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def get_call_df(df, call_id: str):
+    &#34;&#34;&#34;
+    This gets the rows containing a specific caller ID.
+    :param df: dataset that is being searched
+    :param call_id: str the caller ID that is being located
+    :return: df of rows with caller id.
+    &#34;&#34;&#34;
+    return df.loc[df[&#34;call&#34;] == call_id]</code></pre>
+</details>
+</dd>
+<dt id="ConversationalBrowser.conversationalbrowser.data_manipulation.get_list_of_call_id_df"><code class="name flex">
+<span>def <span class="ident">get_list_of_call_id_df</span></span>(<span>df, call_id_list: list)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>This finds the rows where the call ID matches one of the call ids being searched for.
+:param df: dataset that is being searched
+:param call_id_list: a list of call ids that are being matched.
+:return: df of rows where the call id is in the call_id list</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def get_list_of_call_id_df(df, call_id_list: list):
+    &#34;&#34;&#34;
+    This finds the rows where the call ID matches one of the call ids being searched for.
+    :param df: dataset that is being searched
+    :param call_id_list: a list of call ids that are being matched.
+    :return: df of rows where the call id is in the call_id list
+    &#34;&#34;&#34;
+    return df[(df.call.isin(call_id_list))]</code></pre>
+</details>
+</dd>
+<dt id="ConversationalBrowser.conversationalbrowser.data_manipulation.get_non_verbal_speech_only"><code class="name flex">
+<span>def <span class="ident">get_non_verbal_speech_only</span></span>(<span>df, non_verbal_speech: str)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Return df with non-verbal speech cue rows only.
+:param df: dataset
+:param non_verbal_speech: str containing the cue being searched
+:return: df with only the rows that contain said cue.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def get_non_verbal_speech_only(df, non_verbal_speech: str):
+    &#34;&#34;&#34;
+    Return df with non-verbal speech cue rows only.
+    :param df: dataset
+    :param non_verbal_speech: str containing the cue being searched
+    :return: df with only the rows that contain said cue.
+    &#34;&#34;&#34;
+    df = df[df[&#34;person_and_type&#34;].str.contains(non_verbal_speech)]
+    return df</code></pre>
+</details>
+</dd>
+<dt id="ConversationalBrowser.conversationalbrowser.data_manipulation.get_permutations_of_gender_and_position"><code class="name flex">
+<span>def <span class="ident">get_permutations_of_gender_and_position</span></span>(<span>) ‑> list</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Takes in the gender_and_position var and returns the possible combinations of size 2
+:return: list of gender and positions as caller/receiver.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def get_permutations_of_gender_and_position() -&gt; list:
+    &#34;&#34;&#34;
+    Takes in the gender_and_position var and returns the possible combinations of size 2
+    :return: list of gender and positions as caller/receiver.
+    &#34;&#34;&#34;
+    permutations = list(iterpermutations(gender_and_position, 2))
+    final_permutation = []
+    for perm in permutations:
+        if &#34;caller&#34; in perm[0]:
+            if &#34;receiver&#34; in perm[1]:
+                final_permutation.append(perm)
+    return [&#34; &#34;.join(i) for i in final_permutation]</code></pre>
+</details>
+</dd>
+<dt id="ConversationalBrowser.conversationalbrowser.data_manipulation.get_rows_by_caller_and_receiver"><code class="name flex">
+<span>def <span class="ident">get_rows_by_caller_and_receiver</span></span>(<span>df, caller: str, receiver: str)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Specify the caller and receiver string and returns the dataframe with those rows by searching the receiver and
+caller columns.
+:param df: dataset
+:param caller: str of caller in the format caller_<M/F>
+:param receiver: str of receiver in the format receiver_<M/F>
+:return: df containing the caller and receiver specified.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def get_rows_by_caller_and_receiver(df, caller: str, receiver: str):
+    &#34;&#34;&#34;
+    Specify the caller and receiver string and returns the dataframe with those rows by searching the receiver and
+    caller columns.
+    :param df: dataset
+    :param caller: str of caller in the format caller_&lt;M/F&gt;
+    :param receiver: str of receiver in the format receiver_&lt;M/F&gt;
+    :return: df containing the caller and receiver specified.
+    &#34;&#34;&#34;
+    if receiver is not None and caller is None:
+        return df.loc[(df[&#34;receiver&#34;] == receiver)]
+    elif caller is not None and receiver is None:
+        return df.loc[(df[&#34;caller&#34;] == caller)]
+    elif caller is not None and receiver is not None:
+        return df.loc[(df[&#34;caller&#34;] == caller) &amp; (df[&#34;receiver&#34;] == receiver)]
+    else:
+        return df</code></pre>
+</details>
+</dd>
+<dt id="ConversationalBrowser.conversationalbrowser.data_manipulation.mean_time_of_each_event"><code class="name flex">
+<span>def <span class="ident">mean_time_of_each_event</span></span>(<span>df, types: dict) ‑> dict</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Gets the mean of each conversation cue. Returns the cue average time.
+:param df: dataset being searched
+:param types: dict of the cues being searched and the duration at 0
+:return: dict of average cue durations.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def mean_time_of_each_event(df, types: dict) -&gt; dict:
+    &#34;&#34;&#34;
+    Gets the mean of each conversation cue. Returns the cue average time.
+    :param df: dataset being searched
+    :param types: dict of the cues being searched and the duration at 0
+    :return: dict of average cue durations.
+    &#34;&#34;&#34;
+    for cue in types:
+        new_df = df[df[&#34;person_and_type&#34;].str.contains(cue)]
+        if len(new_df) &gt; 0:
+            types[cue] = (new_df[&#34;end&#34;] - new_df[&#34;start&#34;]).mean(axis=0)
+    return types</code></pre>
+</details>
+</dd>
+<dt id="ConversationalBrowser.conversationalbrowser.data_manipulation.occurrence_of_each_event"><code class="name flex">
+<span>def <span class="ident">occurrence_of_each_event</span></span>(<span>df, types: dict) ‑> dict</span>
+</code></dt>
+<dd>
+<div class="desc"><p>This takes in a dataframe and produces the total number of each conversation cue occurred.
+:param df: dataset
+:param types: dict of types is the cue being searched for.
+:return: types: dict of types along with their frequency.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def occurrence_of_each_event(df, types: dict) -&gt; dict:
+    &#34;&#34;&#34;
+    This takes in a dataframe and produces the total number of each conversation cue occurred.
+    :param df: dataset
+    :param types: dict of types is the cue being searched for.
+    :return: types: dict of types along with their frequency.
+    &#34;&#34;&#34;
+    occurrences = df[&#34;person_and_type&#34;].value_counts()
+    for occurrence_name in occurrences.index:
+        for cue_type in types:
+            if occurrence_name.count(cue_type) &gt; 1:
+                types[cue_type] += occurrences[occurrence_name] * 2
+            elif occurrence_name.count(cue_type) == 1:
+                types[cue_type] += occurrences[occurrence_name]
+    return types</code></pre>
+</details>
+</dd>
+<dt id="ConversationalBrowser.conversationalbrowser.data_manipulation.occurrence_of_event"><code class="name flex">
+<span>def <span class="ident">occurrence_of_event</span></span>(<span>df, cue: str) ‑> list</span>
+</code></dt>
+<dd>
+<div class="desc"><p>returns a list of two vals. number of times caller did a cue and number of times the receiver did the cue
+:param df: datset of an individual call.
+:param cue: str cue that is being searched
+:return: list of the cue count, caller and receiver.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def occurrence_of_event(df, cue: str) -&gt; list:
+    &#34;&#34;&#34;
+    returns a list of two vals. number of times caller did a cue and number of times the receiver did the cue
+    :param df: datset of an individual call.
+    :param cue: str cue that is being searched
+    :return: list of the cue count, caller and receiver.
+    &#34;&#34;&#34;
+    if df.empty:
+        raise ValueError(&#34;Dataframe is empty&#34;)
+    if &#34;M&#34; in df[&#34;receiver&#34;].iloc[0]:
+        receiver_search = f&#34;{cue}_rM&#34;
+    else:
+        receiver_search = f&#34;{cue}_rF&#34;
+    if &#34;M&#34; in df[&#34;caller&#34;].iloc[0]:
+        caller_search = f&#34;{cue}_cM&#34;
+    else:
+        caller_search = f&#34;{cue}_cF&#34;
+    if cue == &#34;silence&#34;:
+        receiver_search = &#34;silence&#34;
+        caller_search = &#34;silence&#34;
+    caller_cue_count = df.person_and_type.str.count(caller_search).sum()
+    receiver_cue_count = df.person_and_type.str.count(receiver_search).sum()
+    return [caller_cue_count, receiver_cue_count]</code></pre>
+</details>
+</dd>
+<dt id="ConversationalBrowser.conversationalbrowser.data_manipulation.read_in_data"><code class="name flex">
+<span>def <span class="ident">read_in_data</span></span>(<span>location: str)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Reads in the csv as a panda dataframe.
+:param location: str of the filepath
+:return: dataframe of the dataset</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def read_in_data(location: str):
+    &#34;&#34;&#34;
+    Reads in the csv as a panda dataframe.
+    :param location: str of the filepath
+    :return: dataframe of the dataset
+    &#34;&#34;&#34;
+    return pd.read_csv(location, sep=&#34;,&#34;, names=header_names)</code></pre>
+</details>
+</dd>
+<dt id="ConversationalBrowser.conversationalbrowser.data_manipulation.receiver_and_caller_column"><code class="name flex">
+<span>def <span class="ident">receiver_and_caller_column</span></span>(<span>df)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Takes in the dataframe, header names and gender/position.
+This then looks at person_and_type column and fills the caller and receiver column with the appropriate value
+:return: df data frame containing the data set with additional caller and receiver columns</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def receiver_and_caller_column(df):
+    &#34;&#34;&#34;
+    Takes in the dataframe, header names and gender/position.
+    This then looks at person_and_type column and fills the caller and receiver column with the appropriate value
+    :return: df data frame containing the data set with additional caller and receiver columns
+    &#34;&#34;&#34;
+    call_id = get_all_call_ids(df)
+    for call in call_id:
+        temp_df = get_call_df(df, call)  # get dataframe of only one call id
+        for gp in gender_and_position:
+            if temp_df[&#34;person_and_type&#34;].str.contains(gp).any():
+                if &#34;receiver&#34; in gp:
+                    df.loc[df.call == call, &#34;receiver&#34;] = gp
+                else:
+                    df.loc[df.call == call, &#34;caller&#34;] = gp
+    return df</code></pre>
+</details>
+</dd>
+<dt id="ConversationalBrowser.conversationalbrowser.data_manipulation.total_time_of_each_event"><code class="name flex">
+<span>def <span class="ident">total_time_of_each_event</span></span>(<span>df, types: dict) ‑> dict</span>
+</code></dt>
+<dd>
+<div class="desc"><p>This calculates the total time of each cue from the types dict in the dataset, returning a dictionary of each cue.
+:param df: contains the dataset.
+:param types: dict of the cues being searched for
+:return: types: dict of the cue durations.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def total_time_of_each_event(df, types: dict) -&gt; dict:
+    &#34;&#34;&#34;
+    This calculates the total time of each cue from the types dict in the dataset, returning a dictionary of each cue.
+    :param df: contains the dataset.
+    :param types: dict of the cues being searched for
+    :return: types: dict of the cue durations.
+    &#34;&#34;&#34;
+    for cue in types:
+        new_df = df[
+            df[&#34;person_and_type&#34;].str.contains(cue)
+        ]  # for each cue, get df of all rows containing cue
+        types[cue] = (new_df[&#34;end&#34;] - new_df[&#34;start&#34;]).sum(
+            axis=0
+        )  # end time - start time and sum them all
+    return types</code></pre>
+</details>
+</dd>
+<dt id="ConversationalBrowser.conversationalbrowser.data_manipulation.total_time_of_event"><code class="name flex">
+<span>def <span class="ident">total_time_of_event</span></span>(<span>df, cue: str) ‑> list</span>
+</code></dt>
+<dd>
+<div class="desc"><p>This calculates the total duration of a single cue, for a single call.
+:param df: this is a dataframe containing the rows of a single call ID.
+:param cue: cue that is being used.
+:return: [caller_cue_time, receiver_cue_time] a list of the duration of the cue chosen.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def total_time_of_event(df, cue: str) -&gt; list:
+    &#34;&#34;&#34;
+    This calculates the total duration of a single cue, for a single call.
+    :param df: this is a dataframe containing the rows of a single call ID.
+    :param cue: cue that is being used.
+    :return: [caller_cue_time, receiver_cue_time] a list of the duration of the cue chosen.
+    &#34;&#34;&#34;
+    if df.empty:
+        raise ValueError(&#34;Dataframe empty&#34;)
+    if &#34;M&#34; in df[&#34;receiver&#34;].iloc[0]:
+        receiver_search = f&#34;{cue}_rM&#34;
+    else:
+        receiver_search = f&#34;{cue}_rF&#34;
+    if &#34;M&#34; in df[&#34;caller&#34;].iloc[0]:
+        caller_search = f&#34;{cue}_cM&#34;
+    else:
+        caller_search = f&#34;{cue}_cF&#34;
+    caller_cue_time = df[df[&#34;person_and_type&#34;].str.contains(caller_search)]
+    caller_cue_time = (caller_cue_time[&#34;end&#34;] - caller_cue_time[&#34;start&#34;]).sum(axis=0)
+    receiver_cue_time = df[df[&#34;person_and_type&#34;].str.contains(receiver_search)]
+    receiver_cue_time = (receiver_cue_time[&#34;end&#34;] - receiver_cue_time[&#34;start&#34;]).sum(
+        axis=0
+    )
+    return [caller_cue_time, receiver_cue_time]</code></pre>
+</details>
+</dd>
+</dl>
+</section>
+<section>
+</section>
+</article>
+<nav id="sidebar">
+<h1>Index</h1>
+<div class="toc">
+<ul></ul>
+</div>
+<ul id="index">
+<li><h3>Super-module</h3>
+<ul>
+<li><code><a title="ConversationalBrowser.conversationalbrowser" href="index.html">ConversationalBrowser.conversationalbrowser</a></code></li>
+</ul>
+</li>
+<li><h3><a href="#header-functions">Functions</a></h3>
+<ul class="">
+<li><code><a title="ConversationalBrowser.conversationalbrowser.data_manipulation.get_all_call_ids" href="#ConversationalBrowser.conversationalbrowser.data_manipulation.get_all_call_ids">get_all_call_ids</a></code></li>
+<li><code><a title="ConversationalBrowser.conversationalbrowser.data_manipulation.get_all_event_durations" href="#ConversationalBrowser.conversationalbrowser.data_manipulation.get_all_event_durations">get_all_event_durations</a></code></li>
+<li><code><a title="ConversationalBrowser.conversationalbrowser.data_manipulation.get_call_df" href="#ConversationalBrowser.conversationalbrowser.data_manipulation.get_call_df">get_call_df</a></code></li>
+<li><code><a title="ConversationalBrowser.conversationalbrowser.data_manipulation.get_list_of_call_id_df" href="#ConversationalBrowser.conversationalbrowser.data_manipulation.get_list_of_call_id_df">get_list_of_call_id_df</a></code></li>
+<li><code><a title="ConversationalBrowser.conversationalbrowser.data_manipulation.get_non_verbal_speech_only" href="#ConversationalBrowser.conversationalbrowser.data_manipulation.get_non_verbal_speech_only">get_non_verbal_speech_only</a></code></li>
+<li><code><a title="ConversationalBrowser.conversationalbrowser.data_manipulation.get_permutations_of_gender_and_position" href="#ConversationalBrowser.conversationalbrowser.data_manipulation.get_permutations_of_gender_and_position">get_permutations_of_gender_and_position</a></code></li>
+<li><code><a title="ConversationalBrowser.conversationalbrowser.data_manipulation.get_rows_by_caller_and_receiver" href="#ConversationalBrowser.conversationalbrowser.data_manipulation.get_rows_by_caller_and_receiver">get_rows_by_caller_and_receiver</a></code></li>
+<li><code><a title="ConversationalBrowser.conversationalbrowser.data_manipulation.mean_time_of_each_event" href="#ConversationalBrowser.conversationalbrowser.data_manipulation.mean_time_of_each_event">mean_time_of_each_event</a></code></li>
+<li><code><a title="ConversationalBrowser.conversationalbrowser.data_manipulation.occurrence_of_each_event" href="#ConversationalBrowser.conversationalbrowser.data_manipulation.occurrence_of_each_event">occurrence_of_each_event</a></code></li>
+<li><code><a title="ConversationalBrowser.conversationalbrowser.data_manipulation.occurrence_of_event" href="#ConversationalBrowser.conversationalbrowser.data_manipulation.occurrence_of_event">occurrence_of_event</a></code></li>
+<li><code><a title="ConversationalBrowser.conversationalbrowser.data_manipulation.read_in_data" href="#ConversationalBrowser.conversationalbrowser.data_manipulation.read_in_data">read_in_data</a></code></li>
+<li><code><a title="ConversationalBrowser.conversationalbrowser.data_manipulation.receiver_and_caller_column" href="#ConversationalBrowser.conversationalbrowser.data_manipulation.receiver_and_caller_column">receiver_and_caller_column</a></code></li>
+<li><code><a title="ConversationalBrowser.conversationalbrowser.data_manipulation.total_time_of_each_event" href="#ConversationalBrowser.conversationalbrowser.data_manipulation.total_time_of_each_event">total_time_of_each_event</a></code></li>
+<li><code><a title="ConversationalBrowser.conversationalbrowser.data_manipulation.total_time_of_event" href="#ConversationalBrowser.conversationalbrowser.data_manipulation.total_time_of_event">total_time_of_event</a></code></li>
+</ul>
+</li>
+</ul>
+</nav>
+</main>
+<footer id="footer">
+<p>Generated by <a href="https://pdoc3.github.io/pdoc"><cite>pdoc</cite> 0.9.2</a>.</p>
+</footer>
+</body>
+</html>

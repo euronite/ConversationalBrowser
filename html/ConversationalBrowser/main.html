@@ -1,0 +1,1144 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
+<meta name="generator" content="pdoc 0.9.2" />
+<title>ConversationalBrowser.main API documentation</title>
+<meta name="description" content="This contains the main Controller/View of the GUI." />
+<link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/sanitize.min.css" integrity="sha256-PK9q560IAAa6WVRRh76LtCaI8pjTJ2z11v0miyNNjrs=" crossorigin>
+<link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/typography.min.css" integrity="sha256-7l/o7C8jubJiy74VsKTidCy1yBkRtiUGbVkYBylBqUg=" crossorigin>
+<link rel="stylesheet preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/styles/github.min.css" crossorigin>
+<style>:root{--highlight-color:#fe9}.flex{display:flex !important}body{line-height:1.5em}#content{padding:20px}#sidebar{padding:30px;overflow:hidden}#sidebar > *:last-child{margin-bottom:2cm}.http-server-breadcrumbs{font-size:130%;margin:0 0 15px 0}#footer{font-size:.75em;padding:5px 30px;border-top:1px solid #ddd;text-align:right}#footer p{margin:0 0 0 1em;display:inline-block}#footer p:last-child{margin-right:30px}h1,h2,h3,h4,h5{font-weight:300}h1{font-size:2.5em;line-height:1.1em}h2{font-size:1.75em;margin:1em 0 .50em 0}h3{font-size:1.4em;margin:25px 0 10px 0}h4{margin:0;font-size:105%}h1:target,h2:target,h3:target,h4:target,h5:target,h6:target{background:var(--highlight-color);padding:.2em 0}a{color:#058;text-decoration:none;transition:color .3s ease-in-out}a:hover{color:#e82}.title code{font-weight:bold}h2[id^="header-"]{margin-top:2em}.ident{color:#900}pre code{background:#f8f8f8;font-size:.8em;line-height:1.4em}code{background:#f2f2f1;padding:1px 4px;overflow-wrap:break-word}h1 code{background:transparent}pre{background:#f8f8f8;border:0;border-top:1px solid #ccc;border-bottom:1px solid #ccc;margin:1em 0;padding:1ex}#http-server-module-list{display:flex;flex-flow:column}#http-server-module-list div{display:flex}#http-server-module-list dt{min-width:10%}#http-server-module-list p{margin-top:0}.toc ul,#index{list-style-type:none;margin:0;padding:0}#index code{background:transparent}#index h3{border-bottom:1px solid #ddd}#index ul{padding:0}#index h4{margin-top:.6em;font-weight:bold}@media (min-width:200ex){#index .two-column{column-count:2}}@media (min-width:300ex){#index .two-column{column-count:3}}dl{margin-bottom:2em}dl dl:last-child{margin-bottom:4em}dd{margin:0 0 1em 3em}#header-classes + dl > dd{margin-bottom:3em}dd dd{margin-left:2em}dd p{margin:10px 0}.name{background:#eee;font-weight:bold;font-size:.85em;padding:5px 10px;display:inline-block;min-width:40%}.name:hover{background:#e0e0e0}dt:target .name{background:var(--highlight-color)}.name > span:first-child{white-space:nowrap}.name.class > span:nth-child(2){margin-left:.4em}.inherited{color:#999;border-left:5px solid #eee;padding-left:1em}.inheritance em{font-style:normal;font-weight:bold}.desc h2{font-weight:400;font-size:1.25em}.desc h3{font-size:1em}.desc dt code{background:inherit}.source summary,.git-link-div{color:#666;text-align:right;font-weight:400;font-size:.8em;text-transform:uppercase}.source summary > *{white-space:nowrap;cursor:pointer}.git-link{color:inherit;margin-left:1em}.source pre{max-height:500px;overflow:auto;margin:0}.source pre code{font-size:12px;overflow:visible}.hlist{list-style:none}.hlist li{display:inline}.hlist li:after{content:',\2002'}.hlist li:last-child:after{content:none}.hlist .hlist{display:inline;padding-left:1em}img{max-width:100%}td{padding:0 .5em}.admonition{padding:.1em .5em;margin-bottom:1em}.admonition-title{font-weight:bold}.admonition.note,.admonition.info,.admonition.important{background:#aef}.admonition.todo,.admonition.versionadded,.admonition.tip,.admonition.hint{background:#dfd}.admonition.warning,.admonition.versionchanged,.admonition.deprecated{background:#fd4}.admonition.error,.admonition.danger,.admonition.caution{background:lightpink}</style>
+<style media="screen and (min-width: 700px)">@media screen and (min-width:700px){#sidebar{width:30%;height:100vh;overflow:auto;position:sticky;top:0}#content{width:70%;max-width:100ch;padding:3em 4em;border-left:1px solid #ddd}pre code{font-size:1em}.item .name{font-size:1em}main{display:flex;flex-direction:row-reverse;justify-content:flex-end}.toc ul ul,#index ul{padding-left:1.5em}.toc > ul > li{margin-top:.5em}}</style>
+<style media="print">@media print{#sidebar h1{page-break-before:always}.source{display:none}}@media print{*{background:transparent !important;color:#000 !important;box-shadow:none !important;text-shadow:none !important}a[href]:after{content:" (" attr(href) ")";font-size:90%}a[href][title]:after{content:none}abbr[title]:after{content:" (" attr(title) ")"}.ir a:after,a[href^="javascript:"]:after,a[href^="#"]:after{content:""}pre,blockquote{border:1px solid #999;page-break-inside:avoid}thead{display:table-header-group}tr,img{page-break-inside:avoid}img{max-width:100% !important}@page{margin:0.5cm}p,h2,h3{orphans:3;widows:3}h1,h2,h3,h4,h5,h6{page-break-after:avoid}}</style>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/highlight.min.js" integrity="sha256-Uv3H6lx7dJmRfRvH8TH6kJD1TSK1aFcwgx+mdg3epi8=" crossorigin></script>
+<script>window.addEventListener('DOMContentLoaded', () => hljs.initHighlighting())</script>
+</head>
+<body>
+<main>
+<article id="content">
+<header>
+<h1 class="title">Module <code>ConversationalBrowser.main</code></h1>
+</header>
+<section id="section-intro">
+<p>This contains the main Controller/View of the GUI.</p>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+&#34;&#34;&#34;
+This contains the main Controller/View of the GUI.
+&#34;&#34;&#34;
+
+from PyQt5 import QtWidgets, uic
+from PyQt5.QtCore import pyqtSlot
+from PyQt5.QtWidgets import QWidget, QMessageBox, QDialog
+from sys import exit as s_exit
+from sys import argv as s_argv
+from conversationalbrowser import data_manipulation as dm
+from conversationalbrowser.model import Model, CallerModel
+from conversationalbrowser import graph
+from pathlib import Path
+
+
+class MainWindow(QtWidgets.QMainWindow):
+    &#34;&#34;&#34; This is the main window of the application, containing the various logic for buttons and menus. &#34;&#34;&#34;
+
+    def __init__(self, *args, **kwargs):
+        self.model = Model()
+        self.callModel = CallerModel()
+        super(MainWindow, self).__init__(*args, **kwargs)
+        # Load the UI
+        ui_location = Path(
+            &#34;conversationalbrowser/ui/main_window.ui&#34;
+        )  # This converts \ on windows etc.
+        uic.loadUi(ui_location, self)
+        graph.initmpl(self)
+        self.roleDropdown.activated[str].connect(self.callerReceiverToggle)
+        self.chartDropdown.activated[str].connect(self.averageToggle)
+
+    @pyqtSlot()
+    def browseSlot(self):
+        &#34;&#34;&#34;
+        This is a slot that gets called whenever the load file button is pressed. It loads the data and saves to model.
+        &#34;&#34;&#34;
+        file_dialog = FileDialog()
+        file = file_dialog.openFileDialog()
+        if file:
+            self.model.set_file_name(file)
+            self.model.set_caller_ids(
+                dm.get_all_call_ids(self.model.get_file_content())
+            )
+
+            QMessageBox.information(self, &#34;Load File&#34;, &#34;File loaded successfully.&#34;)
+        else:
+            QMessageBox.critical(
+                self, &#34;Load File Error&#34;, &#34;File not selected, please try again&#34;
+            )
+
+    @pyqtSlot()
+    def exportGraph(self):
+        &#34;&#34;&#34; This calls the file dialog call to then save the file. &#34;&#34;&#34;
+        if self.model.figure is None:
+            return QMessageBox.critical(self, &#34;Export Error&#34;, &#34;No graph to export!&#34;)
+        file_dialog = FileDialog()
+        location = file_dialog.saveFileDialog()
+        try:
+            graph.export(self, location)
+        except IOError:
+            QMessageBox.critical(self, &#34;Saving File Error&#34;, &#34;Unable to save file!&#34;)
+
+    @pyqtSlot()
+    def clearGraphSlot(self):
+        graph.rmmpl(self)
+
+    @pyqtSlot()
+    def displayCallerDialog(self):
+        self.openCallerDialog()
+
+    @pyqtSlot()
+    def cueType(self):
+        self.openCueDialog()
+
+    @pyqtSlot()
+    def displayGraphSlot(self):
+        &#34;&#34;&#34; This calls the functions from graph.py to process the filter options and display the graph. &#34;&#34;&#34;
+        if not self.callModel.selected:
+            self.callModel.selected = [(&#34;All Caller IDs&#34;, 0)]
+        if not self.callModel.cues_selected:
+            self.callModel.cues_selected = [(&#34;All Cues&#34;, 0)]
+        graph.displaympl(self, self.model, self.callModel)
+
+    def averageToggle(self):
+        &#34;&#34;&#34; Average toggle disables the average checkbox whenever the &#39;Display per Cue Event&#39; is selected. &#34;&#34;&#34;
+        if self.chartDropdown.currentText() == &#34;Display Totals&#34;:
+            self.averageCheckbox.setEnabled(True)
+        else:
+            self.averageCheckbox.setEnabled(False)
+
+    def callerReceiverToggle(self):
+        &#34;&#34;&#34;
+        This is used to enable/disable the caller and receiver gender dropdown menu based on the role dropdown selection
+        &#34;&#34;&#34;
+        if self.roleDropdown.currentText() == &#34;Receiver and Caller&#34;:
+            self.callerGenderDropdown.setEnabled(True)
+            self.receiverGenderDropdown.setEnabled(True)
+        elif self.roleDropdown.currentText() == &#34;Caller&#34;:
+            self.receiverGenderDropdown.setEnabled(False)
+            self.callerGenderDropdown.setEnabled(True)
+        elif self.roleDropdown.currentText() == &#34;Receiver&#34;:
+            self.callerGenderDropdown.setEnabled(False)
+            self.receiverGenderDropdown.setEnabled(True)
+
+    def openCueDialog(self):
+        &#34;&#34;&#34; This calls the cue dialog box and allows selection of the cues wanted. &#34;&#34;&#34;
+        cue_dialog = CueDialog(self)
+        if not self.callModel.cues_selected:
+            cue_dialog.selectAll()
+        else:
+            for pair in self.callModel.cues_selected:
+                if pair[1] == 0:
+                    cue_dialog.selectAll()
+                    break
+                cue_dialog.cueListWidget.item(pair[1]).setSelected(True)
+        cue_dialog.exec_()
+        cue_dialog.show()
+        self.callModel.cues_selected = []
+        for item in cue_dialog.cueListWidget.selectedItems():
+            self.callModel.cues_selected.append(
+                (item.text(), cue_dialog.cueListWidget.row(item))
+            )
+
+    def openCallerDialog(self):
+        &#34;&#34;&#34; This opens the caller dialog box to choose which caller ids to display. &#34;&#34;&#34;
+        caller_dialog = CallerDialog(self)
+        caller_dialog.populateListView(self.model.callerIds)
+        if not self.callModel.selected:
+            caller_dialog.selectAll()
+        else:
+            for pair in self.callModel.selected:
+                # Selects the rows that have been selected previously. If the previously selected row is 0, selectall
+                if pair[1] == 0:
+                    caller_dialog.selectAll()
+                    break
+                caller_dialog.callerListWidget.item(pair[1]).setSelected(True)
+        caller_dialog.exec_()
+        caller_dialog.show()
+        self.callModel.selected = []
+        for item in caller_dialog.callerListWidget.selectedItems():
+            # This appends the caller ID and the position in the list to the caller model.
+            self.callModel.selected.append(
+                (item.text(), caller_dialog.callerListWidget.row(item))
+            )
+
+
+class FileDialog(QWidget):
+    &#34;&#34;&#34; This is the file dialog box that is created and shown whenever the user wants to load in data. &#34;&#34;&#34;
+
+    def __init__(self):
+        super(FileDialog, self).__init__()
+        self.initUI()
+
+    def initUI(self):
+        self.setWindowTitle(&#34;Choose csv file&#34;)
+        self.setGeometry(100, 100, 640, 480)
+
+    def openFileDialog(self) -&gt; str:
+        &#34;&#34;&#34;This is called and opens the system file explorer to choose the files. Options are set such as only
+        allowing csv.
+        :return:
+        file: str is the name of the file location.
+        &#34;&#34;&#34;
+        options = QtWidgets.QFileDialog.Options()
+        file, _ = QtWidgets.QFileDialog.getOpenFileName(
+            None,
+            &#34;QFileDialog.getOpenFileName()&#34;,
+            &#34;&#34;,
+            &#34;CSV Files (*.csv)&#34;,
+            options=options,
+        )
+        return file
+
+    def saveFileDialog(self) -&gt; str:
+        &#34;&#34;&#34;
+        This is called to select the location to save the file. Options are set with a default name, plot.png
+        :return:
+        filename: str is the name of the file location to save to.
+        &#34;&#34;&#34;
+        options = QtWidgets.QFileDialog.Options()
+        filename, _ = QtWidgets.QFileDialog.getSaveFileName(
+            None,
+            &#34;QFileDialog.getSaveFileName()&#34;,
+            directory=&#34;plot.png&#34;,
+            options=options,
+        )
+        return filename
+
+
+class CallerDialog(QDialog):
+    &#34;&#34;&#34; This is caller id selection dialog class that is shown to the user. &#34;&#34;&#34;
+
+    def __init__(self, *args, **kwargs):
+        super(CallerDialog, self).__init__(*args, **kwargs)
+        uic.loadUi(Path(&#34;conversationalbrowser/ui/dialog_caller_id.ui&#34;), self)
+        self.setWindowTitle(&#34;Choose caller IDs&#34;)
+        self.callerListWidget.selectionModel().currentChanged.connect(self.onRowChanged)
+
+    def populateListView(self, id_list: list):
+        &#34;&#34;&#34; This is called to update the list view of caller ids. &#34;&#34;&#34;
+        self.callerListWidget.addItems(id_list)
+
+    def onRowChanged(self, current):
+        &#34;&#34;&#34; Whenever an ID is selected/deselected, this is called to select or deselect the item &#34;&#34;&#34;
+        if current.row() != 0:
+            self.callerListWidget.item(0).setSelected(False)
+        elif current.row() == 0:
+            self.selectAll()
+
+    def deselectAll(self):
+        &#34;&#34;&#34; This is called when clear selection button is pressed. Deselects all caller ids. &#34;&#34;&#34;
+        for i in range(self.callerListWidget.count()):
+            self.callerListWidget.item(i).setSelected(False)
+
+    def selectAll(self):
+        &#34;&#34;&#34; This is called when row 0, which is All Ids is pressed. This selects all ids. &#34;&#34;&#34;
+        for i in range(self.callerListWidget.count()):
+            self.callerListWidget.item(i).setSelected(True)
+
+    @pyqtSlot()
+    def clearCallerList(self):
+        self.deselectAll()
+
+
+class CueDialog(QDialog):
+    &#34;&#34;&#34; This shows the cue dialog box as well as the functions within the class. &#34;&#34;&#34;
+
+    def __init__(self, *args, **kwargs):
+        super(CueDialog, self).__init__(*args, **kwargs)
+        uic.loadUi(Path(&#34;conversationalbrowser/ui/dialog_cue.ui&#34;), self)
+        self.setWindowTitle(&#34;Choose cues to display&#34;)
+        self.cueListWidget.selectionModel().currentChanged.connect(self.onRowChanged)
+
+    def onRowChanged(self, current):
+        &#34;&#34;&#34; This selects or deselects the cues when pressed. If the first row is pressed, this is all cues. &#34;&#34;&#34;
+        if current.row() != 0:
+            self.cueListWidget.item(0).setSelected(False)
+        elif current.row() == 0:
+            self.selectAll()
+
+    def deselectAll(self):
+        &#34;&#34;&#34; This clears the cue selection whenever the clear selection button is pressed. &#34;&#34;&#34;
+        for i in range(self.cueListWidget.count()):
+            self.cueListWidget.item(i).setSelected(False)
+
+    def selectAll(self):
+        &#34;&#34;&#34; This is used to select all the cues whenever the first row is pressed. &#34;&#34;&#34;
+        for i in range(self.cueListWidget.count()):
+            self.cueListWidget.item(i).setSelected(True)
+
+    @pyqtSlot()
+    def clearCueList(self):
+        self.deselectAll()
+
+
+def main():
+    app = QtWidgets.QApplication(s_argv)
+    main_window = MainWindow()
+    main_window.show()
+    s_exit(app.exec())
+
+
+if __name__ == &#34;__main__&#34;:
+    main()</code></pre>
+</details>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+<h2 class="section-title" id="header-functions">Functions</h2>
+<dl>
+<dt id="ConversationalBrowser.main.main"><code class="name flex">
+<span>def <span class="ident">main</span></span>(<span>)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def main():
+    app = QtWidgets.QApplication(s_argv)
+    main_window = MainWindow()
+    main_window.show()
+    s_exit(app.exec())</code></pre>
+</details>
+</dd>
+</dl>
+</section>
+<section>
+<h2 class="section-title" id="header-classes">Classes</h2>
+<dl>
+<dt id="ConversationalBrowser.main.CallerDialog"><code class="flex name class">
+<span>class <span class="ident">CallerDialog</span></span>
+<span>(</span><span>*args, **kwargs)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>This is caller id selection dialog class that is shown to the user.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class CallerDialog(QDialog):
+    &#34;&#34;&#34; This is caller id selection dialog class that is shown to the user. &#34;&#34;&#34;
+
+    def __init__(self, *args, **kwargs):
+        super(CallerDialog, self).__init__(*args, **kwargs)
+        uic.loadUi(Path(&#34;conversationalbrowser/ui/dialog_caller_id.ui&#34;), self)
+        self.setWindowTitle(&#34;Choose caller IDs&#34;)
+        self.callerListWidget.selectionModel().currentChanged.connect(self.onRowChanged)
+
+    def populateListView(self, id_list: list):
+        &#34;&#34;&#34; This is called to update the list view of caller ids. &#34;&#34;&#34;
+        self.callerListWidget.addItems(id_list)
+
+    def onRowChanged(self, current):
+        &#34;&#34;&#34; Whenever an ID is selected/deselected, this is called to select or deselect the item &#34;&#34;&#34;
+        if current.row() != 0:
+            self.callerListWidget.item(0).setSelected(False)
+        elif current.row() == 0:
+            self.selectAll()
+
+    def deselectAll(self):
+        &#34;&#34;&#34; This is called when clear selection button is pressed. Deselects all caller ids. &#34;&#34;&#34;
+        for i in range(self.callerListWidget.count()):
+            self.callerListWidget.item(i).setSelected(False)
+
+    def selectAll(self):
+        &#34;&#34;&#34; This is called when row 0, which is All Ids is pressed. This selects all ids. &#34;&#34;&#34;
+        for i in range(self.callerListWidget.count()):
+            self.callerListWidget.item(i).setSelected(True)
+
+    @pyqtSlot()
+    def clearCallerList(self):
+        self.deselectAll()</code></pre>
+</details>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li>PyQt5.QtWidgets.QDialog</li>
+<li>PyQt5.QtWidgets.QWidget</li>
+<li>PyQt5.QtCore.QObject</li>
+<li>sip.wrapper</li>
+<li>PyQt5.QtGui.QPaintDevice</li>
+<li>sip.simplewrapper</li>
+</ul>
+<h3>Methods</h3>
+<dl>
+<dt id="ConversationalBrowser.main.CallerDialog.clearCallerList"><code class="name flex">
+<span>def <span class="ident">clearCallerList</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@pyqtSlot()
+def clearCallerList(self):
+    self.deselectAll()</code></pre>
+</details>
+</dd>
+<dt id="ConversationalBrowser.main.CallerDialog.deselectAll"><code class="name flex">
+<span>def <span class="ident">deselectAll</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>This is called when clear selection button is pressed. Deselects all caller ids.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def deselectAll(self):
+    &#34;&#34;&#34; This is called when clear selection button is pressed. Deselects all caller ids. &#34;&#34;&#34;
+    for i in range(self.callerListWidget.count()):
+        self.callerListWidget.item(i).setSelected(False)</code></pre>
+</details>
+</dd>
+<dt id="ConversationalBrowser.main.CallerDialog.onRowChanged"><code class="name flex">
+<span>def <span class="ident">onRowChanged</span></span>(<span>self, current)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Whenever an ID is selected/deselected, this is called to select or deselect the item</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def onRowChanged(self, current):
+    &#34;&#34;&#34; Whenever an ID is selected/deselected, this is called to select or deselect the item &#34;&#34;&#34;
+    if current.row() != 0:
+        self.callerListWidget.item(0).setSelected(False)
+    elif current.row() == 0:
+        self.selectAll()</code></pre>
+</details>
+</dd>
+<dt id="ConversationalBrowser.main.CallerDialog.populateListView"><code class="name flex">
+<span>def <span class="ident">populateListView</span></span>(<span>self, id_list: list)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>This is called to update the list view of caller ids.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def populateListView(self, id_list: list):
+    &#34;&#34;&#34; This is called to update the list view of caller ids. &#34;&#34;&#34;
+    self.callerListWidget.addItems(id_list)</code></pre>
+</details>
+</dd>
+<dt id="ConversationalBrowser.main.CallerDialog.selectAll"><code class="name flex">
+<span>def <span class="ident">selectAll</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>This is called when row 0, which is All Ids is pressed. This selects all ids.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def selectAll(self):
+    &#34;&#34;&#34; This is called when row 0, which is All Ids is pressed. This selects all ids. &#34;&#34;&#34;
+    for i in range(self.callerListWidget.count()):
+        self.callerListWidget.item(i).setSelected(True)</code></pre>
+</details>
+</dd>
+</dl>
+</dd>
+<dt id="ConversationalBrowser.main.CueDialog"><code class="flex name class">
+<span>class <span class="ident">CueDialog</span></span>
+<span>(</span><span>*args, **kwargs)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>This shows the cue dialog box as well as the functions within the class.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class CueDialog(QDialog):
+    &#34;&#34;&#34; This shows the cue dialog box as well as the functions within the class. &#34;&#34;&#34;
+
+    def __init__(self, *args, **kwargs):
+        super(CueDialog, self).__init__(*args, **kwargs)
+        uic.loadUi(Path(&#34;conversationalbrowser/ui/dialog_cue.ui&#34;), self)
+        self.setWindowTitle(&#34;Choose cues to display&#34;)
+        self.cueListWidget.selectionModel().currentChanged.connect(self.onRowChanged)
+
+    def onRowChanged(self, current):
+        &#34;&#34;&#34; This selects or deselects the cues when pressed. If the first row is pressed, this is all cues. &#34;&#34;&#34;
+        if current.row() != 0:
+            self.cueListWidget.item(0).setSelected(False)
+        elif current.row() == 0:
+            self.selectAll()
+
+    def deselectAll(self):
+        &#34;&#34;&#34; This clears the cue selection whenever the clear selection button is pressed. &#34;&#34;&#34;
+        for i in range(self.cueListWidget.count()):
+            self.cueListWidget.item(i).setSelected(False)
+
+    def selectAll(self):
+        &#34;&#34;&#34; This is used to select all the cues whenever the first row is pressed. &#34;&#34;&#34;
+        for i in range(self.cueListWidget.count()):
+            self.cueListWidget.item(i).setSelected(True)
+
+    @pyqtSlot()
+    def clearCueList(self):
+        self.deselectAll()</code></pre>
+</details>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li>PyQt5.QtWidgets.QDialog</li>
+<li>PyQt5.QtWidgets.QWidget</li>
+<li>PyQt5.QtCore.QObject</li>
+<li>sip.wrapper</li>
+<li>PyQt5.QtGui.QPaintDevice</li>
+<li>sip.simplewrapper</li>
+</ul>
+<h3>Methods</h3>
+<dl>
+<dt id="ConversationalBrowser.main.CueDialog.clearCueList"><code class="name flex">
+<span>def <span class="ident">clearCueList</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@pyqtSlot()
+def clearCueList(self):
+    self.deselectAll()</code></pre>
+</details>
+</dd>
+<dt id="ConversationalBrowser.main.CueDialog.deselectAll"><code class="name flex">
+<span>def <span class="ident">deselectAll</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>This clears the cue selection whenever the clear selection button is pressed.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def deselectAll(self):
+    &#34;&#34;&#34; This clears the cue selection whenever the clear selection button is pressed. &#34;&#34;&#34;
+    for i in range(self.cueListWidget.count()):
+        self.cueListWidget.item(i).setSelected(False)</code></pre>
+</details>
+</dd>
+<dt id="ConversationalBrowser.main.CueDialog.onRowChanged"><code class="name flex">
+<span>def <span class="ident">onRowChanged</span></span>(<span>self, current)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>This selects or deselects the cues when pressed. If the first row is pressed, this is all cues.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def onRowChanged(self, current):
+    &#34;&#34;&#34; This selects or deselects the cues when pressed. If the first row is pressed, this is all cues. &#34;&#34;&#34;
+    if current.row() != 0:
+        self.cueListWidget.item(0).setSelected(False)
+    elif current.row() == 0:
+        self.selectAll()</code></pre>
+</details>
+</dd>
+<dt id="ConversationalBrowser.main.CueDialog.selectAll"><code class="name flex">
+<span>def <span class="ident">selectAll</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>This is used to select all the cues whenever the first row is pressed.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def selectAll(self):
+    &#34;&#34;&#34; This is used to select all the cues whenever the first row is pressed. &#34;&#34;&#34;
+    for i in range(self.cueListWidget.count()):
+        self.cueListWidget.item(i).setSelected(True)</code></pre>
+</details>
+</dd>
+</dl>
+</dd>
+<dt id="ConversationalBrowser.main.FileDialog"><code class="flex name class">
+<span>class <span class="ident">FileDialog</span></span>
+</code></dt>
+<dd>
+<div class="desc"><p>This is the file dialog box that is created and shown whenever the user wants to load in data.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class FileDialog(QWidget):
+    &#34;&#34;&#34; This is the file dialog box that is created and shown whenever the user wants to load in data. &#34;&#34;&#34;
+
+    def __init__(self):
+        super(FileDialog, self).__init__()
+        self.initUI()
+
+    def initUI(self):
+        self.setWindowTitle(&#34;Choose csv file&#34;)
+        self.setGeometry(100, 100, 640, 480)
+
+    def openFileDialog(self) -&gt; str:
+        &#34;&#34;&#34;This is called and opens the system file explorer to choose the files. Options are set such as only
+        allowing csv.
+        :return:
+        file: str is the name of the file location.
+        &#34;&#34;&#34;
+        options = QtWidgets.QFileDialog.Options()
+        file, _ = QtWidgets.QFileDialog.getOpenFileName(
+            None,
+            &#34;QFileDialog.getOpenFileName()&#34;,
+            &#34;&#34;,
+            &#34;CSV Files (*.csv)&#34;,
+            options=options,
+        )
+        return file
+
+    def saveFileDialog(self) -&gt; str:
+        &#34;&#34;&#34;
+        This is called to select the location to save the file. Options are set with a default name, plot.png
+        :return:
+        filename: str is the name of the file location to save to.
+        &#34;&#34;&#34;
+        options = QtWidgets.QFileDialog.Options()
+        filename, _ = QtWidgets.QFileDialog.getSaveFileName(
+            None,
+            &#34;QFileDialog.getSaveFileName()&#34;,
+            directory=&#34;plot.png&#34;,
+            options=options,
+        )
+        return filename</code></pre>
+</details>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li>PyQt5.QtWidgets.QWidget</li>
+<li>PyQt5.QtCore.QObject</li>
+<li>sip.wrapper</li>
+<li>PyQt5.QtGui.QPaintDevice</li>
+<li>sip.simplewrapper</li>
+</ul>
+<h3>Methods</h3>
+<dl>
+<dt id="ConversationalBrowser.main.FileDialog.initUI"><code class="name flex">
+<span>def <span class="ident">initUI</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def initUI(self):
+    self.setWindowTitle(&#34;Choose csv file&#34;)
+    self.setGeometry(100, 100, 640, 480)</code></pre>
+</details>
+</dd>
+<dt id="ConversationalBrowser.main.FileDialog.openFileDialog"><code class="name flex">
+<span>def <span class="ident">openFileDialog</span></span>(<span>self) ‑> str</span>
+</code></dt>
+<dd>
+<div class="desc"><p>This is called and opens the system file explorer to choose the files. Options are set such as only
+allowing csv.
+:return:
+file: str is the name of the file location.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def openFileDialog(self) -&gt; str:
+    &#34;&#34;&#34;This is called and opens the system file explorer to choose the files. Options are set such as only
+    allowing csv.
+    :return:
+    file: str is the name of the file location.
+    &#34;&#34;&#34;
+    options = QtWidgets.QFileDialog.Options()
+    file, _ = QtWidgets.QFileDialog.getOpenFileName(
+        None,
+        &#34;QFileDialog.getOpenFileName()&#34;,
+        &#34;&#34;,
+        &#34;CSV Files (*.csv)&#34;,
+        options=options,
+    )
+    return file</code></pre>
+</details>
+</dd>
+<dt id="ConversationalBrowser.main.FileDialog.saveFileDialog"><code class="name flex">
+<span>def <span class="ident">saveFileDialog</span></span>(<span>self) ‑> str</span>
+</code></dt>
+<dd>
+<div class="desc"><p>This is called to select the location to save the file. Options are set with a default name, plot.png
+:return:
+filename: str is the name of the file location to save to.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def saveFileDialog(self) -&gt; str:
+    &#34;&#34;&#34;
+    This is called to select the location to save the file. Options are set with a default name, plot.png
+    :return:
+    filename: str is the name of the file location to save to.
+    &#34;&#34;&#34;
+    options = QtWidgets.QFileDialog.Options()
+    filename, _ = QtWidgets.QFileDialog.getSaveFileName(
+        None,
+        &#34;QFileDialog.getSaveFileName()&#34;,
+        directory=&#34;plot.png&#34;,
+        options=options,
+    )
+    return filename</code></pre>
+</details>
+</dd>
+</dl>
+</dd>
+<dt id="ConversationalBrowser.main.MainWindow"><code class="flex name class">
+<span>class <span class="ident">MainWindow</span></span>
+<span>(</span><span>*args, **kwargs)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>This is the main window of the application, containing the various logic for buttons and menus.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class MainWindow(QtWidgets.QMainWindow):
+    &#34;&#34;&#34; This is the main window of the application, containing the various logic for buttons and menus. &#34;&#34;&#34;
+
+    def __init__(self, *args, **kwargs):
+        self.model = Model()
+        self.callModel = CallerModel()
+        super(MainWindow, self).__init__(*args, **kwargs)
+        # Load the UI
+        ui_location = Path(
+            &#34;conversationalbrowser/ui/main_window.ui&#34;
+        )  # This converts \ on windows etc.
+        uic.loadUi(ui_location, self)
+        graph.initmpl(self)
+        self.roleDropdown.activated[str].connect(self.callerReceiverToggle)
+        self.chartDropdown.activated[str].connect(self.averageToggle)
+
+    @pyqtSlot()
+    def browseSlot(self):
+        &#34;&#34;&#34;
+        This is a slot that gets called whenever the load file button is pressed. It loads the data and saves to model.
+        &#34;&#34;&#34;
+        file_dialog = FileDialog()
+        file = file_dialog.openFileDialog()
+        if file:
+            self.model.set_file_name(file)
+            self.model.set_caller_ids(
+                dm.get_all_call_ids(self.model.get_file_content())
+            )
+
+            QMessageBox.information(self, &#34;Load File&#34;, &#34;File loaded successfully.&#34;)
+        else:
+            QMessageBox.critical(
+                self, &#34;Load File Error&#34;, &#34;File not selected, please try again&#34;
+            )
+
+    @pyqtSlot()
+    def exportGraph(self):
+        &#34;&#34;&#34; This calls the file dialog call to then save the file. &#34;&#34;&#34;
+        if self.model.figure is None:
+            return QMessageBox.critical(self, &#34;Export Error&#34;, &#34;No graph to export!&#34;)
+        file_dialog = FileDialog()
+        location = file_dialog.saveFileDialog()
+        try:
+            graph.export(self, location)
+        except IOError:
+            QMessageBox.critical(self, &#34;Saving File Error&#34;, &#34;Unable to save file!&#34;)
+
+    @pyqtSlot()
+    def clearGraphSlot(self):
+        graph.rmmpl(self)
+
+    @pyqtSlot()
+    def displayCallerDialog(self):
+        self.openCallerDialog()
+
+    @pyqtSlot()
+    def cueType(self):
+        self.openCueDialog()
+
+    @pyqtSlot()
+    def displayGraphSlot(self):
+        &#34;&#34;&#34; This calls the functions from graph.py to process the filter options and display the graph. &#34;&#34;&#34;
+        if not self.callModel.selected:
+            self.callModel.selected = [(&#34;All Caller IDs&#34;, 0)]
+        if not self.callModel.cues_selected:
+            self.callModel.cues_selected = [(&#34;All Cues&#34;, 0)]
+        graph.displaympl(self, self.model, self.callModel)
+
+    def averageToggle(self):
+        &#34;&#34;&#34; Average toggle disables the average checkbox whenever the &#39;Display per Cue Event&#39; is selected. &#34;&#34;&#34;
+        if self.chartDropdown.currentText() == &#34;Display Totals&#34;:
+            self.averageCheckbox.setEnabled(True)
+        else:
+            self.averageCheckbox.setEnabled(False)
+
+    def callerReceiverToggle(self):
+        &#34;&#34;&#34;
+        This is used to enable/disable the caller and receiver gender dropdown menu based on the role dropdown selection
+        &#34;&#34;&#34;
+        if self.roleDropdown.currentText() == &#34;Receiver and Caller&#34;:
+            self.callerGenderDropdown.setEnabled(True)
+            self.receiverGenderDropdown.setEnabled(True)
+        elif self.roleDropdown.currentText() == &#34;Caller&#34;:
+            self.receiverGenderDropdown.setEnabled(False)
+            self.callerGenderDropdown.setEnabled(True)
+        elif self.roleDropdown.currentText() == &#34;Receiver&#34;:
+            self.callerGenderDropdown.setEnabled(False)
+            self.receiverGenderDropdown.setEnabled(True)
+
+    def openCueDialog(self):
+        &#34;&#34;&#34; This calls the cue dialog box and allows selection of the cues wanted. &#34;&#34;&#34;
+        cue_dialog = CueDialog(self)
+        if not self.callModel.cues_selected:
+            cue_dialog.selectAll()
+        else:
+            for pair in self.callModel.cues_selected:
+                if pair[1] == 0:
+                    cue_dialog.selectAll()
+                    break
+                cue_dialog.cueListWidget.item(pair[1]).setSelected(True)
+        cue_dialog.exec_()
+        cue_dialog.show()
+        self.callModel.cues_selected = []
+        for item in cue_dialog.cueListWidget.selectedItems():
+            self.callModel.cues_selected.append(
+                (item.text(), cue_dialog.cueListWidget.row(item))
+            )
+
+    def openCallerDialog(self):
+        &#34;&#34;&#34; This opens the caller dialog box to choose which caller ids to display. &#34;&#34;&#34;
+        caller_dialog = CallerDialog(self)
+        caller_dialog.populateListView(self.model.callerIds)
+        if not self.callModel.selected:
+            caller_dialog.selectAll()
+        else:
+            for pair in self.callModel.selected:
+                # Selects the rows that have been selected previously. If the previously selected row is 0, selectall
+                if pair[1] == 0:
+                    caller_dialog.selectAll()
+                    break
+                caller_dialog.callerListWidget.item(pair[1]).setSelected(True)
+        caller_dialog.exec_()
+        caller_dialog.show()
+        self.callModel.selected = []
+        for item in caller_dialog.callerListWidget.selectedItems():
+            # This appends the caller ID and the position in the list to the caller model.
+            self.callModel.selected.append(
+                (item.text(), caller_dialog.callerListWidget.row(item))
+            )</code></pre>
+</details>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li>PyQt5.QtWidgets.QMainWindow</li>
+<li>PyQt5.QtWidgets.QWidget</li>
+<li>PyQt5.QtCore.QObject</li>
+<li>sip.wrapper</li>
+<li>PyQt5.QtGui.QPaintDevice</li>
+<li>sip.simplewrapper</li>
+</ul>
+<h3>Methods</h3>
+<dl>
+<dt id="ConversationalBrowser.main.MainWindow.averageToggle"><code class="name flex">
+<span>def <span class="ident">averageToggle</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Average toggle disables the average checkbox whenever the 'Display per Cue Event' is selected.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def averageToggle(self):
+    &#34;&#34;&#34; Average toggle disables the average checkbox whenever the &#39;Display per Cue Event&#39; is selected. &#34;&#34;&#34;
+    if self.chartDropdown.currentText() == &#34;Display Totals&#34;:
+        self.averageCheckbox.setEnabled(True)
+    else:
+        self.averageCheckbox.setEnabled(False)</code></pre>
+</details>
+</dd>
+<dt id="ConversationalBrowser.main.MainWindow.browseSlot"><code class="name flex">
+<span>def <span class="ident">browseSlot</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>This is a slot that gets called whenever the load file button is pressed. It loads the data and saves to model.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@pyqtSlot()
+def browseSlot(self):
+    &#34;&#34;&#34;
+    This is a slot that gets called whenever the load file button is pressed. It loads the data and saves to model.
+    &#34;&#34;&#34;
+    file_dialog = FileDialog()
+    file = file_dialog.openFileDialog()
+    if file:
+        self.model.set_file_name(file)
+        self.model.set_caller_ids(
+            dm.get_all_call_ids(self.model.get_file_content())
+        )
+
+        QMessageBox.information(self, &#34;Load File&#34;, &#34;File loaded successfully.&#34;)
+    else:
+        QMessageBox.critical(
+            self, &#34;Load File Error&#34;, &#34;File not selected, please try again&#34;
+        )</code></pre>
+</details>
+</dd>
+<dt id="ConversationalBrowser.main.MainWindow.callerReceiverToggle"><code class="name flex">
+<span>def <span class="ident">callerReceiverToggle</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>This is used to enable/disable the caller and receiver gender dropdown menu based on the role dropdown selection</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def callerReceiverToggle(self):
+    &#34;&#34;&#34;
+    This is used to enable/disable the caller and receiver gender dropdown menu based on the role dropdown selection
+    &#34;&#34;&#34;
+    if self.roleDropdown.currentText() == &#34;Receiver and Caller&#34;:
+        self.callerGenderDropdown.setEnabled(True)
+        self.receiverGenderDropdown.setEnabled(True)
+    elif self.roleDropdown.currentText() == &#34;Caller&#34;:
+        self.receiverGenderDropdown.setEnabled(False)
+        self.callerGenderDropdown.setEnabled(True)
+    elif self.roleDropdown.currentText() == &#34;Receiver&#34;:
+        self.callerGenderDropdown.setEnabled(False)
+        self.receiverGenderDropdown.setEnabled(True)</code></pre>
+</details>
+</dd>
+<dt id="ConversationalBrowser.main.MainWindow.clearGraphSlot"><code class="name flex">
+<span>def <span class="ident">clearGraphSlot</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@pyqtSlot()
+def clearGraphSlot(self):
+    graph.rmmpl(self)</code></pre>
+</details>
+</dd>
+<dt id="ConversationalBrowser.main.MainWindow.cueType"><code class="name flex">
+<span>def <span class="ident">cueType</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@pyqtSlot()
+def cueType(self):
+    self.openCueDialog()</code></pre>
+</details>
+</dd>
+<dt id="ConversationalBrowser.main.MainWindow.displayCallerDialog"><code class="name flex">
+<span>def <span class="ident">displayCallerDialog</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@pyqtSlot()
+def displayCallerDialog(self):
+    self.openCallerDialog()</code></pre>
+</details>
+</dd>
+<dt id="ConversationalBrowser.main.MainWindow.displayGraphSlot"><code class="name flex">
+<span>def <span class="ident">displayGraphSlot</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>This calls the functions from graph.py to process the filter options and display the graph.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@pyqtSlot()
+def displayGraphSlot(self):
+    &#34;&#34;&#34; This calls the functions from graph.py to process the filter options and display the graph. &#34;&#34;&#34;
+    if not self.callModel.selected:
+        self.callModel.selected = [(&#34;All Caller IDs&#34;, 0)]
+    if not self.callModel.cues_selected:
+        self.callModel.cues_selected = [(&#34;All Cues&#34;, 0)]
+    graph.displaympl(self, self.model, self.callModel)</code></pre>
+</details>
+</dd>
+<dt id="ConversationalBrowser.main.MainWindow.exportGraph"><code class="name flex">
+<span>def <span class="ident">exportGraph</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>This calls the file dialog call to then save the file.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@pyqtSlot()
+def exportGraph(self):
+    &#34;&#34;&#34; This calls the file dialog call to then save the file. &#34;&#34;&#34;
+    if self.model.figure is None:
+        return QMessageBox.critical(self, &#34;Export Error&#34;, &#34;No graph to export!&#34;)
+    file_dialog = FileDialog()
+    location = file_dialog.saveFileDialog()
+    try:
+        graph.export(self, location)
+    except IOError:
+        QMessageBox.critical(self, &#34;Saving File Error&#34;, &#34;Unable to save file!&#34;)</code></pre>
+</details>
+</dd>
+<dt id="ConversationalBrowser.main.MainWindow.openCallerDialog"><code class="name flex">
+<span>def <span class="ident">openCallerDialog</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>This opens the caller dialog box to choose which caller ids to display.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def openCallerDialog(self):
+    &#34;&#34;&#34; This opens the caller dialog box to choose which caller ids to display. &#34;&#34;&#34;
+    caller_dialog = CallerDialog(self)
+    caller_dialog.populateListView(self.model.callerIds)
+    if not self.callModel.selected:
+        caller_dialog.selectAll()
+    else:
+        for pair in self.callModel.selected:
+            # Selects the rows that have been selected previously. If the previously selected row is 0, selectall
+            if pair[1] == 0:
+                caller_dialog.selectAll()
+                break
+            caller_dialog.callerListWidget.item(pair[1]).setSelected(True)
+    caller_dialog.exec_()
+    caller_dialog.show()
+    self.callModel.selected = []
+    for item in caller_dialog.callerListWidget.selectedItems():
+        # This appends the caller ID and the position in the list to the caller model.
+        self.callModel.selected.append(
+            (item.text(), caller_dialog.callerListWidget.row(item))
+        )</code></pre>
+</details>
+</dd>
+<dt id="ConversationalBrowser.main.MainWindow.openCueDialog"><code class="name flex">
+<span>def <span class="ident">openCueDialog</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>This calls the cue dialog box and allows selection of the cues wanted.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def openCueDialog(self):
+    &#34;&#34;&#34; This calls the cue dialog box and allows selection of the cues wanted. &#34;&#34;&#34;
+    cue_dialog = CueDialog(self)
+    if not self.callModel.cues_selected:
+        cue_dialog.selectAll()
+    else:
+        for pair in self.callModel.cues_selected:
+            if pair[1] == 0:
+                cue_dialog.selectAll()
+                break
+            cue_dialog.cueListWidget.item(pair[1]).setSelected(True)
+    cue_dialog.exec_()
+    cue_dialog.show()
+    self.callModel.cues_selected = []
+    for item in cue_dialog.cueListWidget.selectedItems():
+        self.callModel.cues_selected.append(
+            (item.text(), cue_dialog.cueListWidget.row(item))
+        )</code></pre>
+</details>
+</dd>
+</dl>
+</dd>
+</dl>
+</section>
+</article>
+<nav id="sidebar">
+<h1>Index</h1>
+<div class="toc">
+<ul></ul>
+</div>
+<ul id="index">
+<li><h3>Super-module</h3>
+<ul>
+<li><code><a title="ConversationalBrowser" href="index.html">ConversationalBrowser</a></code></li>
+</ul>
+</li>
+<li><h3><a href="#header-functions">Functions</a></h3>
+<ul class="">
+<li><code><a title="ConversationalBrowser.main.main" href="#ConversationalBrowser.main.main">main</a></code></li>
+</ul>
+</li>
+<li><h3><a href="#header-classes">Classes</a></h3>
+<ul>
+<li>
+<h4><code><a title="ConversationalBrowser.main.CallerDialog" href="#ConversationalBrowser.main.CallerDialog">CallerDialog</a></code></h4>
+<ul class="">
+<li><code><a title="ConversationalBrowser.main.CallerDialog.clearCallerList" href="#ConversationalBrowser.main.CallerDialog.clearCallerList">clearCallerList</a></code></li>
+<li><code><a title="ConversationalBrowser.main.CallerDialog.deselectAll" href="#ConversationalBrowser.main.CallerDialog.deselectAll">deselectAll</a></code></li>
+<li><code><a title="ConversationalBrowser.main.CallerDialog.onRowChanged" href="#ConversationalBrowser.main.CallerDialog.onRowChanged">onRowChanged</a></code></li>
+<li><code><a title="ConversationalBrowser.main.CallerDialog.populateListView" href="#ConversationalBrowser.main.CallerDialog.populateListView">populateListView</a></code></li>
+<li><code><a title="ConversationalBrowser.main.CallerDialog.selectAll" href="#ConversationalBrowser.main.CallerDialog.selectAll">selectAll</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="ConversationalBrowser.main.CueDialog" href="#ConversationalBrowser.main.CueDialog">CueDialog</a></code></h4>
+<ul class="">
+<li><code><a title="ConversationalBrowser.main.CueDialog.clearCueList" href="#ConversationalBrowser.main.CueDialog.clearCueList">clearCueList</a></code></li>
+<li><code><a title="ConversationalBrowser.main.CueDialog.deselectAll" href="#ConversationalBrowser.main.CueDialog.deselectAll">deselectAll</a></code></li>
+<li><code><a title="ConversationalBrowser.main.CueDialog.onRowChanged" href="#ConversationalBrowser.main.CueDialog.onRowChanged">onRowChanged</a></code></li>
+<li><code><a title="ConversationalBrowser.main.CueDialog.selectAll" href="#ConversationalBrowser.main.CueDialog.selectAll">selectAll</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="ConversationalBrowser.main.FileDialog" href="#ConversationalBrowser.main.FileDialog">FileDialog</a></code></h4>
+<ul class="">
+<li><code><a title="ConversationalBrowser.main.FileDialog.initUI" href="#ConversationalBrowser.main.FileDialog.initUI">initUI</a></code></li>
+<li><code><a title="ConversationalBrowser.main.FileDialog.openFileDialog" href="#ConversationalBrowser.main.FileDialog.openFileDialog">openFileDialog</a></code></li>
+<li><code><a title="ConversationalBrowser.main.FileDialog.saveFileDialog" href="#ConversationalBrowser.main.FileDialog.saveFileDialog">saveFileDialog</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="ConversationalBrowser.main.MainWindow" href="#ConversationalBrowser.main.MainWindow">MainWindow</a></code></h4>
+<ul class="">
+<li><code><a title="ConversationalBrowser.main.MainWindow.averageToggle" href="#ConversationalBrowser.main.MainWindow.averageToggle">averageToggle</a></code></li>
+<li><code><a title="ConversationalBrowser.main.MainWindow.browseSlot" href="#ConversationalBrowser.main.MainWindow.browseSlot">browseSlot</a></code></li>
+<li><code><a title="ConversationalBrowser.main.MainWindow.callerReceiverToggle" href="#ConversationalBrowser.main.MainWindow.callerReceiverToggle">callerReceiverToggle</a></code></li>
+<li><code><a title="ConversationalBrowser.main.MainWindow.clearGraphSlot" href="#ConversationalBrowser.main.MainWindow.clearGraphSlot">clearGraphSlot</a></code></li>
+<li><code><a title="ConversationalBrowser.main.MainWindow.cueType" href="#ConversationalBrowser.main.MainWindow.cueType">cueType</a></code></li>
+<li><code><a title="ConversationalBrowser.main.MainWindow.displayCallerDialog" href="#ConversationalBrowser.main.MainWindow.displayCallerDialog">displayCallerDialog</a></code></li>
+<li><code><a title="ConversationalBrowser.main.MainWindow.displayGraphSlot" href="#ConversationalBrowser.main.MainWindow.displayGraphSlot">displayGraphSlot</a></code></li>
+<li><code><a title="ConversationalBrowser.main.MainWindow.exportGraph" href="#ConversationalBrowser.main.MainWindow.exportGraph">exportGraph</a></code></li>
+<li><code><a title="ConversationalBrowser.main.MainWindow.openCallerDialog" href="#ConversationalBrowser.main.MainWindow.openCallerDialog">openCallerDialog</a></code></li>
+<li><code><a title="ConversationalBrowser.main.MainWindow.openCueDialog" href="#ConversationalBrowser.main.MainWindow.openCueDialog">openCueDialog</a></code></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</nav>
+</main>
+<footer id="footer">
+<p>Generated by <a href="https://pdoc3.github.io/pdoc"><cite>pdoc</cite> 0.9.2</a>.</p>
+</footer>
+</body>
+</html>
