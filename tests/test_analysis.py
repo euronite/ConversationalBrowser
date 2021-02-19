@@ -301,18 +301,6 @@ def test_get_all_event_durations_raised_error(test_data):
         dm.get_all_event_durations(pd.DataFrame({"A": []}), "silence")
 
 
-def test_total_overlap_occurrence(test_data):
-    assert dm.total_overlap_occurrence(test_data) == 2
-
-
-def test_total_overlap_time(test_data):
-    assert pytest.approx(dm.total_overlap_time(test_data)) == 1.25
-
-
-def test_mean_overlap_time(test_data):
-    assert pytest.approx(dm.mean_overlap_time(test_data)) == 0.625
-
-
 def test_get_all_call_ids(test_data):
     assert len((dm.get_all_call_ids(test_data))) == 2
 

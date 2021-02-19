@@ -241,29 +241,3 @@ def mean_time_of_each_event(df, types: dict) -> dict:
         if len(new_df) > 0:
             types[cue] = (new_df["end"] - new_df["start"]).mean(axis=0)
     return types
-
-
-def total_overlap_occurrence(df):
-    """
-    Returns the number of times there was two people talking over on another
-    """
-    permutations = get_permutations_of_gender_and_position()
-    return df[df["person_and_type"].isin(permutations)].shape[0]
-
-
-def total_overlap_time(df):
-    permutations = get_permutations_of_gender_and_position()
-    new_df = df[df["person_and_type"].isin(permutations)]
-    total = (new_df["end"] - new_df["start"]).sum(
-        axis=0
-    )  # end time - start time and sum them all
-    return total
-
-
-def mean_overlap_time(df):
-    """
-    Calculates the overlap mean time.
-    """
-    permutations = get_permutations_of_gender_and_position()
-    new_df = df[df["person_and_type"].isin(permutations)]
-    return (new_df["end"] - new_df["start"]).mean(axis=0)
