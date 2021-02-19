@@ -8,7 +8,9 @@ from conversationalbrowser import data_manipulation as dm
 
 
 def is_valid(file):
-    """ Returns True if the file exists and can be opened.  Returns False otherwise. """
+    """
+    Returns True if the file exists and can be opened.  Returns False otherwise.
+    """
     try:
         file = open(file, "r")
         file.close()
@@ -18,8 +20,6 @@ def is_valid(file):
 
 
 class CallerModel:
-    """ This holds the data for caller id dialog selections, as well as cues selected. """
-
     def __init__(self):
         self.selected = []
         self.cues_selected = []
@@ -29,18 +29,14 @@ class CallerModel:
 
 
 class Model:
-    """ This holds the file contents of the csv as a dataframe, and also the graph figure. """
-
     def __init__(self):
         self.fileContents = None
         self.fileName = None
         self.callerIds = []
         self.figure = None
 
-    def set_file_name(self, file: str):
+    def set_file_name(self, file):
         """
-        This sets the file name and reads in the data, while modifying the dataframe to include receiever and caller
-        columns for easier data processing.
         :param file: file name to retrieve contents from
         """
         if is_valid(file):
@@ -57,7 +53,7 @@ class Model:
         """
         return self.fileContents
 
-    def set_caller_ids(self, id_list: list):
+    def set_caller_ids(self, id_list):
         self.callerIds = id_list
 
     def set_figure(self, fig):
