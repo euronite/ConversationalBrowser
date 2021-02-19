@@ -318,10 +318,6 @@ def test_individual_call_length(test_data):
     assert expected == dm.individual_call_length(test_data)
 
 
-def test_mean_call_length(test_data):
-    assert pytest.approx(dm.mean_call_length(test_data)) == 3.15
-
-
 def test_get_all_call_ids(test_data):
     assert len((dm.get_all_call_ids(test_data))) == 2
 

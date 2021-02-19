@@ -73,17 +73,25 @@ def get_list_of_call_id_df(df, call_id_list: list):
     return df[(df.call.isin(call_id_list))]
 
 
-def get_non_verbal_speech_only(df, non_verbal_speech):
+def get_non_verbal_speech_only(df, non_verbal_speech: str):
     """
-    Return df with non-verbal speech only
+    Return df with non-verbal speech cue rows only.
+    :param df: dataset
+    :param non_verbal_speech: str containing the cue being searched
+    :return: df with only the rows that contain said cue.
     """
     df = df[df["person_and_type"].str.contains(non_verbal_speech)]
     return df
 
 
-def get_rows_by_caller_and_receiver(df, caller, receiver):
+def get_rows_by_caller_and_receiver(df, caller: str, receiver: str):
     """
-    Specify the caller and receiver string and returns the dataframe with those rows.
+    Specify the caller and receiver string and returns the dataframe with those rows by searching the receiver and
+    caller columns.
+    :param df: dataset
+    :param caller: str of caller in the format caller_<M/F>
+    :param receiver: str of receiver in the format receiver_<M/F>
+    :return: df containing the caller and receiver specified.
     """
     if receiver is not None and caller is None:
         return df.loc[(df["receiver"] == receiver)]
@@ -95,9 +103,10 @@ def get_rows_by_caller_and_receiver(df, caller, receiver):
         return df
 
 
-def get_permutations_of_gender_and_position():
+def get_permutations_of_gender_and_position() -> list:
     """
     Takes in the gender_and_position var and returns the possible combinations of size 2
+    :return: list of gender and positions as caller/receiver.
     """
     permutations = list(iterpermutations(gender_and_position, 2))
     final_permutation = []
@@ -108,9 +117,12 @@ def get_permutations_of_gender_and_position():
     return [" ".join(i) for i in final_permutation]
 
 
-def occurrence_of_each_event(df, types):
+def occurrence_of_each_event(df, types: dict) -> dict:
     """
     This takes in a dataframe and produces the total number of each conversation cue occurred.
+    :param df: dataset
+    :param types: dict of types is the cue being searched for.
+    :return: types: dict of types along with their frequency.
     """
     occurrences = df["person_and_type"].value_counts()
     for occurrence_name in occurrences.index:
@@ -122,9 +134,12 @@ def occurrence_of_each_event(df, types):
     return types
 
 
-def get_all_event_durations(df, cue):
+def get_all_event_durations(df, cue: str) -> list:
     """
-    This gets the duration of each cue and returns it as a tuple of the caller and receiver
+    This gets the duration of a single cue and returns it as a list of the caller and receiver
+    :param df: dataset
+    :param cue: the cue that is being searched
+    :return: list of caller and receiver durations.
     """
     if df.empty:
         raise ValueError("Dataframe is empty")
@@ -146,9 +161,13 @@ def get_all_event_durations(df, cue):
     return [caller_df, receiver_df]
 
 
-def occurrence_of_event(df, cue):
-    # dataframe input should be an individual call.
-    # returns a list of two vals. number of times caller did a cue and number of times the receiver did the cue
+def occurrence_of_event(df, cue: str) -> list:
+    """
+    returns a list of two vals. number of times caller did a cue and number of times the receiver did the cue
+    :param df: datset of an individual call.
+    :param cue: str cue that is being searched
+    :return: list of the cue count, caller and receiver.
+    """
     if df.empty:
         raise ValueError("Dataframe is empty")
     if "M" in df["receiver"].iloc[0]:
@@ -167,7 +186,7 @@ def occurrence_of_event(df, cue):
     return [caller_cue_count, receiver_cue_count]
 
 
-def total_time_of_event(df, cue: str):
+def total_time_of_event(df, cue: str) -> list:
     """
     This calculates the total duration of a single cue, for a single call.
     :param df: this is a dataframe containing the rows of a single call ID.
@@ -193,7 +212,7 @@ def total_time_of_event(df, cue: str):
     return [caller_cue_time, receiver_cue_time]
 
 
-def total_time_of_each_event(df, types: dict):
+def total_time_of_each_event(df, types: dict) -> dict:
     """
     This calculates the total time of each cue from the types dict in the dataset, returning a dictionary of each cue.
     :param df: contains the dataset.
@@ -210,9 +229,12 @@ def total_time_of_each_event(df, types: dict):
     return types
 
 
-def mean_time_of_each_event(df, types):
+def mean_time_of_each_event(df, types: dict) -> dict:
     """
-    Gets the mean of each conversation cue. Returns a dictionary.
+    Gets the mean of each conversation cue. Returns the cue average time.
+    :param df: dataset being searched
+    :param types: dict of the cues being searched and the duration at 0
+    :return: dict of average cue durations.
     """
     for cue in types:
         new_df = df[df["person_and_type"].str.contains(cue)]
@@ -221,18 +243,11 @@ def mean_time_of_each_event(df, types):
     return types
 
 
-def mean_call_length(df):
-    total = 0
-    ids = get_all_call_ids(df)
-    for call in ids:
-        new_df = df[df["call"].str.match(call)]
-        total += new_df.iloc[-1]["end"]
-    return total / len(ids)
-
-
 def individual_call_length(df):
     """
     Gets the the call length of each conversation and returns a dictionary of call id and length of time
+    :param df:
+    :return:
     """
     total = {}
     ids = get_all_call_ids(df)
