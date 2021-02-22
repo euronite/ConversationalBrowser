@@ -68,10 +68,12 @@ class MainWindow(QtWidgets.QMainWindow):
 
     @pyqtSlot()
     def displayCallerDialog(self):
+        """ This calls the caller dialog box upon button press. """
         self.openCallerDialog()
 
     @pyqtSlot()
     def cueType(self):
+        """ This opens the cue dialog box when button is pressed. """
         self.openCueDialog()
 
     @pyqtSlot()
