@@ -296,6 +296,11 @@ def test_get_all_event_durations(test_data):
     assert len(result[0]) == 3 and result[1].iloc[0] == 1.01
 
 
+def test_get_all_event_durations_rf(individual_call_data_2):
+    result = dm.get_all_event_durations(individual_call_data_2, "laughter")
+    assert pytest.approx(result[1].iloc[0]) == 0.9
+
+
 def test_get_all_event_durations_raised_error(test_data):
     with pytest.raises(ValueError):
         dm.get_all_event_durations(pd.DataFrame({"A": []}), "silence")
