@@ -9,6 +9,29 @@ def test_assert():
     assert test_value == 1
 
 
+def test_blank_df():
+    df = pd.DataFrame(columns=["id", "topic", "person", "start", "finish", "caller", "receiver"])
+    assert model.input_is_valid(df) is False
+
+
+def test_end_df_wrong():
+    df = pd.DataFrame(
+        {"call": ["F01"], "topic": ["None"], "person": ["caller_M"], "start": [0.1], "end": [1], "caller": ["caller_M"],
+         "receiver": ["receiver_M"]})
+    assert model.input_is_valid(df) is False
+
+
+def test_start_df_wrong():
+    df = pd.DataFrame(
+        {"call": ["F01"], "topic": ["None"], "person": ["caller_M"], "start": [1], "end": [0.1], "caller": ["caller_M"],
+         "receiver": ["receiver_M"]})
+    assert model.input_is_valid(df) is False
+
+
+def test_valid_data(test_data):
+    assert model.input_is_valid(test_data) is True
+
+
 def test_is_valid_error():
     assert model.is_valid("test.file") is False
 
@@ -17,9 +40,15 @@ def test_is_valid():
     model.is_valid("main.py")
 
 
-def test_set_file_name(test_data_model):
+def test_set_file_name_error_name(test_data_model):
     test_data_model.set_file_name("error.csv")
     assert test_data_model.fileName == ""
+
+
+def test_set_file_name_fails_wrong_file(test_data_model):
+    with pytest.raises(Exception) as exec_info:
+        test_data_model.set_file_name("tests/test_data.csv")
+    assert "File incorrectly formatted!" in str(exec_info.value)
 
 
 def test_set_selected_items(test_call_model):

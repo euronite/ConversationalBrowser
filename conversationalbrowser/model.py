@@ -18,10 +18,13 @@ def is_valid(file):
 
 
 def input_is_valid(df) -> bool:
-    """ This checks the input and ensures it is in the correct format. """
-    if len(df.columns) != 7:
+    """
+    This checks the dataframe for correct input from file.
+    :param df: dataframe containing the data from the csv file.
+    :return: bool of whether data formatting is at least sensible.
+    """
+    if len(df.columns) != 7 or len(df) == 0:
         return False
-    print(df.dtypes)
     for value in df.start:
         if not isinstance(value, float):
             return False
