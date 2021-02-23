@@ -19,8 +19,15 @@ def is_valid(file):
 
 def input_is_valid(df) -> bool:
     """ This checks the input and ensures it is in the correct format. """
-    if len(df.columns) != 5:
+    if len(df.columns) != 7:
         return False
+    print(df.dtypes)
+    for value in df.start:
+        if not isinstance(value, float):
+            return False
+    for value in df.end:
+        if not isinstance(value, float):
+            return False
     return True
 
 
@@ -54,10 +61,11 @@ class Model:
             self.fileName = file
             self.fileContents = read_csv(file, names=dm.header_names)
             if input_is_valid(self.fileContents):
-               self.fileContents = dm.receiver_and_caller_column(self.fileContents)
+                self.fileContents = dm.receiver_and_caller_column(self.fileContents)
             else:
                 raise Exception("File incorrectly formatted! Please check that it has these columns: call id, topic, "
-                                "person with cue type, start time, end time.")
+                                "person with cue type, start time, end time and also check that the columns have "
+                                "correct data types.")
         else:
             self.fileName = ""
 
