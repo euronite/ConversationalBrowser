@@ -17,6 +17,13 @@ def is_valid(file):
         return False
 
 
+def input_is_valid(df) -> bool:
+    """ This checks the input and ensures it is in the correct format. """
+    if len(df.columns) != 5:
+        return False
+    return True
+
+
 class CallerModel:
     """ This holds the data for caller id dialog selections, as well as cues selected. """
 
@@ -46,7 +53,11 @@ class Model:
         if is_valid(file):
             self.fileName = file
             self.fileContents = read_csv(file, names=dm.header_names)
-            self.fileContents = dm.receiver_and_caller_column(self.fileContents)
+            if input_is_valid(self.fileContents):
+               self.fileContents = dm.receiver_and_caller_column(self.fileContents)
+            else:
+                raise Exception("File incorrectly formatted! Please check that it has these columns: call id, topic, "
+                                "person with cue type, start time, end time.")
         else:
             self.fileName = ""
 

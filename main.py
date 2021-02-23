@@ -39,7 +39,10 @@ class MainWindow(QtWidgets.QMainWindow):
         file_dialog = FileDialog()
         file = file_dialog.openFileDialog()
         if file:
-            self.model.set_file_name(file)
+            try:
+                self.model.set_file_name(file)
+            except Exception as e:
+                return QMessageBox.critical(self, "Incorrect file columns", str(e))
             self.model.set_caller_ids(
                 dm.get_all_call_ids(self.model.get_file_content())
             )
