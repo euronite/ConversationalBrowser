@@ -37,6 +37,29 @@ def test_assert():
     assert test_value == 1
 
 
+def test_blank_df():
+    df = pd.DataFrame(columns=[&#34;id&#34;, &#34;topic&#34;, &#34;person&#34;, &#34;start&#34;, &#34;finish&#34;, &#34;caller&#34;, &#34;receiver&#34;])
+    assert model.input_is_valid(df) is False
+
+
+def test_end_df_wrong():
+    df = pd.DataFrame(
+        {&#34;call&#34;: [&#34;F01&#34;], &#34;topic&#34;: [&#34;None&#34;], &#34;person&#34;: [&#34;caller_M&#34;], &#34;start&#34;: [0.1], &#34;end&#34;: [1], &#34;caller&#34;: [&#34;caller_M&#34;],
+         &#34;receiver&#34;: [&#34;receiver_M&#34;]})
+    assert model.input_is_valid(df) is False
+
+
+def test_start_df_wrong():
+    df = pd.DataFrame(
+        {&#34;call&#34;: [&#34;F01&#34;], &#34;topic&#34;: [&#34;None&#34;], &#34;person&#34;: [&#34;caller_M&#34;], &#34;start&#34;: [1], &#34;end&#34;: [0.1], &#34;caller&#34;: [&#34;caller_M&#34;],
+         &#34;receiver&#34;: [&#34;receiver_M&#34;]})
+    assert model.input_is_valid(df) is False
+
+
+def test_valid_data(test_data):
+    assert model.input_is_valid(test_data) is True
+
+
 def test_is_valid_error():
     assert model.is_valid(&#34;test.file&#34;) is False
 
@@ -45,9 +68,15 @@ def test_is_valid():
     model.is_valid(&#34;main.py&#34;)
 
 
-def test_set_file_name(test_data_model):
+def test_set_file_name_error_name(test_data_model):
     test_data_model.set_file_name(&#34;error.csv&#34;)
     assert test_data_model.fileName == &#34;&#34;
+
+
+def test_set_file_name_fails_wrong_file(test_data_model):
+    with pytest.raises(Exception) as exec_info:
+        test_data_model.set_file_name(&#34;tests/test_data.csv&#34;)
+    assert &#34;File incorrectly formatted!&#34; in str(exec_info.value)
 
 
 def test_set_selected_items(test_call_model):
@@ -186,6 +215,20 @@ def test_data():
     assert test_value == 1</code></pre>
 </details>
 </dd>
+<dt id="ConversationalBrowser.tests.test_model.test_blank_df"><code class="name flex">
+<span>def <span class="ident">test_blank_df</span></span>(<span>)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def test_blank_df():
+    df = pd.DataFrame(columns=[&#34;id&#34;, &#34;topic&#34;, &#34;person&#34;, &#34;start&#34;, &#34;finish&#34;, &#34;caller&#34;, &#34;receiver&#34;])
+    assert model.input_is_valid(df) is False</code></pre>
+</details>
+</dd>
 <dt id="ConversationalBrowser.tests.test_model.test_call_model"><code class="name flex">
 <span>def <span class="ident">test_call_model</span></span>(<span>)</span>
 </code></dt>
@@ -317,6 +360,22 @@ def test_data_model(test_data):
     return mod</code></pre>
 </details>
 </dd>
+<dt id="ConversationalBrowser.tests.test_model.test_end_df_wrong"><code class="name flex">
+<span>def <span class="ident">test_end_df_wrong</span></span>(<span>)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def test_end_df_wrong():
+    df = pd.DataFrame(
+        {&#34;call&#34;: [&#34;F01&#34;], &#34;topic&#34;: [&#34;None&#34;], &#34;person&#34;: [&#34;caller_M&#34;], &#34;start&#34;: [0.1], &#34;end&#34;: [1], &#34;caller&#34;: [&#34;caller_M&#34;],
+         &#34;receiver&#34;: [&#34;receiver_M&#34;]})
+    assert model.input_is_valid(df) is False</code></pre>
+</details>
+</dd>
 <dt id="ConversationalBrowser.tests.test_model.test_get_file_contents"><code class="name flex">
 <span>def <span class="ident">test_get_file_contents</span></span>(<span>test_data_model)</span>
 </code></dt>
@@ -385,8 +444,8 @@ def test_data_model(test_data):
     assert test_data_model.figure == &#34;TEST FIGURE&#34;</code></pre>
 </details>
 </dd>
-<dt id="ConversationalBrowser.tests.test_model.test_set_file_name"><code class="name flex">
-<span>def <span class="ident">test_set_file_name</span></span>(<span>test_data_model)</span>
+<dt id="ConversationalBrowser.tests.test_model.test_set_file_name_error_name"><code class="name flex">
+<span>def <span class="ident">test_set_file_name_error_name</span></span>(<span>test_data_model)</span>
 </code></dt>
 <dd>
 <div class="desc"></div>
@@ -394,9 +453,24 @@ def test_data_model(test_data):
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def test_set_file_name(test_data_model):
+<pre><code class="python">def test_set_file_name_error_name(test_data_model):
     test_data_model.set_file_name(&#34;error.csv&#34;)
     assert test_data_model.fileName == &#34;&#34;</code></pre>
+</details>
+</dd>
+<dt id="ConversationalBrowser.tests.test_model.test_set_file_name_fails_wrong_file"><code class="name flex">
+<span>def <span class="ident">test_set_file_name_fails_wrong_file</span></span>(<span>test_data_model)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def test_set_file_name_fails_wrong_file(test_data_model):
+    with pytest.raises(Exception) as exec_info:
+        test_data_model.set_file_name(&#34;tests/test_data.csv&#34;)
+    assert &#34;File incorrectly formatted!&#34; in str(exec_info.value)</code></pre>
 </details>
 </dd>
 <dt id="ConversationalBrowser.tests.test_model.test_set_selected_items"><code class="name flex">
@@ -411,6 +485,35 @@ def test_data_model(test_data):
 <pre><code class="python">def test_set_selected_items(test_call_model):
     test_call_model.set_selected_items([&#34;F01&#34;, &#34;F02&#34;])
     assert test_call_model.selected == [&#34;F01&#34;, &#34;F02&#34;]</code></pre>
+</details>
+</dd>
+<dt id="ConversationalBrowser.tests.test_model.test_start_df_wrong"><code class="name flex">
+<span>def <span class="ident">test_start_df_wrong</span></span>(<span>)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def test_start_df_wrong():
+    df = pd.DataFrame(
+        {&#34;call&#34;: [&#34;F01&#34;], &#34;topic&#34;: [&#34;None&#34;], &#34;person&#34;: [&#34;caller_M&#34;], &#34;start&#34;: [1], &#34;end&#34;: [0.1], &#34;caller&#34;: [&#34;caller_M&#34;],
+         &#34;receiver&#34;: [&#34;receiver_M&#34;]})
+    assert model.input_is_valid(df) is False</code></pre>
+</details>
+</dd>
+<dt id="ConversationalBrowser.tests.test_model.test_valid_data"><code class="name flex">
+<span>def <span class="ident">test_valid_data</span></span>(<span>test_data)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def test_valid_data(test_data):
+    assert model.input_is_valid(test_data) is True</code></pre>
 </details>
 </dd>
 </dl>
@@ -432,17 +535,22 @@ def test_data_model(test_data):
 <li><h3><a href="#header-functions">Functions</a></h3>
 <ul class="">
 <li><code><a title="ConversationalBrowser.tests.test_model.test_assert" href="#ConversationalBrowser.tests.test_model.test_assert">test_assert</a></code></li>
+<li><code><a title="ConversationalBrowser.tests.test_model.test_blank_df" href="#ConversationalBrowser.tests.test_model.test_blank_df">test_blank_df</a></code></li>
 <li><code><a title="ConversationalBrowser.tests.test_model.test_call_model" href="#ConversationalBrowser.tests.test_model.test_call_model">test_call_model</a></code></li>
 <li><code><a title="ConversationalBrowser.tests.test_model.test_call_model_params" href="#ConversationalBrowser.tests.test_model.test_call_model_params">test_call_model_params</a></code></li>
 <li><code><a title="ConversationalBrowser.tests.test_model.test_data" href="#ConversationalBrowser.tests.test_model.test_data">test_data</a></code></li>
 <li><code><a title="ConversationalBrowser.tests.test_model.test_data_model" href="#ConversationalBrowser.tests.test_model.test_data_model">test_data_model</a></code></li>
+<li><code><a title="ConversationalBrowser.tests.test_model.test_end_df_wrong" href="#ConversationalBrowser.tests.test_model.test_end_df_wrong">test_end_df_wrong</a></code></li>
 <li><code><a title="ConversationalBrowser.tests.test_model.test_get_file_contents" href="#ConversationalBrowser.tests.test_model.test_get_file_contents">test_get_file_contents</a></code></li>
 <li><code><a title="ConversationalBrowser.tests.test_model.test_is_valid" href="#ConversationalBrowser.tests.test_model.test_is_valid">test_is_valid</a></code></li>
 <li><code><a title="ConversationalBrowser.tests.test_model.test_is_valid_error" href="#ConversationalBrowser.tests.test_model.test_is_valid_error">test_is_valid_error</a></code></li>
 <li><code><a title="ConversationalBrowser.tests.test_model.test_set_caller_ids" href="#ConversationalBrowser.tests.test_model.test_set_caller_ids">test_set_caller_ids</a></code></li>
 <li><code><a title="ConversationalBrowser.tests.test_model.test_set_figure" href="#ConversationalBrowser.tests.test_model.test_set_figure">test_set_figure</a></code></li>
-<li><code><a title="ConversationalBrowser.tests.test_model.test_set_file_name" href="#ConversationalBrowser.tests.test_model.test_set_file_name">test_set_file_name</a></code></li>
+<li><code><a title="ConversationalBrowser.tests.test_model.test_set_file_name_error_name" href="#ConversationalBrowser.tests.test_model.test_set_file_name_error_name">test_set_file_name_error_name</a></code></li>
+<li><code><a title="ConversationalBrowser.tests.test_model.test_set_file_name_fails_wrong_file" href="#ConversationalBrowser.tests.test_model.test_set_file_name_fails_wrong_file">test_set_file_name_fails_wrong_file</a></code></li>
 <li><code><a title="ConversationalBrowser.tests.test_model.test_set_selected_items" href="#ConversationalBrowser.tests.test_model.test_set_selected_items">test_set_selected_items</a></code></li>
+<li><code><a title="ConversationalBrowser.tests.test_model.test_start_df_wrong" href="#ConversationalBrowser.tests.test_model.test_start_df_wrong">test_start_df_wrong</a></code></li>
+<li><code><a title="ConversationalBrowser.tests.test_model.test_valid_data" href="#ConversationalBrowser.tests.test_model.test_valid_data">test_valid_data</a></code></li>
 </ul>
 </li>
 </ul>

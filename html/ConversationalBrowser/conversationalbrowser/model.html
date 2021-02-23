@@ -46,6 +46,23 @@ def is_valid(file):
         return False
 
 
+def input_is_valid(df) -&gt; bool:
+    &#34;&#34;&#34;
+    This checks the dataframe for correct input from file.
+    :param df: dataframe containing the data from the csv file.
+    :return: bool of whether data formatting is at least sensible.
+    &#34;&#34;&#34;
+    if len(df.columns) != 7 or len(df) == 0:
+        return False
+    for value in df.start:
+        if not isinstance(value, float):
+            return False
+    for value in df.end:
+        if not isinstance(value, float):
+            return False
+    return True
+
+
 class CallerModel:
     &#34;&#34;&#34; This holds the data for caller id dialog selections, as well as cues selected. &#34;&#34;&#34;
 
@@ -75,7 +92,12 @@ class Model:
         if is_valid(file):
             self.fileName = file
             self.fileContents = read_csv(file, names=dm.header_names)
-            self.fileContents = dm.receiver_and_caller_column(self.fileContents)
+            if input_is_valid(self.fileContents):
+                self.fileContents = dm.receiver_and_caller_column(self.fileContents)
+            else:
+                raise Exception(&#34;File incorrectly formatted! Please check that it has these columns: call id, topic, &#34;
+                                &#34;person with cue type, start time, end time and also check that the columns have &#34;
+                                &#34;correct data types.&#34;)
         else:
             self.fileName = &#34;&#34;
 
@@ -100,6 +122,34 @@ class Model:
 <section>
 <h2 class="section-title" id="header-functions">Functions</h2>
 <dl>
+<dt id="ConversationalBrowser.conversationalbrowser.model.input_is_valid"><code class="name flex">
+<span>def <span class="ident">input_is_valid</span></span>(<span>df) ‑> bool</span>
+</code></dt>
+<dd>
+<div class="desc"><p>This checks the dataframe for correct input from file.
+:param df: dataframe containing the data from the csv file.
+:return: bool of whether data formatting is at least sensible.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def input_is_valid(df) -&gt; bool:
+    &#34;&#34;&#34;
+    This checks the dataframe for correct input from file.
+    :param df: dataframe containing the data from the csv file.
+    :return: bool of whether data formatting is at least sensible.
+    &#34;&#34;&#34;
+    if len(df.columns) != 7 or len(df) == 0:
+        return False
+    for value in df.start:
+        if not isinstance(value, float):
+            return False
+    for value in df.end:
+        if not isinstance(value, float):
+            return False
+    return True</code></pre>
+</details>
+</dd>
 <dt id="ConversationalBrowser.conversationalbrowser.model.is_valid"><code class="name flex">
 <span>def <span class="ident">is_valid</span></span>(<span>file)</span>
 </code></dt>
@@ -188,7 +238,12 @@ Returns False otherwise.</p></div>
         if is_valid(file):
             self.fileName = file
             self.fileContents = read_csv(file, names=dm.header_names)
-            self.fileContents = dm.receiver_and_caller_column(self.fileContents)
+            if input_is_valid(self.fileContents):
+                self.fileContents = dm.receiver_and_caller_column(self.fileContents)
+            else:
+                raise Exception(&#34;File incorrectly formatted! Please check that it has these columns: call id, topic, &#34;
+                                &#34;person with cue type, start time, end time and also check that the columns have &#34;
+                                &#34;correct data types.&#34;)
         else:
             self.fileName = &#34;&#34;
 
@@ -271,7 +326,12 @@ columns for easier data processing.
     if is_valid(file):
         self.fileName = file
         self.fileContents = read_csv(file, names=dm.header_names)
-        self.fileContents = dm.receiver_and_caller_column(self.fileContents)
+        if input_is_valid(self.fileContents):
+            self.fileContents = dm.receiver_and_caller_column(self.fileContents)
+        else:
+            raise Exception(&#34;File incorrectly formatted! Please check that it has these columns: call id, topic, &#34;
+                            &#34;person with cue type, start time, end time and also check that the columns have &#34;
+                            &#34;correct data types.&#34;)
     else:
         self.fileName = &#34;&#34;</code></pre>
 </details>
@@ -294,6 +354,7 @@ columns for easier data processing.
 </li>
 <li><h3><a href="#header-functions">Functions</a></h3>
 <ul class="">
+<li><code><a title="ConversationalBrowser.conversationalbrowser.model.input_is_valid" href="#ConversationalBrowser.conversationalbrowser.model.input_is_valid">input_is_valid</a></code></li>
 <li><code><a title="ConversationalBrowser.conversationalbrowser.model.is_valid" href="#ConversationalBrowser.conversationalbrowser.model.is_valid">is_valid</a></code></li>
 </ul>
 </li>

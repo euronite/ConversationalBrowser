@@ -68,7 +68,10 @@ class MainWindow(QtWidgets.QMainWindow):
         file_dialog = FileDialog()
         file = file_dialog.openFileDialog()
         if file:
-            self.model.set_file_name(file)
+            try:
+                self.model.set_file_name(file)
+            except Exception as e:
+                return QMessageBox.critical(self, &#34;Incorrect file columns&#34;, str(e))
             self.model.set_caller_ids(
                 dm.get_all_call_ids(self.model.get_file_content())
             )
@@ -97,10 +100,12 @@ class MainWindow(QtWidgets.QMainWindow):
 
     @pyqtSlot()
     def displayCallerDialog(self):
+        &#34;&#34;&#34; This calls the caller dialog box upon button press. &#34;&#34;&#34;
         self.openCallerDialog()
 
     @pyqtSlot()
     def cueType(self):
+        &#34;&#34;&#34; This opens the cue dialog box when button is pressed. &#34;&#34;&#34;
         self.openCueDialog()
 
     @pyqtSlot()
@@ -736,7 +741,10 @@ filename: str is the name of the file location to save to.</p></div>
         file_dialog = FileDialog()
         file = file_dialog.openFileDialog()
         if file:
-            self.model.set_file_name(file)
+            try:
+                self.model.set_file_name(file)
+            except Exception as e:
+                return QMessageBox.critical(self, &#34;Incorrect file columns&#34;, str(e))
             self.model.set_caller_ids(
                 dm.get_all_call_ids(self.model.get_file_content())
             )
@@ -765,10 +773,12 @@ filename: str is the name of the file location to save to.</p></div>
 
     @pyqtSlot()
     def displayCallerDialog(self):
+        &#34;&#34;&#34; This calls the caller dialog box upon button press. &#34;&#34;&#34;
         self.openCallerDialog()
 
     @pyqtSlot()
     def cueType(self):
+        &#34;&#34;&#34; This opens the cue dialog box when button is pressed. &#34;&#34;&#34;
         self.openCueDialog()
 
     @pyqtSlot()
@@ -887,7 +897,10 @@ def browseSlot(self):
     file_dialog = FileDialog()
     file = file_dialog.openFileDialog()
     if file:
-        self.model.set_file_name(file)
+        try:
+            self.model.set_file_name(file)
+        except Exception as e:
+            return QMessageBox.critical(self, &#34;Incorrect file columns&#34;, str(e))
         self.model.set_caller_ids(
             dm.get_all_call_ids(self.model.get_file_content())
         )
@@ -941,13 +954,14 @@ def clearGraphSlot(self):
 <span>def <span class="ident">cueType</span></span>(<span>self)</span>
 </code></dt>
 <dd>
-<div class="desc"></div>
+<div class="desc"><p>This opens the cue dialog box when button is pressed.</p></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">@pyqtSlot()
 def cueType(self):
+    &#34;&#34;&#34; This opens the cue dialog box when button is pressed. &#34;&#34;&#34;
     self.openCueDialog()</code></pre>
 </details>
 </dd>
@@ -955,13 +969,14 @@ def cueType(self):
 <span>def <span class="ident">displayCallerDialog</span></span>(<span>self)</span>
 </code></dt>
 <dd>
-<div class="desc"></div>
+<div class="desc"><p>This calls the caller dialog box upon button press.</p></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">@pyqtSlot()
 def displayCallerDialog(self):
+    &#34;&#34;&#34; This calls the caller dialog box upon button press. &#34;&#34;&#34;
     self.openCallerDialog()</code></pre>
 </details>
 </dd>

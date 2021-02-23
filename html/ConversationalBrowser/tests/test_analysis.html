@@ -324,6 +324,11 @@ def test_get_all_event_durations(test_data):
     assert len(result[0]) == 3 and result[1].iloc[0] == 1.01
 
 
+def test_get_all_event_durations_rf(individual_call_data_2):
+    result = dm.get_all_event_durations(individual_call_data_2, &#34;laughter&#34;)
+    assert pytest.approx(result[1].iloc[0]) == 0.9
+
+
 def test_get_all_event_durations_raised_error(test_data):
     with pytest.raises(ValueError):
         dm.get_all_event_durations(pd.DataFrame({&#34;A&#34;: []}), &#34;silence&#34;)
@@ -657,6 +662,20 @@ def test_data():
         dm.get_all_event_durations(pd.DataFrame({&#34;A&#34;: []}), &#34;silence&#34;)</code></pre>
 </details>
 </dd>
+<dt id="ConversationalBrowser.tests.test_analysis.test_get_all_event_durations_rf"><code class="name flex">
+<span>def <span class="ident">test_get_all_event_durations_rf</span></span>(<span>individual_call_data_2)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def test_get_all_event_durations_rf(individual_call_data_2):
+    result = dm.get_all_event_durations(individual_call_data_2, &#34;laughter&#34;)
+    assert pytest.approx(result[1].iloc[0]) == 0.9</code></pre>
+</details>
+</dd>
 <dt id="ConversationalBrowser.tests.test_analysis.test_get_call_df"><code class="name flex">
 <span>def <span class="ident">test_get_call_df</span></span>(<span>test_data)</span>
 </code></dt>
@@ -938,6 +957,7 @@ def test_data():
 <li><code><a title="ConversationalBrowser.tests.test_analysis.test_get_all_call_ids" href="#ConversationalBrowser.tests.test_analysis.test_get_all_call_ids">test_get_all_call_ids</a></code></li>
 <li><code><a title="ConversationalBrowser.tests.test_analysis.test_get_all_event_durations" href="#ConversationalBrowser.tests.test_analysis.test_get_all_event_durations">test_get_all_event_durations</a></code></li>
 <li><code><a title="ConversationalBrowser.tests.test_analysis.test_get_all_event_durations_raised_error" href="#ConversationalBrowser.tests.test_analysis.test_get_all_event_durations_raised_error">test_get_all_event_durations_raised_error</a></code></li>
+<li><code><a title="ConversationalBrowser.tests.test_analysis.test_get_all_event_durations_rf" href="#ConversationalBrowser.tests.test_analysis.test_get_all_event_durations_rf">test_get_all_event_durations_rf</a></code></li>
 <li><code><a title="ConversationalBrowser.tests.test_analysis.test_get_call_df" href="#ConversationalBrowser.tests.test_analysis.test_get_call_df">test_get_call_df</a></code></li>
 <li><code><a title="ConversationalBrowser.tests.test_analysis.test_get_list_of_call_id_df" href="#ConversationalBrowser.tests.test_analysis.test_get_list_of_call_id_df">test_get_list_of_call_id_df</a></code></li>
 <li><code><a title="ConversationalBrowser.tests.test_analysis.test_get_non_verbal_speech" href="#ConversationalBrowser.tests.test_analysis.test_get_non_verbal_speech">test_get_non_verbal_speech</a></code></li>

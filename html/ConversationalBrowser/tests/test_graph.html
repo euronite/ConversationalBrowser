@@ -29,12 +29,24 @@
 <pre><code class="python">import conversationalbrowser.graph as graph
 import pytest
 from matplotlib.figure import Figure
+from conversationalbrowser.model import CallerModel
+import pandas as pd
+import main
 
 
 # test unit tests run and are able to pass
 def test_assert():
     test_value = 1
     assert test_value == 1
+
+
+def test_get_df(qtbot, main_window, caller_model, test_data):
+    qtbot.addWidget(main_window)
+    caller_model.set_selected_items([&#34;F01&#34;, &#34;F02&#34;])
+    caller_model.cues_selected = [(&#34;laughter&#34;, 0)]
+    df, cue_types = graph.get_df(main_window, caller_model, test_data)
+    assert df.empty
+    assert cue_types == {&#34;laughter&#34;: 0}
 
 
 def test_set_labels(ax):
@@ -54,7 +66,56 @@ def test_set_labels(ax):
 def ax():
     fig = Figure()
     ax = fig.add_subplot(111)
-    return ax</code></pre>
+    return ax
+
+
+@pytest.fixture
+def main_window():
+    return main.MainWindow()
+
+
+@pytest.fixture
+def test_data():
+    data = {
+        &#34;call&#34;: [
+            &#34;F01&#34;,
+            &#34;F01&#34;,
+            &#34;F02&#34;,
+            &#34;F02&#34;,
+        ],
+        &#34;conversation_topic&#34;: [
+            &#34;other&#34;,
+            &#34;end&#34;,
+            &#34;other&#34;,
+            &#34;end&#34;,
+        ],
+        &#34;person_and_type&#34;: [
+            &#34;laughter_cF&#34;,
+            &#34;end&#34;,
+            &#34;caller_F receiver_F&#34;,
+            &#34;end&#34;,
+        ],
+        &#34;start&#34;: [0, 4.0, 0, 2.0],
+        &#34;end&#34;: [1.01, 4.2, 1.1, 2.1],
+        &#34;caller&#34;: [
+            &#34;caller_F&#34;,
+            &#34;caller_F&#34;,
+            &#34;caller_F&#34;,
+            &#34;caller_F&#34;,
+        ],
+        &#34;receiver&#34;: [
+            &#34;receiver_M&#34;,
+            &#34;receiver_M&#34;,
+            &#34;receiver_F&#34;,
+            &#34;receiver_F&#34;,
+        ],
+    }
+    return pd.DataFrame(data)
+
+
+@pytest.fixture
+def caller_model():
+    return CallerModel()</code></pre>
 </details>
 </section>
 <section>
@@ -80,6 +141,34 @@ def ax():
     return ax</code></pre>
 </details>
 </dd>
+<dt id="ConversationalBrowser.tests.test_graph.caller_model"><code class="name flex">
+<span>def <span class="ident">caller_model</span></span>(<span>)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@pytest.fixture
+def caller_model():
+    return CallerModel()</code></pre>
+</details>
+</dd>
+<dt id="ConversationalBrowser.tests.test_graph.main_window"><code class="name flex">
+<span>def <span class="ident">main_window</span></span>(<span>)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@pytest.fixture
+def main_window():
+    return main.MainWindow()</code></pre>
+</details>
+</dd>
 <dt id="ConversationalBrowser.tests.test_graph.test_assert"><code class="name flex">
 <span>def <span class="ident">test_assert</span></span>(<span>)</span>
 </code></dt>
@@ -92,6 +181,72 @@ def ax():
 <pre><code class="python">def test_assert():
     test_value = 1
     assert test_value == 1</code></pre>
+</details>
+</dd>
+<dt id="ConversationalBrowser.tests.test_graph.test_data"><code class="name flex">
+<span>def <span class="ident">test_data</span></span>(<span>)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@pytest.fixture
+def test_data():
+    data = {
+        &#34;call&#34;: [
+            &#34;F01&#34;,
+            &#34;F01&#34;,
+            &#34;F02&#34;,
+            &#34;F02&#34;,
+        ],
+        &#34;conversation_topic&#34;: [
+            &#34;other&#34;,
+            &#34;end&#34;,
+            &#34;other&#34;,
+            &#34;end&#34;,
+        ],
+        &#34;person_and_type&#34;: [
+            &#34;laughter_cF&#34;,
+            &#34;end&#34;,
+            &#34;caller_F receiver_F&#34;,
+            &#34;end&#34;,
+        ],
+        &#34;start&#34;: [0, 4.0, 0, 2.0],
+        &#34;end&#34;: [1.01, 4.2, 1.1, 2.1],
+        &#34;caller&#34;: [
+            &#34;caller_F&#34;,
+            &#34;caller_F&#34;,
+            &#34;caller_F&#34;,
+            &#34;caller_F&#34;,
+        ],
+        &#34;receiver&#34;: [
+            &#34;receiver_M&#34;,
+            &#34;receiver_M&#34;,
+            &#34;receiver_F&#34;,
+            &#34;receiver_F&#34;,
+        ],
+    }
+    return pd.DataFrame(data)</code></pre>
+</details>
+</dd>
+<dt id="ConversationalBrowser.tests.test_graph.test_get_df"><code class="name flex">
+<span>def <span class="ident">test_get_df</span></span>(<span>qtbot, main_window, caller_model, test_data)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def test_get_df(qtbot, main_window, caller_model, test_data):
+    qtbot.addWidget(main_window)
+    caller_model.set_selected_items([&#34;F01&#34;, &#34;F02&#34;])
+    caller_model.cues_selected = [(&#34;laughter&#34;, 0)]
+    df, cue_types = graph.get_df(main_window, caller_model, test_data)
+    assert df.empty
+    assert cue_types == {&#34;laughter&#34;: 0}</code></pre>
 </details>
 </dd>
 <dt id="ConversationalBrowser.tests.test_graph.test_set_labels"><code class="name flex">
@@ -133,9 +288,13 @@ def ax():
 </ul>
 </li>
 <li><h3><a href="#header-functions">Functions</a></h3>
-<ul class="">
+<ul class="two-column">
 <li><code><a title="ConversationalBrowser.tests.test_graph.ax" href="#ConversationalBrowser.tests.test_graph.ax">ax</a></code></li>
+<li><code><a title="ConversationalBrowser.tests.test_graph.caller_model" href="#ConversationalBrowser.tests.test_graph.caller_model">caller_model</a></code></li>
+<li><code><a title="ConversationalBrowser.tests.test_graph.main_window" href="#ConversationalBrowser.tests.test_graph.main_window">main_window</a></code></li>
 <li><code><a title="ConversationalBrowser.tests.test_graph.test_assert" href="#ConversationalBrowser.tests.test_graph.test_assert">test_assert</a></code></li>
+<li><code><a title="ConversationalBrowser.tests.test_graph.test_data" href="#ConversationalBrowser.tests.test_graph.test_data">test_data</a></code></li>
+<li><code><a title="ConversationalBrowser.tests.test_graph.test_get_df" href="#ConversationalBrowser.tests.test_graph.test_get_df">test_get_df</a></code></li>
 <li><code><a title="ConversationalBrowser.tests.test_graph.test_set_labels" href="#ConversationalBrowser.tests.test_graph.test_set_labels">test_set_labels</a></code></li>
 </ul>
 </li>
