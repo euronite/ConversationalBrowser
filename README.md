@@ -15,8 +15,8 @@ hold the various data.
 ## Build instructions
 
 ### Requirements
-
-* Python 3.7 and above. May work for Python 3.5 and 3.6 but has not been tested.
+**NOTE: if you want the GUI for QT, it will NOT work as of time of writing, it's uninstallable via pip**
+* Python 3.8 and above. Will not work for Python 3.5 and 3.6.
 * Packages: listed in `requirements.txt`
 * pip3 installed. This comes automatically using Anaconda on Windows.
 * Default file explorer. Windows, OSX and Ubuntu already have this installed by default.
@@ -29,15 +29,15 @@ hold the various data.
 * Update pip using either `pip3 install --upgrade pip` or `pip install
   --upgrade pip` on what is being used.
 * Ensure you have pip3 installed and Python 3.X. This has been tested
-  with 3.7 and 3.8.
+  with 3.8, 3.9 and 3.10.
 * Download the files using either the code download as zip or git clone.
 * In terminal, same folder as the main.py and requirements.txt, run
   `pip3 install -r requirements.txt` or
   `pip install -r requirements.txt` (depending on version).
 * Then do python main.py
-* To edit the user interface using QtDesigner, do
+* ~~To edit the user interface using QtDesigner, do
   `cd /usr/lib/x86_64-linux-gnu/qt5/bin/` to get to the folder
-  containing QtDesigner and then run `./designer`.
+  containing QtDesigner and then run `./designer`.~~
 
 ### Windows
 
@@ -47,7 +47,7 @@ hold the various data.
   and run `pip install -r requirements.txt`. Filelock installation error
   may occur but shouldn't affect the running of the program.
 * Then do python main.py
-* To run the QtDesigner to change the UI, designer.exe will be under `....Lib\site-packages\pyqt5_tools`
+* ~~To run the QtDesigner to change the UI, designer.exe will be under `....Lib\site-packages\pyqt5_tools`.~~
 
 ### Test Steps
 

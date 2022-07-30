@@ -1,9 +1,9 @@
-pre-commit==2.9.3
-pyqt5==5.15.2
-pyqt5-tools==5.15.2.3.0.2
-pandas==1.1.5
-numpy==1.22.0
-matplotlib==3.3.3
-pytest==6.2.1
-pytest-qt==3.3.0
+pre-commit==2.20.0
+pyqt5==5.15.7
+# pyqt5-tools>=5.15.2.3.0.2 // won't install
+pandas==1.4.3
+numpy==1.23.1
+matplotlib==3.5.2
+pytest==7.1.2
+pytest-qt==4.1.0
 pytest-cov==2.11.1
