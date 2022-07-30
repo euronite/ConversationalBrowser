@@ -16,7 +16,7 @@ hold the various data.
 
 ### Requirements
 **NOTE: if you want the GUI for QT, it will NOT work as of time of writing, it's uninstallable via pip**
-* Python 3.8 and above. Will not work for Python 3.5 and 3.6.
+* Python 3.8 and 3.9. Will not work for Python 3.5 and 3.6 etc.
 * Packages: listed in `requirements.txt`
 * pip3 installed. This comes automatically using Anaconda on Windows.
 * Default file explorer. Windows, OSX and Ubuntu already have this installed by default.
@@ -29,7 +29,7 @@ hold the various data.
 * Update pip using either `pip3 install --upgrade pip` or `pip install
   --upgrade pip` on what is being used.
 * Ensure you have pip3 installed and Python 3.X. This has been tested
-  with 3.8, 3.9 and 3.10.
+  with 3.8, 3.9.
 * Download the files using either the code download as zip or git clone.
 * In terminal, same folder as the main.py and requirements.txt, run
   `pip3 install -r requirements.txt` or
